@@ -76,7 +76,7 @@ export const Marquee: React.FC = () => {
   }, []);
 
   return (
-    <div className="marquee-container py-12 bg-[#0E0E0E] border-y border-neutral-800/80 overflow-hidden select-none">
+    <div className="marquee-container py-12 bg-transparent backdrop-blur-sm border-y border-white/10 overflow-hidden select-none">
       {/* Row 1 - Leftward */}
       <div className="flex whitespace-nowrap mb-4">
         <div ref={marquee1Ref} className="flex items-center space-x-8 shrink-0">

@@ -47,18 +47,23 @@ export const metadata: Metadata = {
   },
 };
 
+import { LanguageProvider } from "@/context/LanguageContext";
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark scroll-smooth">
+    <html lang="en" className="dark scroll-smooth" suppressHydrationWarning>
       <body
+        suppressHydrationWarning
         className={`${inter.variable} ${geistMono.variable} font-sans bg-[#0A0A0A] text-[#F5F5F5] antialiased selection:bg-[#B8FF00] selection:text-black`}
       >
-        <Cursor />
-        <SmoothScroll>{children}</SmoothScroll>
+        <LanguageProvider>
+          <Cursor />
+          <SmoothScroll>{children}</SmoothScroll>
+        </LanguageProvider>
       </body>
     </html>
   );

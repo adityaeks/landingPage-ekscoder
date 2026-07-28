@@ -5,7 +5,12 @@ import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { ArrowUpRight, Mail, MessageSquare } from "lucide-react";
 
+import { useLanguage } from "@/context/LanguageContext";
+import { translations } from "@/data/translations";
+
 export const CTA: React.FC = () => {
+  const { language } = useLanguage();
+  const t = translations[language].cta;
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -38,7 +43,7 @@ export const CTA: React.FC = () => {
     <section
       id="cta"
       ref={containerRef}
-      className="py-28 md:py-44 px-6 md:px-12 bg-[#0A0A0A] relative overflow-hidden bg-noise border-b border-neutral-800/60"
+      className="py-28 md:py-44 px-6 md:px-12 bg-transparent relative overflow-hidden bg-noise border-b border-neutral-800/60"
     >
       {/* Background Animated Gradient Glows */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#B8FF00]/10 rounded-full blur-[160px] pointer-events-none -z-10 animate-pulse" />
@@ -54,19 +59,19 @@ export const CTA: React.FC = () => {
           {/* Section Tag */}
           <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full border border-[#B8FF00]/30 bg-[#B8FF00]/10 text-[#B8FF00] font-mono text-xs tracking-widest uppercase mb-8 z-10">
             <MessageSquare className="w-3.5 h-3.5" />
-            <span>LET'S COLLABORATE</span>
+            <span>{t.badge}</span>
           </div>
 
           {/* Bold Heading */}
           <h2 className="text-4xl sm:text-6xl md:text-8xl font-black font-mono tracking-tighter uppercase text-white leading-none mb-8 z-10">
-            HAVE AN IDEA?<br />
+            {t.line1}<br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#B8FF00] to-neutral-400">
-              LET'S BUILD IT.
+              {t.line2}
             </span>
           </h2>
 
           <p className="text-neutral-300 font-light text-base sm:text-xl max-w-2xl leading-relaxed mb-12 z-10">
-            Have a new web project, custom software requirement, or digital product in mind? Let's talk tech, plan the architecture, and bring your vision to life.
+            {t.description}
           </p>
 
           {/* Magnetic CTA Buttons */}
@@ -77,7 +82,7 @@ export const CTA: React.FC = () => {
                 className="px-10 py-5 rounded-full bg-[#B8FF00] text-black font-mono font-bold text-base tracking-wider uppercase hover:bg-white transition-all duration-300 flex items-center space-x-3 shadow-2xl glow-accent"
                 data-cursor="TALK"
               >
-                <span>START A PROJECT</span>
+                <span>{t.startProject}</span>
                 <ArrowUpRight className="w-5 h-5" />
               </a>
             </MagneticButton>
@@ -89,7 +94,7 @@ export const CTA: React.FC = () => {
                 data-cursor="MAIL"
               >
                 <Mail className="w-4 h-4 text-[#B8FF00]" />
-                <span>contact@ekscoder.com</span>
+                <span>{t.email}</span>
               </a>
             </MagneticButton>
           </div>

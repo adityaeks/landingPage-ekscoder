@@ -5,7 +5,12 @@ import { projectsData, Project } from "@/data/projects";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { ArrowUpRight, ExternalLink } from "lucide-react";
 
+import { useLanguage } from "@/context/LanguageContext";
+import { translations } from "@/data/translations";
+
 export const Projects: React.FC = () => {
+  const { language } = useLanguage();
+  const t = translations[language].projects;
   const containerRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
 
@@ -40,7 +45,7 @@ export const Projects: React.FC = () => {
     <section
       id="projects"
       ref={containerRef}
-      className="py-24 md:py-36 px-6 md:px-12 bg-[#0A0A0A] relative border-b border-neutral-800/60"
+      className="py-24 md:py-36 px-6 md:px-12 bg-transparent relative border-b border-neutral-800/60"
     >
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
@@ -48,14 +53,14 @@ export const Projects: React.FC = () => {
           <div>
             <div className="flex items-center space-x-3 text-xs font-mono text-[#B8FF00] tracking-widest uppercase mb-3">
               <span className="w-8 h-[1px] bg-[#B8FF00]" />
-              <span>PORTFOLIO</span>
+              <span>{t.badge}</span>
             </div>
             <h2 className="text-4xl sm:text-6xl font-extrabold tracking-tighter uppercase font-mono text-white">
-              SELECTED WORKS<span className="text-[#B8FF00]">.</span>
+              {t.title}
             </h2>
           </div>
           <p className="text-neutral-400 max-w-md text-sm md:text-base font-light">
-            A curated collection of digital products, enterprise platforms, and experimental motion projects crafted with precision.
+            {t.description}
           </p>
         </div>
 

@@ -123,7 +123,7 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
       </div>
 
       <div className="w-full flex justify-between items-center text-[10px] sm:text-xs font-mono text-neutral-600 tracking-wider">
-        <span>CREATIVE TECHNOLOGY BRAND</span>
+        <span>CREATIVE TECHNOLOGY STUDIO</span>
         <span>SCROLL DRIVEN / MOTION FIRST</span>
       </div>
     </div>

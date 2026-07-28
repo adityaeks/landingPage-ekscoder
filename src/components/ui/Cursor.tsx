@@ -111,6 +111,7 @@ export const Cursor: React.FC = () => {
       {/* Center dot */}
       <div
         id="custom-cursor-dot"
+        suppressHydrationWarning
         className={`fixed top-0 left-0 w-2 h-2 rounded-full bg-[#B8FF00] pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300 ${
           isVisible ? "opacity-100" : "opacity-0"
         }`}
@@ -119,6 +120,7 @@ export const Cursor: React.FC = () => {
       {/* Following Ring / Label Container */}
       <div
         id="custom-cursor-ring"
+        suppressHydrationWarning
         className={`fixed top-0 left-0 w-8 h-8 rounded-full border border-white/40 pointer-events-none z-[9998] -translate-x-1/2 -translate-y-1/2 flex items-center justify-center transition-opacity duration-300 ${
           isVisible ? "opacity-100" : "opacity-0"
         }`}

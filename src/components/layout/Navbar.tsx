@@ -5,11 +5,16 @@ import { MagneticButton } from "@/components/ui/MagneticButton";
 import { gsap } from "@/lib/gsap";
 import { Menu, X, ArrowUpRight, Radio, Sparkles, Terminal } from "lucide-react";
 
+import { useLanguage } from "@/context/LanguageContext";
+import { translations } from "@/data/translations";
+
 interface NavbarProps {
   ready?: boolean;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ ready = true }) => {
+  const { language, setLanguage } = useLanguage();
+  const t = translations[language].nav;
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -20,11 +25,12 @@ export const Navbar: React.FC<NavbarProps> = ({ ready = true }) => {
   const ctaRef = useRef<HTMLDivElement>(null);
 
   const navLinks = [
-    { id: "projects", label: "WORK", number: "01" },
-    { id: "services", label: "SERVICES", number: "02" },
-    { id: "capabilities", label: "ABOUT", number: "03" },
-    { id: "technologies", label: "STACK", number: "04" },
-    { id: "process", label: "PROCESS", number: "05" },
+    { id: "about", label: t.about, number: "01" },
+    { id: "capabilities", label: t.capabilities, number: "02" },
+    { id: "services", label: t.services, number: "03" },
+    { id: "technologies", label: t.solutions, number: "04" },
+    { id: "projects", label: t.work, number: "05" },
+    { id: "process", label: t.process, number: "06" },
   ];
 
   useEffect(() => {
@@ -36,7 +42,7 @@ export const Navbar: React.FC<NavbarProps> = ({ ready = true }) => {
       }
 
       // Active section spy
-      const sections = ["hero", "projects", "services", "capabilities", "technologies", "process", "cta"];
+      const sections = ["hero", "about", "capabilities", "services", "technologies", "projects", "process", "cta"];
       const scrollPosition = window.scrollY + 200;
 
       for (const sectionId of sections) {
@@ -138,19 +144,47 @@ export const Navbar: React.FC<NavbarProps> = ({ ready = true }) => {
             })}
           </nav>
 
-          {/* Magnetic CTA Button */}
-          <div ref={ctaRef} className="hidden md:flex items-center space-x-3">
-            <MagneticButton strength={0.3}>
-              <a
-                href="#cta"
-                onClick={(e) => scrollToSection(e, "cta")}
-                className="px-5 py-2 rounded-full bg-[#B8FF00] hover:bg-white text-black text-xs font-mono font-bold tracking-wider uppercase transition-all duration-300 flex items-center space-x-2 shadow-lg glow-accent group"
-                data-cursor="TALK"
+          {/* Language Switcher & Magnetic CTA Button */}
+          <div ref={ctaRef} className="flex items-center space-x-3">
+            {/* Desktop Language Switcher Pill */}
+            <div className="hidden md:flex items-center space-x-1 p-1 rounded-full bg-neutral-900 border border-neutral-800 text-[11px] font-mono select-none">
+              <button
+                onClick={() => setLanguage("EN")}
+                className={`px-2.5 py-1 rounded-full font-bold transition-all duration-300 ${
+                  language === "EN"
+                    ? "bg-[#B8FF00] text-black shadow-sm"
+                    : "text-neutral-400 hover:text-white"
+                }`}
+                aria-label="Switch to English"
               >
-                <span>LET'S TALK</span>
-                <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </a>
-            </MagneticButton>
+                ENG
+              </button>
+              <button
+                onClick={() => setLanguage("ID")}
+                className={`px-2.5 py-1 rounded-full font-bold transition-all duration-300 ${
+                  language === "ID"
+                    ? "bg-[#B8FF00] text-black shadow-sm"
+                    : "text-neutral-400 hover:text-white"
+                }`}
+                aria-label="Switch to Indonesian"
+              >
+                IDN
+              </button>
+            </div>
+
+            <div className="hidden md:flex">
+              <MagneticButton strength={0.3}>
+                <a
+                  href="#cta"
+                  onClick={(e) => scrollToSection(e, "cta")}
+                  className="px-5 py-2 rounded-full bg-[#B8FF00] hover:bg-white text-black text-xs font-mono font-bold tracking-wider uppercase transition-all duration-300 flex items-center space-x-2 shadow-lg glow-accent group"
+                  data-cursor="TALK"
+                >
+                  <span>{t.talk}</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </a>
+              </MagneticButton>
+            </div>
           </div>
 
           {/* Mobile Hamburger Button */}
@@ -171,9 +205,38 @@ export const Navbar: React.FC<NavbarProps> = ({ ready = true }) => {
         }`}
       >
         <div className="pt-20 space-y-2">
-          <div className="text-xs font-mono text-[#B8FF00] tracking-widest uppercase mb-6 flex items-center space-x-2">
-            <Terminal className="w-3.5 h-3.5" />
-            <span>NAVIGATION MENU // EKSCODER</span>
+          {/* Mobile Menu Header with Language Switcher */}
+          <div className="text-xs font-mono text-[#B8FF00] tracking-widest uppercase mb-6 flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <Terminal className="w-3.5 h-3.5" />
+              <span>{t.navigation}</span>
+            </div>
+
+            {/* Language Switcher inside Mobile Menu */}
+            <div className="flex items-center space-x-1 p-1 rounded-full bg-neutral-900 border border-neutral-800 text-[11px] font-mono select-none">
+              <button
+                onClick={() => setLanguage("EN")}
+                className={`px-3 py-1 rounded-full font-bold transition-all duration-300 ${
+                  language === "EN"
+                    ? "bg-[#B8FF00] text-black shadow-sm"
+                    : "text-neutral-400 hover:text-white"
+                }`}
+                aria-label="Switch to English"
+              >
+                ENG
+              </button>
+              <button
+                onClick={() => setLanguage("ID")}
+                className={`px-3 py-1 rounded-full font-bold transition-all duration-300 ${
+                  language === "ID"
+                    ? "bg-[#B8FF00] text-black shadow-sm"
+                    : "text-neutral-400 hover:text-white"
+                }`}
+                aria-label="Switch to Indonesian"
+              >
+                IDN
+              </button>
+            </div>
           </div>
 
           <div className="flex flex-col space-y-4 font-mono text-2xl font-extrabold tracking-wider text-white">
@@ -205,7 +268,7 @@ export const Navbar: React.FC<NavbarProps> = ({ ready = true }) => {
             onClick={(e) => scrollToSection(e, "cta")}
             className="w-full py-4 rounded-full bg-[#B8FF00] text-black text-center font-mono font-bold text-sm tracking-widest uppercase hover:bg-white transition-colors flex items-center justify-center space-x-2 shadow-xl glow-accent"
           >
-            <span>LET'S TALK NOW</span>
+            <span>{t.talk}</span>
             <ArrowUpRight className="w-4 h-4" />
           </a>
 

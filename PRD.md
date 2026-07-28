@@ -18,14 +18,14 @@ Landing page EKSCODER dirancang sebagai website modern dengan pendekatan **motio
 
 Website harus memberikan kesan:
 
-* Modern
-* Premium
-* Technical
-* Creative
-* Futuristic
-* Confident
-* Developer-oriented
-* Highly interactive
+- Modern
+- Premium
+- Technical
+- Creative
+- Futuristic
+- Confident
+- Developer-oriented
+- Highly interactive
 
 Visual utama menggunakan **dark theme** dengan tipografi besar, whitespace yang luas, kontras tinggi, dan animasi berbasis scroll.
 
@@ -47,11 +47,11 @@ Website akan menggunakan GSAP sebagai animation engine utama.
 
 ## 2.2 Secondary Goals
 
-* Meningkatkan kredibilitas profesional.
-* Menjadi portfolio utama.
-* Menjadi landing page untuk calon klien.
-* Menjadi playground untuk menunjukkan kemampuan frontend dan GSAP.
-* Menjadi fondasi untuk pengembangan website dan layanan EKSCODER di masa depan.
+- Meningkatkan kredibilitas profesional.
+- Menjadi portfolio utama.
+- Menjadi landing page untuk calon klien.
+- Menjadi playground untuk menunjukkan kemampuan frontend dan GSAP.
+- Menjadi fondasi untuk pengembangan website dan layanan EKSCODER di masa depan.
 
 ---
 
@@ -63,39 +63,39 @@ Website akan menggunakan GSAP sebagai animation engine utama.
 
 Pemilik bisnis yang membutuhkan:
 
-* Website perusahaan
-* Landing page
-* Sistem internal
-* Digitalisasi bisnis
+- Website perusahaan
+- Landing page
+- Sistem internal
+- Digitalisasi bisnis
 
 ### 2. Startup
 
 Startup yang membutuhkan:
 
-* MVP
-* SaaS
-* Web application
-* Scalable architecture
+- MVP
+- SaaS
+- Web application
+- Scalable architecture
 
 ### 3. Company / Enterprise
 
 Perusahaan yang membutuhkan:
 
-* Custom software
-* Internal dashboard
-* ERP
-* API integration
-* Cloud infrastructure
+- Custom software
+- Internal dashboard
+- ERP
+- API integration
+- Cloud infrastructure
 
 ### 4. Developer / Technology Community
 
 Pengunjung yang tertarik melihat:
 
-* Teknologi
-* Web development
-* GSAP animation
-* Creative coding
-* Software engineering
+- Teknologi
+- Web development
+- GSAP animation
+- Creative coding
+- Software engineering
 
 ---
 
@@ -113,32 +113,32 @@ Pengunjung yang tertarik melihat:
 
 EKSCODER harus terasa:
 
-* Bold
-* Technical
-* Minimal
-* Experimental
-* Creative
-* Professional
-* Futuristic
+- Bold
+- Technical
+- Minimal
+- Experimental
+- Creative
+- Professional
+- Futuristic
 
 ## 4.4 Visual Direction
 
 Tema utama:
 
-**Dark Creative Technology**
+**CREATIVE TECHNOLOGY STUDIO**
 
 Visual harus menggunakan:
 
-* Dark background
-* Large typography
-* High contrast
-* Minimal UI
-* Subtle gradients
-* Grid system
-* Animated elements
-* Smooth scrolling
-* Large whitespace
-* Motion-driven transitions
+- Dark background
+- Large typography
+- High contrast
+- Minimal UI
+- Subtle gradients
+- Grid system
+- Animated elements
+- Smooth scrolling
+- Large whitespace
+- Motion-driven transitions
 
 ---
 
@@ -179,11 +179,11 @@ Accent:
 
 Accent digunakan untuk:
 
-* CTA
-* Hover
-* Highlight text
-* Progress indicator
-* Interactive elements
+- CTA
+- Hover
+- Highlight text
+- Progress indicator
+- Interactive elements
 
 Jangan menggunakan terlalu banyak warna.
 
@@ -372,9 +372,9 @@ Navbar harus sticky.
 
 Menggunakan GSAP:
 
-* Navbar masuk dari atas.
-* Menu muncul stagger.
-* CTA memiliki hover animation.
+- Navbar masuk dari atas.
+- Menu muncul stagger.
+- CTA memiliki hover animation.
 
 ---
 
@@ -424,12 +424,12 @@ LET'S TALK
 
 Hero harus menggunakan:
 
-* Large typography
-* Animated text
-* Abstract 3D / gradient visual
-* Grid
-* Floating elements
-* Mouse interaction
+- Large typography
+- Animated text
+- Abstract 3D / gradient visual
+- Grid
+- Floating elements
+- Mouse interaction
 
 ## GSAP Animation
 
@@ -461,11 +461,11 @@ Visual
 
 Saat user scroll:
 
-* Hero heading scale down.
-* Hero opacity berkurang.
-* Background visual bergerak.
-* Grid mengalami parallax.
-* CTA bergerak keluar.
+- Hero heading scale down.
+- Hero opacity berkurang.
+- Background visual bergerak.
+- Grid mengalami parallax.
+- CTA bergerak keluar.
 
 Gunakan:
 
@@ -496,9 +496,9 @@ DIGITAL EXPERIENCE
 
 Animation:
 
-* Infinite horizontal loop.
-* Direction alternate.
-* Pause on hover.
+- Infinite horizontal loop.
+- Direction alternate.
+- Pause on hover.
 
 Teknologi:
 
@@ -526,9 +526,9 @@ EKSCODER membantu bisnis dan individu mengubah ide menjadi produk digital yang c
 
 Saat masuk viewport:
 
-* Heading reveal per line.
-* Text fade up.
-* Background grid bergerak.
+- Heading reveal per line.
+- Text fade up.
+- Background grid bergerak.
 
 Gunakan:
 
@@ -560,21 +560,21 @@ UI/UX & DIGITAL EXPERIENCE
 
 Setiap card memiliki:
 
-* Number
-* Title
-* Description
-* Icon / visual
-* Hover animation
+- Number
+- Title
+- Description
+- Icon / visual
+- Hover animation
 
 ## Hover
 
 Saat mouse masuk:
 
-* Card scale up sedikit.
-* Background berubah.
-* Accent muncul.
-* Icon bergerak.
-* Cursor interaction.
+- Card scale up sedikit.
+- Background berubah.
+- Accent muncul.
+- Icon bergerak.
+- Cursor interaction.
 
 ---
 
@@ -611,10 +611,10 @@ Arrow
 
 Saat hover:
 
-* Title bergeser horizontal.
-* Arrow bergerak.
-* Background image muncul.
-* Item lainnya sedikit meredup.
+- Title bergeser horizontal.
+- Arrow bergerak.
+- Background image muncul.
+- Item lainnya sedikit meredup.
 
 ---
 
@@ -711,10 +711,10 @@ Infrastructure Management
 
 Saat hover:
 
-* Image scale.
-* Cursor berubah.
-* Project title bergerak.
-* Image mengikuti cursor.
+- Image scale.
+- Cursor berubah.
+- Project title bergerak.
+- Image mengikuti cursor.
 
 ## Scroll Animation
 
@@ -760,10 +760,10 @@ Gunakan vertical scroll animation.
 
 Saat user scroll:
 
-* Progress line berjalan.
-* Step aktif berubah.
-* Content berganti.
-* Background berubah secara halus.
+- Progress line berjalan.
+- Step aktif berubah.
+- Content berganti.
+- Background berubah secara halus.
 
 ---
 
@@ -796,10 +796,10 @@ START A PROJECT
 
 Saat user memasuki section:
 
-* Heading reveal.
-* CTA scale.
-* Background gradient bergerak.
-* Cursor interaction.
+- Heading reveal.
+- CTA scale.
+- Background gradient bergerak.
+- Cursor interaction.
 
 ---
 
@@ -873,11 +873,11 @@ atau library text splitting alternatif.
 
 Animasi harus:
 
-* Smooth
-* Intentional
-* Fast enough
-* Tidak mengganggu usability
-* Tidak terlalu berlebihan
+- Smooth
+- Intentional
+- Fast enough
+- Tidak mengganggu usability
+- Tidak terlalu berlebihan
 
 Gunakan easing:
 
@@ -930,9 +930,9 @@ Animation
 
 Pastikan:
 
-* ScrollTrigger sinkron dengan Lenis.
-* Tidak ada scroll lag.
-* Mobile tetap performant.
+- ScrollTrigger sinkron dengan Lenis.
+- Tidak ada scroll lag.
+- Mobile tetap performant.
 
 ---
 
@@ -961,11 +961,11 @@ Desktop:
 
 Pada mobile:
 
-* Kurangi animasi berat.
-* Matikan cursor follower.
-* Kurangi parallax.
-* Kurangi ScrollTrigger.
-* Gunakan animasi sederhana.
+- Kurangi animasi berat.
+- Matikan cursor follower.
+- Kurangi parallax.
+- Kurangi ScrollTrigger.
+- Gunakan animasi sederhana.
 
 ---
 
@@ -989,14 +989,14 @@ SEO:
 
 Optimasi:
 
-* Next.js Image
-* Lazy loading
-* Code splitting
-* Dynamic import
-* Compress images
-* WebP / AVIF
-* Minimize JS
-* Avoid unnecessary re-renders
+- Next.js Image
+- Lazy loading
+- Code splitting
+- Dynamic import
+- Compress images
+- WebP / AVIF
+- Minimize JS
+- Avoid unnecessary re-renders
 
 GSAP harus digunakan secara modular.
 
@@ -1020,12 +1020,12 @@ animations/
 
 Website harus mendukung:
 
-* Semantic HTML
-* Keyboard navigation
-* ARIA label
-* Visible focus state
-* Alt text
-* Sufficient contrast
+- Semantic HTML
+- Keyboard navigation
+- ARIA label
+- Visible focus state
+- Alt text
+- Sufficient contrast
 
 Implementasikan:
 
@@ -1328,18 +1328,18 @@ Phase 3 hanya dilakukan jika tidak mengorbankan performance.
 
 Landing page dianggap selesai jika:
 
-* Semua section sudah tersedia.
-* Responsive di mobile, tablet, desktop.
-* GSAP animation berjalan lancar.
-* ScrollTrigger sinkron dengan Lenis.
-* Tidak ada console error.
-* Tidak ada hydration error.
-* Lighthouse score minimal 90.
-* Reduced motion tersedia.
-* SEO metadata tersedia.
-* Semua CTA berfungsi.
-* Semua project dapat diklik.
-* Website dapat di-deploy ke production.
+- Semua section sudah tersedia.
+- Responsive di mobile, tablet, desktop.
+- GSAP animation berjalan lancar.
+- ScrollTrigger sinkron dengan Lenis.
+- Tidak ada console error.
+- Tidak ada hydration error.
+- Lighthouse score minimal 90.
+- Reduced motion tersedia.
+- SEO metadata tersedia.
+- Semua CTA berfungsi.
+- Semua project dapat diklik.
+- Website dapat di-deploy ke production.
 
 ---
 

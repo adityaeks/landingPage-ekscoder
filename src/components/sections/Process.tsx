@@ -2,50 +2,18 @@
 
 import React, { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
-import { Search, Compass, Code2, Rocket, RefreshCw } from "lucide-react";
+import { processStepsData } from "@/data/processData";
+import { useLanguage } from "@/context/LanguageContext";
+import { translations } from "@/data/translations";
 
 export const Process: React.FC = () => {
+  const { language } = useLanguage();
+  const t = translations[language].process;
   const containerRef = useRef<HTMLDivElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
   const stepsRef = useRef<HTMLDivElement>(null);
 
-  const steps = [
-    {
-      number: "01",
-      title: "DISCOVER",
-      subtitle: "Strategy & Architectural Blueprint",
-      description: "Deep dive into product requirements, domain logic, tech stack selection, and system topology planning to ensure a rock-solid engineering foundation.",
-      icon: Search,
-    },
-    {
-      number: "02",
-      title: "DESIGN",
-      subtitle: "UI/UX & Visual Direction",
-      description: "Drafting minimalist, dark-themed UI components, design tokens, interactive prototypes, and motion animation keyframes.",
-      icon: Compass,
-    },
-    {
-      number: "03",
-      title: "DEVELOP",
-      subtitle: "Motion-First Clean Code",
-      description: "Implementing frontend reactive components, GSAP scroll triggers, backend REST APIs, and database models adhering to strict TypeScript standards.",
-      icon: Code2,
-    },
-    {
-      number: "04",
-      title: "DEPLOY",
-      subtitle: "DevOps & Infrastructure",
-      description: "Automated CI/CD deployment to production servers, SSL setup, Docker containerization, Nginx reverse proxy configuration, and caching optimization.",
-      icon: Rocket,
-    },
-    {
-      number: "05",
-      title: "EVOLVE",
-      subtitle: "Continuous Performance Tuning",
-      description: "Monitoring real-world performance metrics, conducting Lighthouse audits, refining animations, and delivering iterative software updates.",
-      icon: RefreshCw,
-    },
-  ];
+  const steps = processStepsData[language];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -97,7 +65,7 @@ export const Process: React.FC = () => {
     <section
       id="process"
       ref={containerRef}
-      className="py-24 md:py-36 px-6 md:px-12 bg-[#0E0E0E] relative border-b border-neutral-800/60"
+      className="py-24 md:py-36 px-6 md:px-12 bg-transparent relative border-b border-neutral-800/60"
     >
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
@@ -105,14 +73,14 @@ export const Process: React.FC = () => {
           <div>
             <div className="flex items-center space-x-3 text-xs font-mono text-[#B8FF00] tracking-widest uppercase mb-3">
               <span className="w-8 h-[1px] bg-[#B8FF00]" />
-              <span>WORKFLOW</span>
+              <span>{t.badge}</span>
             </div>
             <h2 className="text-4xl sm:text-6xl font-extrabold tracking-tighter uppercase font-mono text-white">
-              HOW WE BUILD<span className="text-[#B8FF00]">.</span>
+              {t.title}
             </h2>
           </div>
           <p className="text-neutral-400 max-w-md text-sm md:text-base font-light">
-            A structured, 5-phase engineering methodology guaranteeing transparent execution and flawless digital product delivery.
+            {t.description}
           </p>
         </div>
 

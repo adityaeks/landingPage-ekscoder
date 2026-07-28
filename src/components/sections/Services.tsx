@@ -3,9 +3,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { servicesData } from "@/data/services";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
+
+import { useLanguage } from "@/context/LanguageContext";
+import { translations } from "@/data/translations";
 
 export const Services: React.FC = () => {
+  const { language } = useLanguage();
+  const t = translations[language].services;
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
@@ -40,7 +45,7 @@ export const Services: React.FC = () => {
     <section
       id="services"
       ref={containerRef}
-      className="py-24 md:py-36 px-6 md:px-12 bg-[#0A0A0A] relative border-b border-neutral-800/60"
+      className="py-24 md:py-36 px-6 md:px-12 bg-transparent relative border-b border-neutral-800/60"
     >
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
@@ -48,20 +53,20 @@ export const Services: React.FC = () => {
           <div>
             <div className="flex items-center space-x-3 text-xs font-mono text-[#B8FF00] tracking-widest uppercase mb-3">
               <span className="w-8 h-[1px] bg-[#B8FF00]" />
-              <span>WHAT WE DO</span>
+              <span>{t.badge}</span>
             </div>
             <h2 className="text-4xl sm:text-6xl font-extrabold tracking-tighter uppercase font-mono text-white">
-              SERVICES<span className="text-[#B8FF00]">.</span>
+              {t.title}
             </h2>
           </div>
           <p className="text-neutral-400 max-w-md text-sm md:text-base font-light">
-            Tailored digital engineering and creative technology offerings designed for businesses demanding excellence.
+            {t.description}
           </p>
         </div>
 
         {/* Interactive Vertical Services List */}
         <div ref={listRef} className="divide-y divide-neutral-800 border-t border-b border-neutral-800">
-          {servicesData.map((service, idx) => {
+          {servicesData[language].map((service, idx) => {
             const isHovered = activeIdx === idx;
 
             return (
@@ -69,10 +74,9 @@ export const Services: React.FC = () => {
                 key={idx}
                 onMouseEnter={() => setActiveIdx(idx)}
                 onMouseLeave={() => setActiveIdx(null)}
-                className={`service-row py-8 md:py-10 transition-all duration-500 cursor-pointer ${
+                className={`service-row py-8 md:py-10 transition-all duration-500 ${
                   activeIdx !== null && !isHovered ? "opacity-30 blur-[0.5px]" : "opacity-100"
                 }`}
-                data-cursor="EXPLORE"
               >
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
                   {/* Number & Title */}
@@ -96,7 +100,7 @@ export const Services: React.FC = () => {
                   </div>
 
                   {/* Subtitle & Description */}
-                  <div className="lg:col-span-5 space-y-2">
+                  <div className="lg:col-span-6 space-y-2">
                     <div className="text-xs font-mono text-neutral-400 uppercase tracking-widest">
                       {service.subtitle}
                     </div>
@@ -119,19 +123,6 @@ export const Services: React.FC = () => {
                           <span>{item}</span>
                         </span>
                       ))}
-                    </div>
-                  </div>
-
-                  {/* Arrow Indicator */}
-                  <div className="lg:col-span-1 flex justify-end">
-                    <div
-                      className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 ${
-                        isHovered
-                          ? "bg-[#B8FF00] border-[#B8FF00] text-black translate-x-2"
-                          : "border-neutral-800 text-neutral-500"
-                      }`}
-                    >
-                      <ArrowRight className="w-5 h-5" />
                     </div>
                   </div>
                 </div>
