@@ -214,20 +214,20 @@ export const Capabilities: React.FC = () => {
     <section
       id="capabilities"
       ref={containerRef}
-      className="relative w-full bg-transparent border-b border-neutral-800/60 overflow-hidden flex flex-col justify-between pt-16 md:pt-24 pb-12 md:pb-6 bg-noise md:h-screen md:min-h-[700px] md:h-[100dvh]"
+      className="relative w-full bg-transparent border-b border-neutral-800/60 overflow-hidden flex flex-col justify-between pt-10 md:pt-14 pb-6 md:pb-3 bg-noise md:h-screen md:min-h-[640px] md:h-[100dvh]"
     >
       {/* Background Ambient Glows */}
       <div className="absolute top-1/2 left-1/3 -translate-y-1/2 w-[500px] h-[500px] bg-[#B8FF00]/5 rounded-full blur-[160px] pointer-events-none -z-10 animate-pulse" />
 
       {/* Header Section */}
       <div className="max-w-7xl mx-auto w-full px-6 md:px-12">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-3 md:pb-4 border-b border-neutral-800/80">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-3 border-b border-neutral-800/80">
           <div>
             <div className="flex items-center space-x-3 text-[11px] font-mono text-[#B8FF00] tracking-widest uppercase mb-1">
               <span className="w-6 h-[1px] bg-[#B8FF00]" />
               <span>{t.badge}</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tighter uppercase font-mono text-white flex items-center gap-3">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tighter uppercase font-mono text-white flex items-center gap-3">
               <span>{t.title}</span>
             </h2>
           </div>
@@ -271,28 +271,28 @@ export const Capabilities: React.FC = () => {
       </div>
 
       {/* DESKTOP HORIZONTAL GSAP TRACK (>= 768px) */}
-      <div className="hidden md:block w-full overflow-hidden px-6 md:px-12 my-auto py-2">
+      <div className="hidden md:block w-full overflow-hidden px-6 md:px-12 my-auto py-3">
         <div
           ref={trackRef}
-          className="flex flex-row gap-7 w-max"
+          className="flex flex-row gap-6 w-max"
         >
           {capabilities.map((cap, idx) => {
             const Icon = cap.icon;
             return (
               <div
                 key={idx}
-                className={`group relative p-7 rounded-2xl bg-[#111111]/90 backdrop-blur-xl border ${cap.accentBg} transition-all duration-500 flex flex-col justify-between overflow-hidden shadow-2xl w-[480px] lg:w-[520px] shrink-0 min-h-[380px]`}
+                className={`group relative p-5 lg:p-6 rounded-2xl bg-[#111111]/90 backdrop-blur-xl border ${cap.accentBg} transition-all duration-500 flex flex-col justify-between overflow-hidden shadow-2xl w-[440px] lg:w-[480px] shrink-0`}
                 data-cursor="SWIPE"
               >
                 {/* Background Large Number Watermark */}
-                <div className="absolute -bottom-8 -right-4 font-mono text-8xl font-black text-white/5 pointer-events-none select-none group-hover:text-[#B8FF00]/10 transition-colors duration-500">
+                <div className="absolute -bottom-6 -right-3 font-mono text-7xl lg:text-8xl font-black text-white/5 pointer-events-none select-none group-hover:text-[#B8FF00]/10 transition-colors duration-500">
                   {cap.number}
                 </div>
 
                 <div>
                   {/* Top Console Bar */}
-                  <div className="flex items-center justify-between border-b border-neutral-800/80 pb-3 mb-4">
-                    <div className="flex items-center space-x-2.5">
+                  <div className="flex items-center justify-between border-b border-neutral-800/80 pb-2.5 mb-3">
+                    <div className="flex items-center space-x-2">
                       <div className="flex space-x-1.5">
                         <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
                         <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
@@ -310,30 +310,30 @@ export const Capabilities: React.FC = () => {
                   </div>
 
                   {/* Card Title & Icon Row */}
-                  <div className="flex items-start justify-between gap-3 mb-3">
+                  <div className="flex items-start justify-between gap-3 mb-2.5">
                     <div>
                       <div className="text-[10px] font-mono text-neutral-400 uppercase tracking-widest mb-0.5 font-semibold">
                         // DOMAIN {cap.number} — {cap.subtitle}
                       </div>
-                      <h3 className="text-2xl font-extrabold font-mono text-white tracking-tight group-hover:translate-x-1 transition-transform">
+                      <h3 className="text-xl lg:text-2xl font-extrabold font-mono text-white tracking-tight group-hover:translate-x-1 transition-transform">
                         {cap.title}
                       </h3>
                     </div>
 
-                    <div className="p-2.5 rounded-xl bg-neutral-900 border border-neutral-800 group-hover:bg-[#B8FF00] group-hover:text-black transition-colors duration-300">
-                      <Icon className="w-5 h-5 text-white group-hover:text-black transition-colors" />
+                    <div className="p-2 rounded-xl bg-neutral-900 border border-neutral-800 group-hover:bg-[#B8FF00] group-hover:text-black transition-colors duration-300">
+                      <Icon className="w-4 h-4 lg:w-5 lg:h-5 text-white group-hover:text-black transition-colors" />
                     </div>
                   </div>
 
-                  <p className="text-neutral-300 font-light text-sm leading-relaxed mb-4">
+                  <p className="text-neutral-300 font-light text-xs lg:text-sm leading-relaxed mb-3">
                     {cap.description}
                   </p>
 
                   {/* Live Code / Console Snippet Window */}
-                  <div className="p-3 rounded-xl bg-[#080808] border border-neutral-800/90 font-mono text-[11px] text-neutral-300 space-y-0.5 overflow-x-auto shadow-inner group-hover:border-neutral-700 transition-colors">
+                  <div className="p-2.5 lg:p-3 rounded-xl bg-[#080808] border border-neutral-800/90 font-mono text-[10px] lg:text-[11px] text-neutral-300 space-y-0.5 overflow-x-auto shadow-inner group-hover:border-neutral-700 transition-colors">
                     {cap.snippet.map((line, lIdx) => (
                       <div key={lIdx} className="flex items-center space-x-2">
-                        <span className="text-neutral-600 select-none text-[10px]">{lIdx + 1}</span>
+                        <span className="text-neutral-600 select-none text-[9px] lg:text-[10px]">{lIdx + 1}</span>
                         <span className="text-[#B8FF00]/90 font-mono leading-tight">{line}</span>
                       </div>
                     ))}
@@ -341,7 +341,7 @@ export const Capabilities: React.FC = () => {
                 </div>
 
                 {/* Card Bottom Row */}
-                <div className="pt-4 border-t border-neutral-800/80 flex items-center justify-between mt-4">
+                <div className="pt-3 border-t border-neutral-800/80 flex items-center justify-between mt-3">
                   <div className="flex flex-wrap gap-1.5">
                     {cap.tags.map((tag, tIdx) => (
                       <span
@@ -364,33 +364,33 @@ export const Capabilities: React.FC = () => {
 
           {/* End Cyber Terminal CTA Card */}
           <div
-            className="group relative p-7 rounded-2xl bg-gradient-to-br from-[#161616] via-neutral-900 to-[#111111] border border-[#B8FF00]/40 transition-all duration-500 flex flex-col justify-between overflow-hidden shadow-2xl w-[450px] shrink-0 min-h-[380px]"
+            className="group relative p-5 lg:p-6 rounded-2xl bg-gradient-to-br from-[#161616] via-neutral-900 to-[#111111] border border-[#B8FF00]/40 transition-all duration-500 flex flex-col justify-between overflow-hidden shadow-2xl w-[400px] lg:w-[440px] shrink-0"
             data-cursor="TALK"
           >
             <div>
-              <div className="flex items-center justify-between border-b border-neutral-800/80 pb-3 mb-4">
+              <div className="flex items-center justify-between border-b border-neutral-800/80 pb-2.5 mb-3">
                 <span className="text-[11px] font-mono text-[#B8FF00] font-bold">
                   // FINAL DOMAIN // BUILD READY
                 </span>
                 <span className="w-2 h-2 rounded-full bg-[#B8FF00] animate-ping" />
               </div>
 
-              <div className="w-12 h-12 rounded-xl bg-[#B8FF00]/10 border border-[#B8FF00]/30 flex items-center justify-center mb-4">
-                <TerminalIcon className="w-6 h-6 text-[#B8FF00]" />
+              <div className="w-10 h-10 rounded-xl bg-[#B8FF00]/10 border border-[#B8FF00]/30 flex items-center justify-center mb-3">
+                <TerminalIcon className="w-5 h-5 text-[#B8FF00]" />
               </div>
 
-              <h3 className="text-2xl font-extrabold font-mono text-white tracking-tight uppercase leading-tight mb-3">
+              <h3 className="text-xl lg:text-2xl font-extrabold font-mono text-white tracking-tight uppercase leading-tight mb-2.5">
                 READY TO DEPLOY YOUR IDEA?
               </h3>
 
-              <p className="text-neutral-400 font-light text-xs leading-relaxed mb-4">
+              <p className="text-neutral-400 font-light text-xs leading-relaxed mb-3">
                 Engineered with high performance, scalability, and modern motion graphics. Let's start your project architecture now.
               </p>
             </div>
 
             <a
               href="#cta"
-              className="w-full py-3 rounded-full bg-[#B8FF00] text-black font-mono font-bold text-xs tracking-widest uppercase hover:bg-white transition-colors flex items-center justify-center space-x-2 shadow-xl glow-accent"
+              className="w-full py-2.5 rounded-full bg-[#B8FF00] text-black font-mono font-bold text-xs tracking-widest uppercase hover:bg-white transition-colors flex items-center justify-center space-x-2 shadow-xl glow-accent"
             >
               <span>INITIATE PROJECT TALK</span>
               <ArrowUpRight className="w-3.5 h-3.5" />

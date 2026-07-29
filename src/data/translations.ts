@@ -12,10 +12,10 @@ export const translations = {
     },
     hero: {
       badge: "CREATIVE TECHNOLOGY STUDIO",
-      line1: "WE BUILD",
-      line2: "DIGITAL",
-      line3: "EXPERIENCES.",
-      description: "Creative technology studio focused on building modern digital products, scalable software, and memorable web experiences through code and technology.",
+      line1: "START YOUR",
+      line2: "DIGITAL JOURNEY",
+      line3: "WITH US.",
+      description: "Start your digital journey with EKSCODER through modern web platforms and custom software.",
       viewWork: "VIEW OUR WORK",
       talk: "LET'S TALK",
       bottomBar: "FRONTEND // BACKEND // WEB DESIGN // UI/UX // AUTOMATION"
@@ -124,10 +124,10 @@ export const translations = {
     },
     hero: {
       badge: "STUDIO TEKNOLOGI KREATIF",
-      line1: "KAMI MEMBANGUN",
-      line2: "PENGALAMAN",
-      line3: "DIGITAL.",
-      description: "Studio teknologi kreatif yang berfokus membangun produk digital modern, perangkat lunak terukur, dan pengalaman web berkesan melalui kode dan teknologi.",
+      line1: "MULAI PERJALANAN",
+      line2: "DIGITALMU",
+      line3: "BERSAMA KAMI.",
+      description: "Mulai perjalanan digitalmu bersama EKSCODER melalui platform web dan software kustom modern.",
       viewWork: "LIHAT KARYA KAMI",
       talk: "HUBUNGI KAMI",
       bottomBar: "FRONTEND // BACKEND // WEB DESIGN // UI/UX // AUTOMATION"

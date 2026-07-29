@@ -57,8 +57,11 @@ export const Cursor: React.FC = () => {
         setCursorText(text);
         setIsHovered(true);
 
+        const len = text.length;
+        const targetScale = len > 14 ? 4.2 : len > 9 ? 3.4 : len > 0 ? 2.8 : 1.6;
+
         gsap.to(cursorRing, {
-          scale: text ? 2.8 : 1.6,
+          scale: targetScale,
           backgroundColor: text ? "rgba(184, 255, 0, 0.15)" : "transparent",
           borderColor: "#B8FF00",
           duration: 0.25,
@@ -126,7 +129,7 @@ export const Cursor: React.FC = () => {
         }`}
       >
         {cursorText && (
-          <span className="text-[9px] font-mono font-bold tracking-widest text-[#B8FF00] uppercase select-none px-1">
+          <span className="text-[8px] sm:text-[9px] font-mono font-bold tracking-wider text-[#B8FF00] uppercase select-none px-1 text-center whitespace-nowrap">
             {cursorText}
           </span>
         )}

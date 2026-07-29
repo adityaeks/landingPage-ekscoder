@@ -152,7 +152,7 @@ export const Hero: React.FC<HeroProps> = ({ ready = true }) => {
         {/* Hero Main Heading */}
         <h1
           ref={headingRef}
-          className="text-[11.5vw] sm:text-6xl md:text-7xl lg:text-8xl xl:text-[6.5vw] font-extrabold tracking-tighter uppercase leading-[0.92] text-white font-mono text-center"
+          className="text-[9.2vw] sm:text-6xl md:text-7xl lg:text-8xl xl:text-[6.2vw] font-extrabold tracking-tighter uppercase leading-[0.94] text-white font-mono text-center"
         >
           <div className="overflow-hidden">
             <span className="hero-line block">{t.line1}</span>

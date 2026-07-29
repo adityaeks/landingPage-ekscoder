@@ -101,7 +101,7 @@ export const Process: React.FC = () => {
                 <div
                   key={idx}
                   className="process-item relative grid grid-cols-1 lg:grid-cols-12 gap-6 items-center p-8 rounded-2xl bg-[#141414] border border-neutral-800 hover:border-[#B8FF00]/40 transition-all duration-300 group"
-                  data-cursor="PROCESS"
+                  data-cursor={step.title}
                 >
                   {/* Timeline Dot Badge */}
                   <div className="absolute -left-[31px] md:-left-[55px] top-10 w-4 h-4 rounded-full border-2 border-neutral-700 bg-[#0E0E0E] group-hover:border-[#B8FF00] group-hover:bg-[#B8FF00] transition-colors" />
