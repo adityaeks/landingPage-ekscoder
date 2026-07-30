@@ -43,14 +43,6 @@ export const servicesData: Record<"EN" | "ID", ServiceItem[]> = {
     },
     {
       number: "05",
-      title: "Cloud & Infrastructure",
-      subtitle: "DevOps, containerization & deployment",
-      description: "Managing reliable cloud environments, automated CI/CD deployment pipelines, containerization, and server security.",
-      deliverables: ["Docker Containerization", "CI/CD Automation", "VPS & Nginx Tuning", "Server Hardening & Backups"],
-      gradient: "from-blue-500/20 via-neutral-900 to-black"
-    },
-    {
-      number: "06",
       title: "UI/UX & Digital Design",
       subtitle: "User-centric design systems",
       description: "Designing dark-themed, futuristic visual systems, high-fidelity prototypes, and component libraries that scale.",
@@ -93,14 +85,6 @@ export const servicesData: Record<"EN" | "ID", ServiceItem[]> = {
     },
     {
       number: "05",
-      title: "Cloud & Infrastruktur",
-      subtitle: "DevOps, kontainerisasi & pemeliharaan",
-      description: "Mengelola lingkungan cloud andal, pipeline deployment CI/CD otomatis, kontainerisasi Docker, dan keamanan server.",
-      deliverables: ["Kontainerisasi Docker", "Otomatisasi CI/CD", "Tuning VPS & Nginx", "Keamanan Server & Backup"],
-      gradient: "from-blue-500/20 via-neutral-900 to-black"
-    },
-    {
-      number: "06",
       title: "UI/UX & Desain Digital",
       subtitle: "Sistem desain berpusat pada pengguna",
       description: "Merancang sistem visual modern bertema gelap, prototipe fungsional tinggi, dan pustaka komponen yang mudah dikembangkan.",

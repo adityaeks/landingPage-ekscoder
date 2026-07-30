@@ -16,7 +16,7 @@ export const translations = {
       line1: "START YOUR",
       line2: "DIGITAL JOURNEY",
       line3: "WITH US.",
-      description: "Start your digital journey with EKSCODER through modern web platforms and custom software.",
+      description: "We engineer high-performance web platforms, enterprise software, and digital products that drive real business growth.",
       viewWork: "VIEW OUR WORK",
       talk: "LET'S TALK",
       bottomBar: "FRONTEND // BACKEND // WEB DESIGN // UI/UX // AUTOMATION"
@@ -33,34 +33,24 @@ export const translations = {
       stat4Label: "AVG RESPONSE"
     },
     capabilities: {
-      badge: "CAPABILITIES // CYBER CONSOLE SHOWCASE",
+      badge: "CAPABILITIES // BUSINESS & ENTERPRISE SHOWCASE",
       title: "CORE DOMAINS.",
       scrollInstruction: "[ SCROLL DOWN TO EXPLORE → ]",
       domains: [
         {
-          title: "FRONTEND ENGINEERING",
-          subtitle: "HIGH-PERFORMANCE MOTION & UI/UX",
-          description: "Engineered with modern frameworks for 60-120fps motion, instant hydration, and top Lighthouse SEO scores."
+          title: "WEB & DIGITAL PLATFORMS",
+          subtitle: "HIGH-CONVERSION USER EXPERIENCE",
+          description: "High-performance web applications, corporate platforms, and interactive portals designed to strengthen brand authority and drive business conversions."
         },
         {
-          title: "SOFTWARE ENGINEERING",
-          subtitle: "ENTERPRISE MICROSERVICES & APIs",
-          description: "Scalable backend systems, ERP architectures, complex business logic engines, and high-concurrency RESTful APIs."
+          title: "ENTERPRISE SOFTWARE & ERP",
+          subtitle: "BUSINESS AUTOMATION & WORKFLOWS",
+          description: "Custom management systems, ERP software, automated business logic engines, and scalable APIs engineered for operational efficiency."
         },
         {
-          title: "CLOUD & INFRASTRUCTURE",
-          subtitle: "DEVOPS, DOCKER & CI/CD",
-          description: "Containerized deployment pipelines, Nginx load balancers, high-availability Linux clusters, and zero-downtime releases."
-        },
-        {
-          title: "MOTION & INTERACTION",
-          subtitle: "CREATIVE DIRECTION & BRAND EXPERIENCE",
-          description: "Smooth scroll choreographies, interactive WebGL visualizers, dynamic cursor responses, and bespoke micro-interactions."
-        },
-        {
-          title: "SECURITY & RELIABILITY",
-          subtitle: "SYSTEM HARDENING & AUDITING",
-          description: "Automated vulnerability scanning, AES-256 SSL encryption, rate limiting, and zero-trust security compliance."
+          title: "PRODUCT UI/UX & BRANDING",
+          subtitle: "PREMIUM DESIGN & RETENTION",
+          description: "World-class UI/UX design, custom design tokens, and fluid micro-interactions crafted to maximize user satisfaction and customer retention."
         }
       ]
     },
@@ -99,8 +89,8 @@ export const translations = {
       badge: "LET'S COLLABORATE",
       line1: "HAVE AN IDEA?",
       line2: "LET'S BUILD IT.",
-      description: "Have a new web project, custom software requirement, or digital product in mind? Let's talk tech, plan the architecture, and bring your vision to life.",
-      startProject: "START A PROJECT",
+      description: "Have a new web project, custom software requirement, or digital product in mind? Get a free consultation — let's discuss your vision, plan the architecture, and turn it into reality.",
+      startProject: "FREE CONSULTATION",
       email: "contact@ekscoder.com"
     },
     footer: {
@@ -129,7 +119,7 @@ export const translations = {
       line1: "MULAI PERJALANAN",
       line2: "DIGITALMU",
       line3: "BERSAMA KAMI.",
-      description: "Mulai perjalanan digitalmu bersama EKSCODER melalui platform web dan software kustom modern.",
+      description: "Kami membangun platform web berkinerja tinggi, software enterprise, dan produk digital yang mendorong pertumbuhan bisnis nyata.",
       viewWork: "LIHAT KARYA KAMI",
       talk: "HUBUNGI KAMI",
       bottomBar: "FRONTEND // BACKEND // WEB DESIGN // UI/UX // AUTOMATION"
@@ -141,39 +131,29 @@ export const translations = {
       line3: "MENJADI DIGITAL.",
       description: "EKSCODER membantu bisnis, startup, dan enterprise bertransformasi ke ekosistem digital secara modern. Kami membangun platform web berkinerja tinggi, sistem software kustom, dan infrastruktur digital terukur yang siap mengakselerasi pertumbuhan bisnis Anda.",
       stat1Label: "CUSTOM CODE",
-      stat2Label: "CORE SERVICES",
+      stat2Label: "LAYANAN INTI",
       stat3Label: "UPTIME ARCHITECTURE",
       stat4Label: "AVG RESPONSE"
     },
     capabilities: {
-      badge: "KAPABILITAS // CYBER CONSOLE SHOWCASE",
+      badge: "KAPABILITAS // ENTERPRISE & SOLUSI BISNIS",
       title: "BIDANG UTAMA.",
       scrollInstruction: "[ GULIR KE BAWAH UNTUK EXPLORE → ]",
       domains: [
         {
-          title: "REKAYASA FRONTEND",
-          subtitle: "MOTION BEBAS HAMBATAN & UI/UX",
-          description: "Dirancang dengan framework modern untuk pergerakan 60-120fps, hidrasi cepat, dan skor SEO Lighthouse tertinggi."
+          title: "PLATFORM WEB & DIGITAL",
+          subtitle: "PENGALAMAN DIGITAL HIGH-CONVERSION",
+          description: "Aplikasi web berkinerja tinggi, portal korporat, dan platform interaktif yang dirancang untuk memperkuat kredibilitas brand serta meningkatkan konversi bisnis."
         },
         {
-          title: "REKAYASA PERANGKAT LUNAK",
-          subtitle: "MICROSERVICES ENTERPRISE & API",
-          description: "Sistem backend scalable, arsitektur ERP, mesin logika bisnis kompleks, dan RESTful API berkinerja tinggi."
+          title: "SOFTWARE ENTERPRISE & ERP",
+          subtitle: "AUTOMASI OPERASIONAL & SISTEM UTAMA",
+          description: "Sistem manajemen kustom, software ERP, mesin otomatisasi alur kerja bisnis, dan API terukur yang dirancang khusus untuk efisiensi operasional perusahaan."
         },
         {
-          title: "CLOUD & INFRASTRUKTUR",
-          subtitle: "DEVOPS, DOCKER & CI/CD",
-          description: "Pipeline deployment terkonainerisasi, load balancer Nginx, klaster Linux berkeandalan tinggi, dan rilis tanpa downtime."
-        },
-        {
-          title: "DESAIN MOTION & INTERAKSI",
-          subtitle: "DIREKSI KREATIF & PENGALAMAN BRAND",
-          description: "Koreografi scroll halus, visualisator WebGL interaktif, respon kursor dinamis, dan mikro-interaksi kustom."
-        },
-        {
-          title: "KEAMANAN & KEANDALAN",
-          subtitle: "PERKUATAN SISTEM & AUDIT KEAMANAN",
-          description: "Pemindaian kerentanan otomatis, enkripsi SSL AES-256, pembatasan laju akses (rate limiting), dan standar zero-trust."
+          title: "DESAIN UI/UX & BRAND EXPERIENCE",
+          subtitle: "UI/UX STRATEGIS & RETENSI PENGGUNA",
+          description: "Desain UI/UX kelas dunia, sistem desain kustom, dan interaksi halus yang disusun untuk memaksimalkan kepuasan pengguna dan retensi pelanggan."
         }
       ]
     },
@@ -212,8 +192,8 @@ export const translations = {
       badge: "MARI BEKERJASAMA",
       line1: "PUNYA IDE?",
       line2: "MARI WUJUDKAN.",
-      description: "Punya proyek web baru, kebutuhan perangkat lunak kustom, atau produk digital dalam pikiran Anda? Mari berdiskusi teknis, merencanakan arsitektur, dan mewujudkan visi Anda.",
-      startProject: "MULAI PROYEK",
+      description: "Punya proyek web baru, kebutuhan perangkat lunak kustom, atau produk digital? Dapatkan konsultasi gratis — mari diskusikan visi Anda, rencanakan arsitektur, dan wujudkan bersama.",
+      startProject: "KONSULTASI GRATIS",
       email: "contact@ekscoder.com"
     },
     footer: {

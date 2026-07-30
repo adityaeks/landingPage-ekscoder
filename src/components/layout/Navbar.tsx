@@ -35,31 +35,44 @@ export const Navbar: React.FC<NavbarProps> = ({ ready = true }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 30) {
+      const scrollY = window.scrollY || window.pageYOffset;
+      if (scrollY > 30) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
       }
 
-      // Active section spy
+      // Active section spy using getBoundingClientRect for reliable relative coordinates
       const sections = ["hero", "about", "capabilities", "services", "technologies", "projects", "process", "cta"];
-      const scrollPosition = window.scrollY + 200;
+      const targetY = window.innerHeight * 0.35;
 
+      let currentSection = "hero";
       for (const sectionId of sections) {
         const el = document.getElementById(sectionId);
         if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(sectionId);
-            break;
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= targetY && rect.bottom > 100) {
+            currentSection = sectionId;
           }
         }
       }
+      setActiveSection(currentSection);
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+
+    const lenis = (window as any).lenis;
+    if (lenis) {
+      lenis.on("scroll", handleScroll);
+    }
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (lenis) {
+        lenis.off("scroll", handleScroll);
+      }
+    };
   }, []);
 
   useEffect(() => {
@@ -81,7 +94,11 @@ export const Navbar: React.FC<NavbarProps> = ({ ready = true }) => {
     setMobileMenuOpen(false);
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      if (typeof window !== "undefined" && (window as any).lenis) {
+        (window as any).lenis.scrollTo(element, { offset: -60, duration: 1.2 });
+      } else {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
     }
   };
 
@@ -105,7 +122,6 @@ export const Navbar: React.FC<NavbarProps> = ({ ready = true }) => {
               href="#hero"
               onClick={(e) => scrollToSection(e, "hero")}
               className="text-lg md:text-xl font-extrabold tracking-tighter text-white hover:text-[#B8FF00] transition-colors flex items-center group font-mono"
-              data-cursor="EKSCODER"
             >
               <span>EKSCODER</span>
               <span className="text-[#B8FF00] group-hover:translate-x-0.5 transition-transform">.</span>
@@ -130,14 +146,12 @@ export const Navbar: React.FC<NavbarProps> = ({ ready = true }) => {
                   key={link.id}
                   href={`#${link.id}`}
                   onClick={(e) => scrollToSection(e, link.id)}
-                  className={`px-4 py-1.5 rounded-full transition-all duration-300 relative flex items-center space-x-1.5 font-medium tracking-wider ${
+                  className={`px-4 py-1.5 rounded-full transition-all duration-300 relative flex items-center justify-center font-medium tracking-wider ${
                     isActive
                       ? "bg-[#B8FF00] text-black font-bold shadow-md shadow-[#B8FF00]/20"
                       : "hover:text-white hover:bg-white/5"
                   }`}
-                  data-cursor={link.label}
                 >
-                  {isActive && <span className="w-1.5 h-1.5 rounded-full bg-black" />}
                   <span>{link.label}</span>
                 </a>
               );
@@ -178,7 +192,6 @@ export const Navbar: React.FC<NavbarProps> = ({ ready = true }) => {
                   href="#cta"
                   onClick={(e) => scrollToSection(e, "cta")}
                   className="px-5 py-2 rounded-full bg-[#B8FF00] hover:bg-white text-black text-xs font-mono font-bold tracking-wider uppercase transition-all duration-300 flex items-center space-x-2 shadow-lg glow-accent group"
-                  data-cursor="TALK"
                 >
                   <span>{t.talk}</span>
                   <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />

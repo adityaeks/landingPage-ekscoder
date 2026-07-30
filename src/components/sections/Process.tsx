@@ -25,8 +25,8 @@ export const Process: React.FC = () => {
           {
             scrollTrigger: {
               trigger: containerRef.current,
-              start: "top 60%",
-              end: "bottom 80%",
+              start: "top 50%",
+              end: "bottom 75%",
               scrub: true,
             },
             scaleY: 1,
@@ -41,16 +41,16 @@ export const Process: React.FC = () => {
         items.forEach((item) => {
           gsap.fromTo(
             item,
-            { opacity: 0, x: -40 },
+            { opacity: 0, y: 30 },
             {
               scrollTrigger: {
                 trigger: item,
-                start: "top 80%",
-                toggleActions: "play none none reverse",
+                start: "top 75%",
+                toggleActions: "play none none none",
               },
               opacity: 1,
-              x: 0,
-              duration: 0.8,
+              y: 0,
+              duration: 0.7,
               ease: "power3.out",
             }
           );

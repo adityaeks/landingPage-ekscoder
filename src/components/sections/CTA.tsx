@@ -79,6 +79,7 @@ export const CTA: React.FC = () => {
             <MagneticButton strength={0.4}>
               <a
                 href="mailto:contact@ekscoder.com"
+                suppressHydrationWarning
                 className="px-10 py-5 rounded-full bg-[#B8FF00] text-black font-mono font-bold text-base tracking-wider uppercase hover:bg-white transition-all duration-300 flex items-center space-x-3 shadow-2xl glow-accent"
                 data-cursor="TALK"
               >
@@ -90,6 +91,7 @@ export const CTA: React.FC = () => {
             <MagneticButton strength={0.25}>
               <a
                 href="mailto:contact@ekscoder.com"
+                suppressHydrationWarning
                 className="px-8 py-5 rounded-full border border-neutral-700 bg-neutral-900 hover:bg-neutral-800 text-white font-mono font-medium text-sm tracking-wider uppercase transition-colors flex items-center space-x-2"
                 data-cursor="MAIL"
               >

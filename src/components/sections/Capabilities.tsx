@@ -33,99 +33,63 @@ export const Capabilities: React.FC = () => {
   const capabilities = [
     {
       number: "01",
-      shortTitle: "FRONTEND",
-      title: "FRONTEND ENGINEERING",
-      subtitle: "MOTION-FIRST FRONTEND ENGINE",
-      description: "High-end, performance-driven web applications engineered with Next.js, TypeScript, GSAP, and ultra-fast SSR.",
+      shortTitle: "PLATFORM",
+      title: t.domains[0].title,
+      subtitle: t.domains[0].subtitle,
+      description: t.domains[0].description,
       icon: Code,
       accent: "#B8FF00",
       accentBg: "border-[#B8FF00]/40 shadow-[#B8FF00]/10",
-      terminalTitle: "next.config.ts — v16.2",
+      terminalTitle: "business-platform.analysis",
       snippet: [
-        "export default defineNextConfig({",
-        "  motionFirst: true, smoothScroll: 'Lenis',",
-        "  animationEngine: 'GSAP/ScrollTrigger'",
-        "});"
+        "✓ Speed & SEO: 99/100 Lighthouse",
+        "✓ Conversion Rate Architecture",
+        "✓ Multi-Device Responsive UI"
       ],
-      badge: "LATENCY: 0.12ms",
-      tags: ["Next.js", "React", "GSAP", "Tailwind CSS"]
+      badge: "CONVERSION: OPTIMIZED",
+      tags: ["Corporate Web", "Web App", "UI/UX Strategy", "SEO Authority"]
     },
     {
       number: "02",
-      shortTitle: "SOFTWARE",
-      title: "SOFTWARE ENGINEERING",
-      subtitle: "ENTERPRISE MICROSERVICES & APIs",
-      description: "Scalable backend systems, ERP architectures, complex business logic engines, and high-concurrency RESTful APIs.",
+      shortTitle: "ERP & SOFTWARE",
+      title: t.domains[1].title,
+      subtitle: t.domains[1].subtitle,
+      description: t.domains[1].description,
       icon: Cpu,
       accent: "#06B6D4",
       accentBg: "border-cyan-500/40 shadow-cyan-500/10",
-      terminalTitle: "api-gateway.service.go",
+      terminalTitle: "enterprise-core.config",
       snippet: [
-        "func HandleStream(ctx *Context) {",
-        "  pool := redis.NewCluster()",
-        "  ctx.JSON(200, status.OK)",
-        "}"
+        "✓ Operational Speed: +45% Boost",
+        "✓ High Concurrency: 50,000 rps",
+        "✓ Real-time Analytics & ERP Engine"
       ],
-      badge: "THROUGHPUT: 50k rps",
-      tags: ["Go", "Node.js", "PostgreSQL", "Redis"]
+      badge: "EFFICIENCY: +45% BOOST",
+      tags: ["ERP Systems", "Custom API", "Workflow Automation", "Enterprise Logic"]
     },
     {
       number: "03",
-      shortTitle: "CLOUD",
-      title: "CLOUD & INFRASTRUCTURE",
-      subtitle: "DEVOPS, DOCKER & CI/CD",
-      description: "Containerized deployment pipelines, Nginx load balancers, high-availability Linux clusters, and zero-downtime releases.",
-      icon: Cloud,
-      accent: "#A855F7",
-      accentBg: "border-purple-500/40 shadow-purple-500/10",
-      terminalTitle: "docker-compose.prod.yml",
-      snippet: [
-        "services: app_cluster:",
-        "  image: ekscoder/core:latest",
-        "  replicas: 8, ports: ['443:443']"
-      ],
-      badge: "UPTIME: 99.99%",
-      tags: ["Docker", "Linux", "Nginx", "CI/CD"]
-    },
-    {
-      number: "04",
       shortTitle: "UI/UX",
-      title: "UI/UX & DIGITAL EXP",
-      subtitle: "DESIGN SYSTEMS & MOTION",
-      description: "Dark-themed interactive interfaces, component tokens, fluid micro-interactions, and custom cursor state machines.",
+      title: t.domains[2].title,
+      subtitle: t.domains[2].subtitle,
+      description: t.domains[2].description,
       icon: Layout,
       accent: "#F43F5E",
       accentBg: "border-rose-500/40 shadow-rose-500/10",
-      terminalTitle: "design-tokens.config.json",
+      terminalTitle: "customer-experience.design",
       snippet: [
-        "{\n  \"theme\": \"Dark Technology\", \"accent\": \"#B8FF00\"\n}"
+        "✓ User Retention: Highly Engaged",
+        "✓ Enterprise Design System",
+        "✓ Conversion-Focused User Journeys"
       ],
-      badge: "FPS: 120 MAX",
-      tags: ["Design Tokens", "Figma", "GSAP Timeline", "UX"]
-    },
-    {
-      number: "05",
-      shortTitle: "SECURITY",
-      title: "SECURITY & RELIABILITY",
-      subtitle: "SYSTEM HARDENING & AUDITING",
-      description: "Automated vulnerability scanning, AES-256 SSL encryption, rate limiting, and zero-trust security compliance.",
-      icon: ShieldCheck,
-      accent: "#10B981",
-      accentBg: "border-emerald-500/40 shadow-emerald-500/10",
-      terminalTitle: "security-audit.log",
-      snippet: [
-        "[SECURITY CHECK]",
-        "✓ SSL/TLS: Valid (AES-256)",
-        "✓ Vulnerabilities: 0 Detected"
-      ],
-      badge: "SECURITY: PASSED",
-      tags: ["SSL/TLS", "Rate Limiting", "Auditing", "AES-256"]
+      badge: "RETENTION: HIGH",
+      tags: ["UI/UX Strategy", "Design System", "Figma", "Customer Retention"]
     }
   ];
 
   const mobileTabs = [
     ...capabilities.map((cap) => ({ number: cap.number, label: cap.shortTitle })),
-    { number: "06", label: "TALK" }
+    { number: "04", label: "TALK" }
   ];
 
   useEffect(() => {

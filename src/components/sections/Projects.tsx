@@ -95,12 +95,13 @@ export const Projects: React.FC = () => {
             <Link
               key={project.id}
               href={`/projects/${project.id}`}
+              suppressHydrationWarning
               className="project-card group relative rounded-3xl bg-[#111111] border border-neutral-800 hover:border-[#B8FF00]/40 overflow-hidden transition-all duration-500 flex flex-col justify-between"
               data-cursor="VIEW"
             >
               {/* Project Card Image / Gradient Preview Frame */}
               <div
-                className={`h-72 sm:h-96 w-full bg-gradient-to-br ${project.imageBg} relative p-8 flex flex-col justify-between overflow-hidden group-hover:scale-[1.02] transition-transform duration-700 ease-out`}
+                className={`shrink-0 h-64 sm:h-72 lg:h-80 w-full bg-gradient-to-br ${project.imageBg} relative p-6 sm:p-8 flex flex-col justify-between overflow-hidden group-hover:scale-[1.02] transition-transform duration-700 ease-out`}
               >
                 {/* Tech Grid Background Texture */}
                 <div className="absolute inset-0 bg-grid-pattern opacity-30" />
@@ -116,7 +117,7 @@ export const Projects: React.FC = () => {
                 </div>
 
                 {/* Large Background Code/Number Watermark */}
-                <div className="absolute bottom-2 right-4 font-mono text-8xl font-black text-white/5 select-none pointer-events-none group-hover:text-white/10 transition-colors">
+                <div className="absolute bottom-2 right-4 font-mono text-7xl sm:text-8xl font-black text-white/5 select-none pointer-events-none group-hover:text-white/10 transition-colors">
                   {project.number}
                 </div>
 
@@ -125,15 +126,15 @@ export const Projects: React.FC = () => {
                   <div className="text-xs font-mono text-[#B8FF00] tracking-widest uppercase mb-1">
                     {project.category}
                   </div>
-                  <h3 className="text-3xl sm:text-5xl font-mono font-black text-white tracking-tight uppercase group-hover:text-[#B8FF00] transition-colors">
+                  <h3 className="text-2xl sm:text-4xl lg:text-5xl font-mono font-black text-white tracking-tight uppercase group-hover:text-[#B8FF00] transition-colors">
                     {project.title}
                   </h3>
                 </div>
               </div>
 
               {/* Project Details Bottom Container */}
-              <div className="p-8 space-y-6 bg-[#111111] border-t border-neutral-800">
-                <p className="text-neutral-300 font-light text-sm sm:text-base leading-relaxed">
+              <div className="flex-1 flex flex-col justify-between p-6 sm:p-8 space-y-6 bg-[#111111] border-t border-neutral-800">
+                <p className="text-neutral-300 font-light text-sm sm:text-base leading-relaxed line-clamp-3 min-h-[4.5rem]">
                   {project.description}
                 </p>
 

@@ -37,32 +37,32 @@ export const Footer: React.FC = () => {
             </div>
             <ul className="space-y-2 text-neutral-400">
               <li>
-                <a href="#about" className="hover:text-white transition-colors">
+                <a href="#about" suppressHydrationWarning className="hover:text-white transition-colors">
                   01 // {navT.about}
                 </a>
               </li>
               <li>
-                <a href="#capabilities" className="hover:text-white transition-colors">
+                <a href="#capabilities" suppressHydrationWarning className="hover:text-white transition-colors">
                   02 // {navT.capabilities}
                 </a>
               </li>
               <li>
-                <a href="#services" className="hover:text-white transition-colors">
+                <a href="#services" suppressHydrationWarning className="hover:text-white transition-colors">
                   03 // {navT.services}
                 </a>
               </li>
               <li>
-                <a href="#technologies" className="hover:text-white transition-colors">
+                <a href="#technologies" suppressHydrationWarning className="hover:text-white transition-colors">
                   04 // {navT.solutions}
                 </a>
               </li>
               <li>
-                <a href="#projects" className="hover:text-white transition-colors">
-                  05 // {navT.work}
+                <a href="#projects" suppressHydrationWarning className="hover:text-white transition-colors">
+                  05 // {navT.project}
                 </a>
               </li>
               <li>
-                <a href="#process" className="hover:text-white transition-colors">
+                <a href="#process" suppressHydrationWarning className="hover:text-white transition-colors">
                   06 // {navT.process}
                 </a>
               </li>
@@ -79,6 +79,7 @@ export const Footer: React.FC = () => {
                 href="https://github.com"
                 target="_blank"
                 rel="noreferrer"
+                suppressHydrationWarning
                 className="hover:text-[#B8FF00] transition-colors"
                 data-cursor="LINK"
               >
@@ -88,6 +89,7 @@ export const Footer: React.FC = () => {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noreferrer"
+                suppressHydrationWarning
                 className="hover:text-[#B8FF00] transition-colors"
                 data-cursor="LINK"
               >
@@ -97,6 +99,7 @@ export const Footer: React.FC = () => {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noreferrer"
+                suppressHydrationWarning
                 className="hover:text-[#B8FF00] transition-colors"
                 data-cursor="LINK"
               >
@@ -106,6 +109,7 @@ export const Footer: React.FC = () => {
                 href="https://x.com"
                 target="_blank"
                 rel="noreferrer"
+                suppressHydrationWarning
                 className="hover:text-[#B8FF00] transition-colors"
                 data-cursor="LINK"
               >

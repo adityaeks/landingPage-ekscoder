@@ -103,7 +103,7 @@ export const Introduction: React.FC = () => {
               <div className="mt-1 text-neutral-500">{t.stat1Label}</div>
             </div>
             <div>
-              <div className="text-[#B8FF00] text-2xl font-bold font-sans">6+</div>
+              <div className="text-[#B8FF00] text-2xl font-bold font-sans">5+</div>
               <div className="mt-1 text-neutral-500">{t.stat2Label}</div>
             </div>
             <div>
