@@ -122,11 +122,9 @@ html.lenis, html.lenis body {
   pointer-events: none;
 }
 
-/* Hide default cursor on desktop when custom cursor is enabled */
-@media (min-width: 1024px) {
-  body.custom-cursor-enabled,
-  body.custom-cursor-enabled a,
-  body.custom-cursor-enabled button {
-    cursor: none !important;
-  }
+/* Hide default cursor when custom cursor is enabled */
+body.custom-cursor-enabled,
+body.custom-cursor-enabled a,
+body.custom-cursor-enabled button {
+  cursor: none !important;
 }

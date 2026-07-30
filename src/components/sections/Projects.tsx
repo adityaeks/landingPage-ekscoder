@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { projectsData, Project } from "@/data/projects";
+import { fetchProjectsFromBackend } from "@/services/projectService";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { ArrowUpRight, ExternalLink } from "lucide-react";
 
@@ -14,7 +16,30 @@ export const Projects: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
 
+  const [projects, setProjects] = useState<Project[]>(projectsData);
+  const [loading, setLoading] = useState<boolean>(true);
+
   useEffect(() => {
+    let isMounted = true;
+
+    async function loadProjects() {
+      const data = await fetchProjectsFromBackend();
+      if (isMounted) {
+        setProjects(data);
+        setLoading(false);
+      }
+    }
+
+    loadProjects();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (loading) return;
+
     const ctx = gsap.context(() => {
       if (gridRef.current) {
         const cards = gridRef.current.querySelectorAll(".project-card");
@@ -36,10 +61,10 @@ export const Projects: React.FC = () => {
           );
         });
       }
-    });
+    }, containerRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [loading, projects]);
 
   return (
     <section
@@ -66,9 +91,10 @@ export const Projects: React.FC = () => {
 
         {/* Projects Cards Grid */}
         <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {projectsData.map((project: Project) => (
-            <div
+          {projects.map((project: Project) => (
+            <Link
               key={project.id}
+              href={`/projects/${project.id}`}
               className="project-card group relative rounded-3xl bg-[#111111] border border-neutral-800 hover:border-[#B8FF00]/40 overflow-hidden transition-all duration-500 flex flex-col justify-between"
               data-cursor="VIEW"
             >
@@ -130,7 +156,7 @@ export const Projects: React.FC = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

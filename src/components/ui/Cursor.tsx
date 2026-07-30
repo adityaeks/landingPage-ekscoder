@@ -9,11 +9,10 @@ export const Cursor: React.FC = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   useEffect(() => {
-    // Disable custom cursor on touch devices or reduced motion
-    const isTouch = window.matchMedia("(pointer: coarse)").matches;
+    // Disable custom cursor only if reduced motion is requested
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    if (isTouch || prefersReducedMotion) {
+    if (prefersReducedMotion) {
       return;
     }
 
@@ -27,9 +26,9 @@ export const Cursor: React.FC = () => {
     let mouseX = 0;
     let mouseY = 0;
 
-    const onMouseMove = (e: MouseEvent) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
+    const updatePosition = (clientX: number, clientY: number) => {
+      mouseX = clientX;
+      mouseY = clientY;
 
       if (!isVisible) setIsVisible(true);
 
@@ -46,6 +45,16 @@ export const Cursor: React.FC = () => {
         duration: 0.3,
         ease: "power3.out",
       });
+    };
+
+    const onMouseMove = (e: MouseEvent) => {
+      updatePosition(e.clientX, e.clientY);
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (e.touches && e.touches[0]) {
+        updatePosition(e.touches[0].clientX, e.touches[0].clientY);
+      }
     };
 
     const onMouseOver = (e: MouseEvent) => {
@@ -97,13 +106,41 @@ export const Cursor: React.FC = () => {
       }
     };
 
+    const onTouchEnd = () => {
+      setIsVisible(false);
+      setIsHovered(false);
+      setCursorText("");
+      if (cursorRing) {
+        gsap.to(cursorRing, {
+          scale: 1,
+          backgroundColor: "transparent",
+          borderColor: "rgba(255, 255, 255, 0.4)",
+          duration: 0.2,
+        });
+      }
+    };
+
+    const onMouseLeave = () => {
+      setIsVisible(false);
+    };
+
     window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("touchmove", onTouchMove, { passive: true });
+    window.addEventListener("touchstart", onTouchMove, { passive: true });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
+    window.addEventListener("touchcancel", onTouchEnd, { passive: true });
+    document.documentElement.addEventListener("mouseleave", onMouseLeave);
     document.addEventListener("mouseover", onMouseOver);
     document.addEventListener("mouseout", onMouseOut);
 
     return () => {
       document.body.classList.remove("custom-cursor-enabled");
       window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchstart", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
+      window.removeEventListener("touchcancel", onTouchEnd);
+      document.documentElement.removeEventListener("mouseleave", onMouseLeave);
       document.removeEventListener("mouseover", onMouseOver);
       document.removeEventListener("mouseout", onMouseOut);
     };

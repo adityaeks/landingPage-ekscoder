@@ -29,7 +29,7 @@ export const Navbar: React.FC<NavbarProps> = ({ ready = true }) => {
     { id: "capabilities", label: t.capabilities, number: "02" },
     { id: "services", label: t.services, number: "03" },
     { id: "technologies", label: t.solutions, number: "04" },
-    { id: "projects", label: t.work, number: "05" },
+    { id: "projects", label: t.project, number: "05" },
     { id: "process", label: t.process, number: "06" },
   ];
 

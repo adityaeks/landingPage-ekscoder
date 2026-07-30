@@ -7,6 +7,7 @@ export const translations = {
       services: "SERVICES",
       solutions: "SOLUTIONS",
       work: "WORK",
+      project: "PROJECTS",
       process: "PROCESS",
       talk: "LET'S TALK NOW"
     },
@@ -119,6 +120,7 @@ export const translations = {
       services: "LAYANAN",
       solutions: "SOLUSI",
       work: "PORTOFOLIO",
+      project: "PROYEK",
       process: "ALUR KERJA",
       talk: "KONSULTASI SEKARANG"
     },
