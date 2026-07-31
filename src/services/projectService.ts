@@ -6,7 +6,8 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8
  * Laravel API response item shape (as returned by ekscoder-backend)
  */
 interface LaravelProjectItem {
-  id: string;
+  id: number | string;
+  slug?: string;
   number: string;
   title: string;
   category: string;
@@ -30,8 +31,10 @@ interface LaravelProjectItem {
  * Map a single Laravel API response item to the frontend Project model.
  */
 function mapToProject(item: LaravelProjectItem, index: number): Project {
+  const slug = item.slug || item.id?.toString() || `project-${index + 1}`;
   return {
-    id: item.id?.toString() || `project-${index + 1}`,
+    id: slug,
+    slug: slug,
     number: item.number || String(index + 1).padStart(2, "0"),
     title: item.title || "UNTITLED PROJECT",
     category: item.category || "Development",

@@ -8,9 +8,9 @@ interface PageProps {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { id } = await params;
+  const { id: slug } = await params;
   const projects = await fetchProjectsFromBackend();
-  const project = projects.find((p) => p.id === id);
+  const project = projects.find((p) => p.slug === slug);
 
   if (!project) {
     return {
@@ -30,13 +30,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export async function generateStaticParams() {
-  return projectsData.map((p) => ({ id: p.id }));
+  return projectsData.map((p) => ({ id: p.slug }));
 }
 
 export default async function ProjectDetailPage({ params }: PageProps) {
-  const { id } = await params;
+  const { id: slug } = await params;
   const projects = await fetchProjectsFromBackend();
-  const project = projects.find((p) => p.id === id) ?? null;
+  const project = projects.find((p) => p.slug === slug) ?? null;
 
   return <ProjectDetailClient project={project} allProjects={projects} />;
 }

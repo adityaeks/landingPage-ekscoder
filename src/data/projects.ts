@@ -1,5 +1,6 @@
 export interface Project {
   id: string;
+  slug: string;
   number: string;
   title: string;
   category: string;
@@ -15,6 +16,7 @@ export interface Project {
 export const projectsData: Project[] = [
   {
     id: "erp-system",
+    slug: "erp-system",
     number: "01",
     title: "ERP SYSTEM",
     category: "Enterprise Software",
@@ -27,6 +29,7 @@ export const projectsData: Project[] = [
   },
   {
     id: "greenoryyinn",
+    slug: "greenoryyinn",
     number: "02",
     title: "GREENORYYINN",
     category: "Hospitality Platform",
@@ -39,6 +42,7 @@ export const projectsData: Project[] = [
   },
   {
     id: "vps-control",
+    slug: "vps-control",
     number: "03",
     title: "VPS CONTROL",
     category: "Infrastructure Management",
@@ -51,6 +55,7 @@ export const projectsData: Project[] = [
   },
   {
     id: "hyperflow",
+    slug: "hyperflow",
     number: "04",
     title: "HYPERFLOW",
     category: "SaaS & Workflow Engine",
@@ -63,6 +68,7 @@ export const projectsData: Project[] = [
   },
   {
     id: "nova-creative",
+    slug: "nova-creative",
     number: "05",
     title: "NOVA CREATIVE",
     category: "Interactive Agency Web",
@@ -75,6 +81,7 @@ export const projectsData: Project[] = [
   },
   {
     id: "cybernexus",
+    slug: "cybernexus",
     number: "06",
     title: "CYBERNEXUS",
     category: "AI Cloud Monitoring",

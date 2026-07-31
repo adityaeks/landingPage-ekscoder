@@ -34,7 +34,7 @@ export function ProjectDetailClient({ project, allProjects }: ProjectDetailClien
   const relatedRef = useRef<HTMLDivElement>(null);
 
   // Related projects (exclude current)
-  const related = allProjects.filter((p) => p.id !== project?.id).slice(0, 3);
+  const related = allProjects.filter((p) => p.slug !== project?.slug).slice(0, 3);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -335,8 +335,8 @@ export function ProjectDetailClient({ project, allProjects }: ProjectDetailClien
             <div ref={relatedRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {related.map((rel) => (
                 <Link
-                  key={rel.id}
-                  href={`/projects/${rel.id}`}
+                  key={rel.slug}
+                  href={`/projects/${rel.slug}`}
                   data-cursor="VIEW"
                   className="related-card group rounded-2xl bg-[#111111] border border-neutral-800 hover:border-[#B8FF00]/40 overflow-hidden transition-all duration-400"
                 >

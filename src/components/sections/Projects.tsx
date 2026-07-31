@@ -93,8 +93,8 @@ export const Projects: React.FC = () => {
         <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {projects.map((project: Project) => (
             <Link
-              key={project.id}
-              href={`/projects/${project.id}`}
+              key={project.slug}
+              href={`/projects/${project.slug}`}
               suppressHydrationWarning
               className="project-card group relative rounded-3xl bg-[#111111] border border-neutral-800 hover:border-[#B8FF00]/40 overflow-hidden transition-all duration-500 flex flex-col justify-between"
               data-cursor="VIEW"
