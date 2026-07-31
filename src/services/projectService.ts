@@ -2,6 +2,9 @@ import { Project, projectsData } from "@/data/projects";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000/api";
 
+// Debug: log the baked-in API URL (visible in browser console)
+console.log("[ProjectService] API_BASE_URL =", API_BASE_URL);
+
 /**
  * Laravel API response item shape (as returned by ekscoder-backend)
  */
