@@ -19,7 +19,7 @@ export const translations = {
       description: "We engineer high-performance web platforms, enterprise software, and digital products that drive real business growth.",
       viewWork: "VIEW OUR WORK",
       talk: "LET'S TALK",
-      bottomBar: "FRONTEND // BACKEND // WEB DESIGN // UI/UX // AUTOMATION"
+      bottomBar: "DIGITAL PLATFORMS // ENTERPRISE ERP // UI/UX DESIGN // BUSINESS AUTOMATION"
     },
     intro: {
       badge: "ABOUT US // DIGITAL TRANSFORMATION",
@@ -122,7 +122,7 @@ export const translations = {
       description: "Kami membangun platform web berkinerja tinggi, software enterprise, dan produk digital yang mendorong pertumbuhan bisnis nyata.",
       viewWork: "LIHAT KARYA KAMI",
       talk: "HUBUNGI KAMI",
-      bottomBar: "FRONTEND // BACKEND // WEB DESIGN // UI/UX // AUTOMATION"
+      bottomBar: "PLATFORM DIGITAL // ERP ENTERPRISE // DESAIN UI/UX // OTOMATISASI BISNIS"
     },
     intro: {
       badge: "TENTANG KAMI // TRANSFORMASI DIGITAL",

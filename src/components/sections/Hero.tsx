@@ -233,7 +233,7 @@ export const Hero: React.FC<HeroProps> = ({ ready = true }) => {
 
           <div className="flex items-center space-x-2 text-neutral-400 overflow-x-auto scrollbar-none w-full justify-center px-2 py-0.5 whitespace-nowrap">
             <Terminal className="w-3 h-3 text-[#B8FF00] shrink-0" />
-            <span className="text-[9.5px] tracking-wider text-neutral-400">FRONTEND • BACKEND • UI/UX • AUTOMATION</span>
+            <span className="text-[9.5px] tracking-wider text-neutral-400">DIGITAL PLATFORMS • ENTERPRISE SOFTWARE • UI/UX • AUTOMATION</span>
           </div>
         </div>
       </div>
