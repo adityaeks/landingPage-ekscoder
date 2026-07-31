@@ -39,6 +39,7 @@ export const Marquee: React.FC = () => {
       repeat: -1,
       duration: 25,
       ease: "none",
+      force3D: true,
     });
 
     // Row 2 move right
@@ -50,6 +51,7 @@ export const Marquee: React.FC = () => {
         repeat: -1,
         duration: 25,
         ease: "none",
+        force3D: true,
       }
     );
 
@@ -79,7 +81,7 @@ export const Marquee: React.FC = () => {
     <div className="marquee-container py-12 bg-transparent backdrop-blur-sm border-y border-white/10 overflow-hidden select-none">
       {/* Row 1 - Leftward */}
       <div className="flex whitespace-nowrap mb-4">
-        <div ref={marquee1Ref} className="flex items-center space-x-8 shrink-0">
+        <div ref={marquee1Ref} className="flex items-center space-x-8 shrink-0 transform-gpu">
           {[...itemsRow1, ...itemsRow1].map((text, idx) => (
             <div key={idx} className="flex items-center space-x-8">
               <span className="text-3xl sm:text-5xl font-mono font-extrabold tracking-tighter text-white/90 uppercase hover:text-[#B8FF00] transition-colors cursor-default">
@@ -93,7 +95,7 @@ export const Marquee: React.FC = () => {
 
       {/* Row 2 - Rightward */}
       <div className="flex whitespace-nowrap">
-        <div ref={marquee2Ref} className="flex items-center space-x-8 shrink-0">
+        <div ref={marquee2Ref} className="flex items-center space-x-8 shrink-0 transform-gpu">
           {[...itemsRow2, ...itemsRow2].map((text, idx) => (
             <div key={idx} className="flex items-center space-x-8">
               <span className="text-3xl sm:text-5xl font-mono font-bold tracking-tighter text-stroke uppercase cursor-default">

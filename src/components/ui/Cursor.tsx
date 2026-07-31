@@ -23,28 +23,18 @@ export const Cursor: React.FC = () => {
 
     if (!cursorDot || !cursorRing) return;
 
-    let mouseX = 0;
-    let mouseY = 0;
+    // Use gsap.quickTo for high-performance mouse tracking without allocations
+    const xDotTo = gsap.quickTo(cursorDot, "x", { duration: 0.08, ease: "power2.out" });
+    const yDotTo = gsap.quickTo(cursorDot, "y", { duration: 0.08, ease: "power2.out" });
+    const xRingTo = gsap.quickTo(cursorRing, "x", { duration: 0.25, ease: "power3.out" });
+    const yRingTo = gsap.quickTo(cursorRing, "y", { duration: 0.25, ease: "power3.out" });
 
     const updatePosition = (clientX: number, clientY: number) => {
-      mouseX = clientX;
-      mouseY = clientY;
-
       if (!isVisible) setIsVisible(true);
-
-      gsap.to(cursorDot, {
-        x: mouseX,
-        y: mouseY,
-        duration: 0.1,
-        ease: "power2.out",
-      });
-
-      gsap.to(cursorRing, {
-        x: mouseX,
-        y: mouseY,
-        duration: 0.3,
-        ease: "power3.out",
-      });
+      xDotTo(clientX);
+      yDotTo(clientY);
+      xRingTo(clientX);
+      yRingTo(clientY);
     };
 
     const onMouseMove = (e: MouseEvent) => {

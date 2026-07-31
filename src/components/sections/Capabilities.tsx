@@ -24,10 +24,10 @@ export const Capabilities: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const progressBarRef = useRef<HTMLDivElement>(null);
+  const progressTextRef = useRef<HTMLSpanElement>(null);
   const mobileTrackRef = useRef<HTMLDivElement>(null);
   const mobileTabsRef = useRef<HTMLDivElement>(null);
 
-  const [scrollProgress, setScrollProgress] = useState(0);
   const [activeMobileIdx, setActiveMobileIdx] = useState(0);
 
   const capabilities = [
@@ -109,6 +109,7 @@ export const Capabilities: React.FC = () => {
       gsap.to(track, {
         x: () => -getScrollAmount(),
         ease: "none",
+        force3D: true,
         scrollTrigger: {
           trigger: container,
           start: "top top",
@@ -118,9 +119,11 @@ export const Capabilities: React.FC = () => {
           invalidateOnRefresh: true,
           onUpdate: (self) => {
             const pct = Math.round(self.progress * 100);
-            setScrollProgress(pct);
             if (progressBarRef.current) {
               progressBarRef.current.style.width = `${pct}%`;
+            }
+            if (progressTextRef.current) {
+              progressTextRef.current.textContent = `${pct}%`;
             }
           },
         },
@@ -200,7 +203,7 @@ export const Capabilities: React.FC = () => {
           <div className="hidden md:flex flex-col items-end space-y-1.5">
             <div className="flex items-center space-x-3 font-mono text-xs text-neutral-400">
               <span className="text-[#B8FF00] font-bold">{t.scrollInstruction}</span>
-              <span className="text-white font-bold">{scrollProgress}%</span>
+              <span ref={progressTextRef} className="text-white font-bold">0%</span>
             </div>
 
             {/* Horizontal Track Progress Bar */}

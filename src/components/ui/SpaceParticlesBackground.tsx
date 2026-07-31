@@ -55,8 +55,8 @@ export const SpaceParticlesBackground: React.FC = () => {
       "rgba(147, 197, 253, 0.8)", // Icy blue
     ];
 
-    // Generate Stars
-    const starCount = Math.floor((width * height) / 4500); // Responsive density
+    // Generate Stars (capped at 250 max for silky smooth 60-120fps)
+    const starCount = Math.min(250, Math.floor((width * height) / 5500));
     const stars: Star[] = [];
 
     for (let i = 0; i < starCount; i++) {
@@ -65,10 +65,10 @@ export const SpaceParticlesBackground: React.FC = () => {
         x: Math.random() * width,
         y: Math.random() * height,
         z: Math.random() * 2 + 0.5,
-        size: Math.random() * 1.5 + 0.4,
+        size: Math.random() * 1.4 + 0.4,
         baseAlpha,
         alpha: baseAlpha,
-        twinkleSpeed: (Math.random() * 0.02 + 0.005) * (Math.random() > 0.5 ? 1 : -1),
+        twinkleSpeed: (Math.random() * 0.015 + 0.005) * (Math.random() > 0.5 ? 1 : -1),
         color: starColors[Math.floor(Math.random() * starColors.length)],
       });
     }
@@ -80,7 +80,7 @@ export const SpaceParticlesBackground: React.FC = () => {
       y: Math.random() * height * 0.4,
       length: Math.random() * 80 + 40,
       speed: Math.random() * 6 + 4,
-      angle: Math.PI / 4 + (Math.random() * 0.2 - 0.1), // ~45 deg inclination
+      angle: Math.PI / 4 + (Math.random() * 0.2 - 0.1),
       alpha: 1,
       active: true,
     });
@@ -96,7 +96,7 @@ export const SpaceParticlesBackground: React.FC = () => {
     const render = () => {
       ctx.clearRect(0, 0, width, height);
 
-      // Render Stars
+      // Batch Star Rendering (No ctx.save/restore or shadowBlur inside loop)
       for (let i = 0; i < stars.length; i++) {
         const star = stars[i];
 
@@ -106,30 +106,17 @@ export const SpaceParticlesBackground: React.FC = () => {
           star.twinkleSpeed = -star.twinkleSpeed;
         }
 
-        // Subtle Parallax calculation based on scroll
+        // Parallax calculation
         const parallaxY = (star.y - scrollY * 0.05 * star.z) % height;
         const finalY = parallaxY < 0 ? parallaxY + height : parallaxY;
 
-        ctx.save();
         ctx.globalAlpha = Math.max(0.1, Math.min(1, star.alpha));
         ctx.fillStyle = star.color;
-
         ctx.beginPath();
         ctx.arc(star.x, finalY, star.size, 0, Math.PI * 2);
         ctx.fill();
-
-        // Subtle Glow for larger stars
-        if (star.size > 1.2) {
-          ctx.shadowBlur = 6;
-          ctx.shadowColor = star.color;
-          ctx.beginPath();
-          ctx.arc(star.x, finalY, star.size * 0.6, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.shadowBlur = 0;
-        }
-
-        ctx.restore();
       }
+      ctx.globalAlpha = 1;
 
       // Handle Meteors
       const now = Date.now();
@@ -150,14 +137,12 @@ export const SpaceParticlesBackground: React.FC = () => {
         gradient.addColorStop(0.7, "rgba(184, 255, 0, 0.4)");
         gradient.addColorStop(1, `rgba(255, 255, 255, ${m.alpha})`);
 
-        ctx.save();
         ctx.strokeStyle = gradient;
         ctx.lineWidth = 1.5;
         ctx.beginPath();
         ctx.moveTo(m.x, m.y);
         ctx.lineTo(endX, endY);
         ctx.stroke();
-        ctx.restore();
 
         m.x += Math.cos(m.angle) * m.speed;
         m.y += Math.sin(m.angle) * m.speed;
@@ -184,14 +169,14 @@ export const SpaceParticlesBackground: React.FC = () => {
   return (
     <div suppressHydrationWarning className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
       {/* Background Starfield Canvas */}
-      <canvas ref={canvasRef} className="w-full h-full opacity-90" />
+      <canvas ref={canvasRef} className="w-full h-full opacity-90 transform-gpu" />
 
-      {/* Deep Space Cosmic Nebulae Ambient Glows spanning entire scroll depth */}
-      <div className="absolute top-[5%] left-[10%] w-[700px] h-[700px] bg-purple-900/15 rounded-full blur-[200px] -z-10 pointer-events-none animate-pulse" />
-      <div className="absolute top-[25%] right-[5%] w-[800px] h-[800px] bg-[#B8FF00]/5 rounded-full blur-[220px] -z-10 pointer-events-none" />
-      <div className="absolute top-[50%] left-[15%] w-[750px] h-[750px] bg-blue-900/15 rounded-full blur-[200px] -z-10 pointer-events-none animate-pulse" />
-      <div className="absolute top-[75%] right-[10%] w-[700px] h-[700px] bg-indigo-900/20 rounded-full blur-[210px] -z-10 pointer-events-none" />
-      <div className="absolute top-[90%] left-[30%] w-[650px] h-[650px] bg-[#B8FF00]/5 rounded-full blur-[180px] -z-10 pointer-events-none" />
+      {/* Deep Space Cosmic Nebulae Ambient Glows with Hardware Layer Promotion */}
+      <div className="absolute top-[5%] left-[10%] w-[600px] h-[600px] bg-purple-900/15 rounded-full blur-[140px] -z-10 pointer-events-none transform-gpu animate-pulse" />
+      <div className="absolute top-[25%] right-[5%] w-[650px] h-[650px] bg-[#B8FF00]/5 rounded-full blur-[150px] -z-10 pointer-events-none transform-gpu" />
+      <div className="absolute top-[50%] left-[15%] w-[600px] h-[600px] bg-blue-900/15 rounded-full blur-[140px] -z-10 pointer-events-none transform-gpu animate-pulse" />
+      <div className="absolute top-[75%] right-[10%] w-[600px] h-[600px] bg-indigo-900/20 rounded-full blur-[140px] -z-10 pointer-events-none transform-gpu" />
+      <div className="absolute top-[90%] left-[30%] w-[550px] h-[550px] bg-[#B8FF00]/5 rounded-full blur-[130px] -z-10 pointer-events-none transform-gpu" />
     </div>
   );
 };
