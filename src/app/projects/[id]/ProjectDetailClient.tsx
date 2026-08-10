@@ -84,6 +84,7 @@ export function ProjectDetailClient({ project, allProjects }: ProjectDetailClien
         </p>
         <Link
           href="/#projects"
+          suppressHydrationWarning
           className="inline-flex items-center space-x-2 px-6 py-3 rounded-full bg-[#B8FF00] text-black font-mono font-bold text-sm tracking-wider uppercase hover:bg-white transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
@@ -109,6 +110,7 @@ export function ProjectDetailClient({ project, allProjects }: ProjectDetailClien
 
         <Link
           href="/"
+          suppressHydrationWarning
           className="font-mono font-extrabold text-white text-lg tracking-tighter hover:text-[#B8FF00] transition-colors"
           data-cursor="EKSCODER"
         >
@@ -120,6 +122,7 @@ export function ProjectDetailClient({ project, allProjects }: ProjectDetailClien
             href={project.link}
             target="_blank"
             rel="noopener noreferrer"
+            suppressHydrationWarning
             data-cursor="LIVE"
             className="inline-flex items-center space-x-2 px-4 py-2 rounded-full border border-neutral-700 text-xs font-mono text-neutral-300 hover:border-[#B8FF00] hover:text-[#B8FF00] transition-all"
           >
@@ -241,6 +244,7 @@ export function ProjectDetailClient({ project, allProjects }: ProjectDetailClien
                   href={project.link}
                   target="_blank"
                   rel="noopener noreferrer"
+                  suppressHydrationWarning
                   data-cursor="LIVE"
                   className="inline-flex items-center space-x-3 px-7 py-4 rounded-full bg-[#B8FF00] text-black font-mono font-bold text-sm tracking-wider uppercase hover:bg-white transition-colors shadow-[0_0_30px_rgba(184,255,0,0.2)]"
                 >
@@ -324,6 +328,7 @@ export function ProjectDetailClient({ project, allProjects }: ProjectDetailClien
               </div>
               <Link
                 href="/#projects"
+                suppressHydrationWarning
                 data-cursor="ALL"
                 className="hidden sm:inline-flex items-center space-x-2 text-xs font-mono text-neutral-400 hover:text-[#B8FF00] transition-colors group"
               >
@@ -337,6 +342,7 @@ export function ProjectDetailClient({ project, allProjects }: ProjectDetailClien
                 <Link
                   key={rel.slug}
                   href={`/projects/${rel.slug}`}
+                  suppressHydrationWarning
                   data-cursor="VIEW"
                   className="related-card group rounded-2xl bg-[#111111] border border-neutral-800 hover:border-[#B8FF00]/40 overflow-hidden transition-all duration-400"
                 >
@@ -378,6 +384,7 @@ export function ProjectDetailClient({ project, allProjects }: ProjectDetailClien
           <span>© 2026 EKSCODER. ALL RIGHTS RESERVED.</span>
           <Link
             href="/"
+            suppressHydrationWarning
             className="hover:text-[#B8FF00] transition-colors tracking-wider"
           >
             BACK TO HOME →

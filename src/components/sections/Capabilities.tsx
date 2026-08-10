@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 
 import { useLanguage } from "@/context/LanguageContext";
-import { translations } from "@/data/translations";
+import { translations, WA_LINK } from "@/data/translations";
 
 export const Capabilities: React.FC = () => {
   const { language } = useLanguage();
@@ -356,7 +356,10 @@ export const Capabilities: React.FC = () => {
             </div>
 
             <a
-              href="#cta"
+              href={WA_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              suppressHydrationWarning
               className="w-full py-2.5 rounded-full bg-[#B8FF00] text-black font-mono font-bold text-xs tracking-widest uppercase hover:bg-white transition-colors flex items-center justify-center space-x-2 shadow-xl glow-accent"
             >
               <span>INITIATE PROJECT TALK</span>
@@ -484,7 +487,10 @@ export const Capabilities: React.FC = () => {
             </div>
 
             <a
-              href="#cta"
+              href={WA_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              suppressHydrationWarning
               className="w-full py-3 rounded-full bg-[#B8FF00] text-black font-mono font-bold text-xs tracking-widest uppercase flex items-center justify-center space-x-2 shadow-xl glow-accent"
             >
               <span>INITIATE TALK</span>

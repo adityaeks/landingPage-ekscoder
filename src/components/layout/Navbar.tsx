@@ -6,7 +6,7 @@ import { gsap } from "@/lib/gsap";
 import { Menu, X, ArrowUpRight, Radio, Sparkles, Terminal } from "lucide-react";
 
 import { useLanguage } from "@/context/LanguageContext";
-import { translations } from "@/data/translations";
+import { translations, WA_LINK } from "@/data/translations";
 
 interface NavbarProps {
   ready?: boolean;
@@ -26,7 +26,7 @@ export const Navbar: React.FC<NavbarProps> = ({ ready = true }) => {
 
   const navLinks = [
     { id: "about", label: t.about, number: "01" },
-    { id: "capabilities", label: t.capabilities, number: "02" },
+    // { id: "capabilities", label: t.capabilities, number: "02" },
     { id: "services", label: t.services, number: "03" },
     { id: "technologies", label: t.solutions, number: "04" },
     { id: "projects", label: t.project, number: "05" },
@@ -43,7 +43,16 @@ export const Navbar: React.FC<NavbarProps> = ({ ready = true }) => {
       }
 
       // Active section spy using getBoundingClientRect for reliable relative coordinates
-      const sections = ["hero", "about", "capabilities", "services", "technologies", "projects", "process", "cta"];
+      const sections = [
+        "hero", 
+        "about", 
+        // "capabilities", 
+        "services", 
+        "technologies", 
+        "projects", 
+        "process", 
+        "cta"
+      ];
       const targetY = window.innerHeight * 0.35;
 
       let currentSection = "hero";
@@ -121,6 +130,7 @@ export const Navbar: React.FC<NavbarProps> = ({ ready = true }) => {
               ref={logoRef}
               href="#hero"
               onClick={(e) => scrollToSection(e, "hero")}
+              suppressHydrationWarning
               className="text-lg md:text-xl font-extrabold tracking-tighter text-white hover:text-[#B8FF00] transition-colors flex items-center group font-mono"
             >
               <span>EKSCODER</span>
@@ -146,6 +156,7 @@ export const Navbar: React.FC<NavbarProps> = ({ ready = true }) => {
                   key={link.id}
                   href={`#${link.id}`}
                   onClick={(e) => scrollToSection(e, link.id)}
+                  suppressHydrationWarning
                   className={`px-4 py-1.5 rounded-full transition-all duration-300 relative flex items-center justify-center font-medium tracking-wider ${
                     isActive
                       ? "bg-[#B8FF00] text-black font-bold shadow-md shadow-[#B8FF00]/20"
@@ -189,8 +200,10 @@ export const Navbar: React.FC<NavbarProps> = ({ ready = true }) => {
             <div className="hidden md:flex">
               <MagneticButton strength={0.3}>
                 <a
-                  href="#cta"
-                  onClick={(e) => scrollToSection(e, "cta")}
+                  href={WA_LINK}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  suppressHydrationWarning
                   className="px-5 py-2 rounded-full bg-[#B8FF00] hover:bg-white text-black text-xs font-mono font-bold tracking-wider uppercase transition-all duration-300 flex items-center space-x-2 shadow-lg glow-accent group"
                 >
                   <span>{t.talk}</span>
@@ -260,6 +273,7 @@ export const Navbar: React.FC<NavbarProps> = ({ ready = true }) => {
                   key={link.id}
                   href={`#${link.id}`}
                   onClick={(e) => scrollToSection(e, link.id)}
+                  suppressHydrationWarning
                   className={`py-3 border-b border-neutral-800/80 flex items-center justify-between transition-colors ${
                     isActive ? "text-[#B8FF00]" : "hover:text-[#B8FF00]"
                   }`}
@@ -277,8 +291,10 @@ export const Navbar: React.FC<NavbarProps> = ({ ready = true }) => {
 
         <div className="space-y-4 pt-6 border-t border-neutral-800/80">
           <a
-            href="#cta"
-            onClick={(e) => scrollToSection(e, "cta")}
+            href={WA_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            suppressHydrationWarning
             className="w-full py-4 rounded-full bg-[#B8FF00] text-black text-center font-mono font-bold text-sm tracking-widest uppercase hover:bg-white transition-colors flex items-center justify-center space-x-2 shadow-xl glow-accent"
           >
             <span>{t.talk}</span>

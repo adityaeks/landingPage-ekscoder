@@ -6,7 +6,7 @@ import { MagneticButton } from "@/components/ui/MagneticButton";
 import { ArrowDownRight, Sparkles, Terminal } from "lucide-react";
 
 import { useLanguage } from "@/context/LanguageContext";
-import { translations } from "@/data/translations";
+import { translations, WA_LINK } from "@/data/translations";
 
 interface HeroProps {
   ready?: boolean;
@@ -183,6 +183,7 @@ export const Hero: React.FC<HeroProps> = ({ ready = true }) => {
               <a
                 href="#projects"
                 onClick={scrollToWork}
+                suppressHydrationWarning
                 className="px-6 py-3.5 sm:px-8 sm:py-4 rounded-full bg-[#B8FF00] text-black font-mono font-bold text-xs sm:text-sm tracking-wider uppercase hover:bg-white transition-colors duration-300 flex items-center space-x-3 shadow-xl glow-accent"
                 data-cursor="EXPLORE"
               >
@@ -193,8 +194,10 @@ export const Hero: React.FC<HeroProps> = ({ ready = true }) => {
 
             <MagneticButton strength={0.25}>
               <a
-                href="#cta"
-                onClick={scrollToCTA}
+                href={WA_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                suppressHydrationWarning
                 className="px-6 py-3.5 sm:px-8 sm:py-4 rounded-full border border-neutral-700 bg-neutral-900/60 hover:bg-neutral-800 text-white font-mono font-medium text-xs sm:text-sm tracking-wider uppercase transition-all duration-300"
                 data-cursor="TALK"
               >

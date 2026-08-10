@@ -1,3 +1,5 @@
+export const WA_LINK = "https://wa.me/6281230508019?text=Hallo%20Admin%20Ekscoder%20saya%20ingin%20konsultasi%20terkait%20project%20website";
+
 export const translations = {
   EN: {
     nav: {
@@ -90,7 +92,8 @@ export const translations = {
       line1: "HAVE AN IDEA?",
       line2: "LET'S BUILD IT.",
       description: "Have a new web project, custom software requirement, or digital product in mind? Get a free consultation — let's discuss your vision, plan the architecture, and turn it into reality.",
-      startProject: "FREE CONSULTATION",
+      startProject: "FREE CONSULTATION (WA)",
+      whatsapp: "WHATSAPP: 0812-3050-8019",
       email: "contact@ekscoder.com"
     },
     footer: {
@@ -193,7 +196,8 @@ export const translations = {
       line1: "PUNYA IDE?",
       line2: "MARI WUJUDKAN.",
       description: "Punya proyek web baru, kebutuhan perangkat lunak kustom, atau produk digital? Dapatkan konsultasi gratis — mari diskusikan visi Anda, rencanakan arsitektur, dan wujudkan bersama.",
-      startProject: "KONSULTASI GRATIS",
+      startProject: "KONSULTASI GRATIS (WA)",
+      whatsapp: "WHATSAPP: 0812-3050-8019",
       email: "contact@ekscoder.com"
     },
     footer: {

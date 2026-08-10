@@ -22,7 +22,7 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 pb-16 border-b border-neutral-800/80">
           {/* Brand Column */}
           <div className="md:col-span-5 space-y-4">
-            <a href="#hero" className="text-3xl font-extrabold font-mono tracking-tighter text-white">
+            <a href="#hero" suppressHydrationWarning className="text-3xl font-extrabold font-mono tracking-tighter text-white">
               EKSCODER<span className="text-[#B8FF00]">.</span>
             </a>
             <p className="text-neutral-400 font-light text-sm max-w-sm leading-relaxed">
@@ -41,11 +41,11 @@ export const Footer: React.FC = () => {
                   01 // {navT.about}
                 </a>
               </li>
-              <li>
+              {/* <li>
                 <a href="#capabilities" suppressHydrationWarning className="hover:text-white transition-colors">
                   02 // {navT.capabilities}
                 </a>
-              </li>
+              </li> */}
               <li>
                 <a href="#services" suppressHydrationWarning className="hover:text-white transition-colors">
                   03 // {navT.services}

@@ -32,7 +32,7 @@ export default function Home() {
       <Hero ready={preloaderFinished} />
       <Marquee />
       <Introduction />
-      <Capabilities />
+      {/* <Capabilities /> */}
       <Services />
       <Technologies />
       <Projects />

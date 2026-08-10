@@ -3,16 +3,18 @@
 import React, { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { MagneticButton } from "@/components/ui/MagneticButton";
-import { ArrowUpRight, Mail, MessageSquare } from "lucide-react";
+import { ArrowUpRight, Mail, MessageSquare, Phone } from "lucide-react";
 
 import { useLanguage } from "@/context/LanguageContext";
-import { translations } from "@/data/translations";
+import { translations, WA_LINK } from "@/data/translations";
 
 export const CTA: React.FC = () => {
   const { language } = useLanguage();
   const t = translations[language].cta;
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+
+  const waUrl = WA_LINK;
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -78,7 +80,9 @@ export const CTA: React.FC = () => {
           <div className="flex flex-wrap items-center justify-center gap-6 z-10">
             <MagneticButton strength={0.4}>
               <a
-                href="mailto:contact@ekscoder.com"
+                href={waUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 suppressHydrationWarning
                 className="px-10 py-5 rounded-full bg-[#B8FF00] text-black font-mono font-bold text-base tracking-wider uppercase hover:bg-white transition-all duration-300 flex items-center space-x-3 shadow-2xl glow-accent"
                 data-cursor="TALK"
@@ -90,13 +94,15 @@ export const CTA: React.FC = () => {
 
             <MagneticButton strength={0.25}>
               <a
-                href="mailto:contact@ekscoder.com"
+                href={waUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 suppressHydrationWarning
                 className="px-8 py-5 rounded-full border border-neutral-700 bg-neutral-900 hover:bg-neutral-800 text-white font-mono font-medium text-sm tracking-wider uppercase transition-colors flex items-center space-x-2"
-                data-cursor="MAIL"
+                data-cursor="WA"
               >
-                <Mail className="w-4 h-4 text-[#B8FF00]" />
-                <span>{t.email}</span>
+                <Phone className="w-4 h-4 text-[#B8FF00]" />
+                <span>{t.whatsapp}</span>
               </a>
             </MagneticButton>
           </div>
