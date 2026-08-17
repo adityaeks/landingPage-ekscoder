@@ -9,10 +9,11 @@ export const Cursor: React.FC = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   useEffect(() => {
-    // Disable custom cursor only if reduced motion is requested
+    // Disable custom cursor if reduced motion is requested or on touch/mobile devices
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isTouchDevice = window.matchMedia("(hover: none), (pointer: coarse)").matches;
 
-    if (prefersReducedMotion) {
+    if (prefersReducedMotion || isTouchDevice) {
       return;
     }
 
@@ -39,12 +40,6 @@ export const Cursor: React.FC = () => {
 
     const onMouseMove = (e: MouseEvent) => {
       updatePosition(e.clientX, e.clientY);
-    };
-
-    const onTouchMove = (e: TouchEvent) => {
-      if (e.touches && e.touches[0]) {
-        updatePosition(e.touches[0].clientX, e.touches[0].clientY);
-      }
     };
 
     const onMouseOver = (e: MouseEvent) => {
@@ -96,29 +91,11 @@ export const Cursor: React.FC = () => {
       }
     };
 
-    const onTouchEnd = () => {
-      setIsVisible(false);
-      setIsHovered(false);
-      setCursorText("");
-      if (cursorRing) {
-        gsap.to(cursorRing, {
-          scale: 1,
-          backgroundColor: "transparent",
-          borderColor: "rgba(255, 255, 255, 0.4)",
-          duration: 0.2,
-        });
-      }
-    };
-
     const onMouseLeave = () => {
       setIsVisible(false);
     };
 
     window.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("touchmove", onTouchMove, { passive: true });
-    window.addEventListener("touchstart", onTouchMove, { passive: true });
-    window.addEventListener("touchend", onTouchEnd, { passive: true });
-    window.addEventListener("touchcancel", onTouchEnd, { passive: true });
     document.documentElement.addEventListener("mouseleave", onMouseLeave);
     document.addEventListener("mouseover", onMouseOver);
     document.addEventListener("mouseout", onMouseOut);
@@ -126,10 +103,6 @@ export const Cursor: React.FC = () => {
     return () => {
       document.body.classList.remove("custom-cursor-enabled");
       window.removeEventListener("mousemove", onMouseMove);
-      window.removeEventListener("touchmove", onTouchMove);
-      window.removeEventListener("touchstart", onTouchMove);
-      window.removeEventListener("touchend", onTouchEnd);
-      window.removeEventListener("touchcancel", onTouchEnd);
       document.documentElement.removeEventListener("mouseleave", onMouseLeave);
       document.removeEventListener("mouseover", onMouseOver);
       document.removeEventListener("mouseout", onMouseOut);
@@ -142,7 +115,7 @@ export const Cursor: React.FC = () => {
       <div
         id="custom-cursor-dot"
         suppressHydrationWarning
-        className={`fixed top-0 left-0 w-2 h-2 rounded-full bg-[#B8FF00] pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300 ${
+        className={`hidden md:block fixed top-0 left-0 w-2 h-2 rounded-full bg-[#B8FF00] pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300 ${
           isVisible ? "opacity-100" : "opacity-0"
         }`}
       />
@@ -151,7 +124,7 @@ export const Cursor: React.FC = () => {
       <div
         id="custom-cursor-ring"
         suppressHydrationWarning
-        className={`fixed top-0 left-0 w-8 h-8 rounded-full border border-white/40 pointer-events-none z-[9998] -translate-x-1/2 -translate-y-1/2 flex items-center justify-center transition-opacity duration-300 ${
+        className={`hidden md:block fixed top-0 left-0 w-8 h-8 rounded-full border border-white/40 pointer-events-none z-[9998] -translate-x-1/2 -translate-y-1/2 flex items-center justify-center transition-opacity duration-300 ${
           isVisible ? "opacity-100" : "opacity-0"
         }`}
       >

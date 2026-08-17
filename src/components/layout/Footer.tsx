@@ -66,6 +66,11 @@ export const Footer: React.FC = () => {
                   06 // {navT.process}
                 </a>
               </li>
+              <li>
+                <a href="#blog" suppressHydrationWarning className="hover:text-white transition-colors">
+                  07 // {navT.blog}
+                </a>
+              </li>
             </ul>
           </div>
 

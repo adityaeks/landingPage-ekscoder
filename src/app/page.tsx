@@ -12,6 +12,7 @@ import { Services } from "@/components/sections/Services";
 import { Technologies } from "@/components/sections/Technologies";
 import { Projects } from "@/components/sections/Projects";
 import { Process } from "@/components/sections/Process";
+import { Blog } from "@/components/sections/Blog";
 import { CTA } from "@/components/sections/CTA";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTopRocket } from "@/components/ui/ScrollToTopRocket";
@@ -37,6 +38,7 @@ export default function Home() {
       <Technologies />
       <Projects />
       <Process />
+      <Blog />
       <CTA />
       <Footer />
       <ScrollToTopRocket />

@@ -31,6 +31,7 @@ export const Navbar: React.FC<NavbarProps> = ({ ready = true }) => {
     { id: "technologies", label: t.solutions, number: "04" },
     { id: "projects", label: t.project, number: "05" },
     { id: "process", label: t.process, number: "06" },
+    { id: "blog", label: t.blog, number: "07" },
   ];
 
   useEffect(() => {
@@ -51,6 +52,7 @@ export const Navbar: React.FC<NavbarProps> = ({ ready = true }) => {
         "technologies", 
         "projects", 
         "process", 
+        "blog",
         "cta"
       ];
       const targetY = window.innerHeight * 0.35;

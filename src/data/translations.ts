@@ -11,6 +11,7 @@ export const translations = {
       work: "WORK",
       project: "PROJECTS",
       process: "PROCESS",
+      blog: "ARTICLES",
       talk: "LET'S TALK NOW"
     },
     hero: {
@@ -87,6 +88,19 @@ export const translations = {
       title: "THE PROCESS.",
       description: "A structured, agile workflow designed to deliver world-class software on time and without compromise."
     },
+    blog: {
+      badge: "INSIGHTS // TECHNICAL ARTICLES",
+      title: "LATEST ARTICLES.",
+      description: "Technical insights, DevOps guides, and engineering practices directly from our core development team.",
+      allFilter: "ALL ARTICLES",
+      readArticle: "READ ARTICLE",
+      featuredBadge: "FEATURED",
+      views: "views",
+      by: "By",
+      publishedOn: "Published",
+      closeModal: "CLOSE ARTICLE",
+      share: "SHARE ARTICLE"
+    },
     cta: {
       badge: "LET'S COLLABORATE",
       line1: "HAVE AN IDEA?",
@@ -115,6 +129,7 @@ export const translations = {
       work: "PORTOFOLIO",
       project: "PROYEK",
       process: "ALUR KERJA",
+      blog: "ARTIKEL",
       talk: "KONSULTASI SEKARANG"
     },
     hero: {
@@ -190,6 +205,19 @@ export const translations = {
       badge: "METODOLOGI KAMI // CARA KERJA",
       title: "PROSES KERJA.",
       description: "Alur kerja terstruktur dan agile yang dirancang untuk menyampaikan perangkat lunak kelas dunia tepat waktu."
+    },
+    blog: {
+      badge: "ARTIKEL & WAWASAN TEKNIS",
+      title: "ARTIKEL TERBARU.",
+      description: "Wawasan teknis, panduan DevOps, dan praktik rekayasa software dari tim pengembang utama Ekscoder.",
+      allFilter: "SEMUA ARTIKEL",
+      readArticle: "BACA ARTIKEL",
+      featuredBadge: "UNGGULAN",
+      views: "dilihat",
+      by: "Oleh",
+      publishedOn: "Diterbitkan",
+      closeModal: "TUTUP ARTIKEL",
+      share: "BAGIKAN ARTIKEL"
     },
     cta: {
       badge: "MARI BEKERJASAMA",
