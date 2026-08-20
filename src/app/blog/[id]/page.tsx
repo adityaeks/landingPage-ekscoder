@@ -1,4 +1,8 @@
-import { fetchBlogPostsFromBackend, getPostExcerpt } from "@/services/blogService";
+import {
+  fetchBlogPostsFromBackend,
+  fetchBlogPostBySlug,
+  getPostExcerpt,
+} from "@/services/blogService";
 import { BlogDetailClient } from "./BlogDetailClient";
 import type { Metadata } from "next";
 
@@ -8,8 +12,11 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { id: slug } = await params;
-  const posts = await fetchBlogPostsFromBackend();
-  const post = posts.find((p) => p.slug === slug || String(p.id) === slug);
+  let post = await fetchBlogPostBySlug(slug);
+  if (!post) {
+    const posts = await fetchBlogPostsFromBackend();
+    post = posts.find((p) => p.slug === slug || String(p.id) === slug) ?? null;
+  }
 
   if (!post) {
     return {
@@ -40,8 +47,15 @@ export async function generateStaticParams() {
 
 export default async function BlogDetailPage({ params }: PageProps) {
   const { id: slug } = await params;
-  const posts = await fetchBlogPostsFromBackend();
-  const post = posts.find((p) => p.slug === slug || String(p.id) === slug) ?? null;
+  const [postBySlug, allPosts] = await Promise.all([
+    fetchBlogPostBySlug(slug),
+    fetchBlogPostsFromBackend(),
+  ]);
 
-  return <BlogDetailClient post={post} allPosts={posts} />;
+  const post =
+    postBySlug ??
+    allPosts.find((p) => p.slug === slug || String(p.id) === slug) ??
+    null;
+
+  return <BlogDetailClient post={post} allPosts={allPosts} />;
 }

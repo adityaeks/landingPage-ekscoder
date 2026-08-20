@@ -175,4 +175,37 @@ export function getReadingTime(content?: string | null): string {
   return `${minutes} MIN READ`;
 }
 
+/**
+ * Fetch a single blog post by slug from Laravel REST API backend (http://127.0.0.1:8000/api/posts/{slug})
+ * Automatically triggers views count increment in the backend.
+ */
+export async function fetchBlogPostBySlug(slug: string): Promise<BlogPost | null> {
+  try {
+    const res = await fetch(`${API_BASE_URL}/posts/${encodeURIComponent(slug)}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      cache: "no-store",
+    });
+
+    if (!res.ok) {
+      return null;
+    }
+
+    const json = await res.json();
+
+    if (json.status === "success" && json.data) {
+      return json.data;
+    }
+
+    return null;
+  } catch (error) {
+    console.warn(`[BlogService] Could not fetch post ${slug} from backend:`, error);
+    return null;
+  }
+}
+
+
 
