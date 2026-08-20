@@ -13,6 +13,7 @@ import {
 } from "@/services/blogService";
 import { gsap } from "@/lib/gsap";
 import ReactMarkdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
 import {
   ArrowLeft,
   ArrowUpRight,
@@ -398,6 +399,7 @@ export function BlogDetailClient({ post, allPosts }: BlogDetailClientProps) {
             {/* Markdown Body Content */}
             <div ref={bodyRef} className="prose prose-invert max-w-none text-neutral-300 font-light text-base sm:text-lg leading-relaxed space-y-6">
               <ReactMarkdown
+                rehypePlugins={[rehypeRaw]}
                 components={{
                   h1: ({ children }) => (
                     <h1 className="text-2xl sm:text-4xl font-black font-mono text-white tracking-tight uppercase border-b border-neutral-800 pb-4 mt-12 mb-6">
