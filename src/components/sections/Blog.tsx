@@ -1,39 +1,124 @@
 "use client";
 
 import React, { useEffect, useState, useMemo } from "react";
+import Link from "next/link";
 import {
   BookOpen,
   Eye,
   Calendar,
   User,
   ArrowUpRight,
-  X,
   Sparkles,
-  Share2,
-  Tag,
-  Clock,
   ChevronLeft,
   ChevronRight,
+  Code2,
 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations } from "@/data/translations";
 import {
   BlogPost,
+  BlogCategory,
   fetchBlogPostsFromBackend,
   formatDate,
-  fallbackBlogPosts,
+  getPostExcerpt,
+  getFullImageUrl,
 } from "@/services/blogService";
-import { MagneticButton } from "@/components/ui/MagneticButton";
-import ReactMarkdown from "react-markdown";
+
+/**
+ * Robust BlogCoverImage component with automatic fallback & cyber placeholder
+ */
+const BlogCoverImage: React.FC<{
+  src?: string | null;
+  alt: string;
+  category?: BlogCategory;
+  className?: string;
+}> = ({ src, alt, category, className = "" }) => {
+  const [hasError, setHasError] = useState(false);
+  const fullSrc = useMemo(() => getFullImageUrl(src), [src]);
+
+  useEffect(() => {
+    setHasError(false);
+  }, [src]);
+
+  if (!fullSrc || hasError) {
+    const accentColor = category?.color || "#B8FF00";
+    return (
+      <div
+        className={`w-full h-full min-h-[180px] relative flex flex-col items-center justify-center overflow-hidden select-none bg-[#0c0d0e] ${className}`}
+        style={{
+          background: `radial-gradient(ellipse at 50% 40%, ${accentColor}18 0%, #0c0d0e 85%)`,
+        }}
+      >
+        {/* Subtle Cyber Grid Pattern */}
+        <div
+          className="absolute inset-0 opacity-15 pointer-events-none"
+          style={{
+            backgroundImage: `linear-gradient(${accentColor}25 1px, transparent 1px), linear-gradient(90deg, ${accentColor}25 1px, transparent 1px)`,
+            backgroundSize: "24px 24px",
+          }}
+        />
+
+        {/* Ambient Glow Aura */}
+        <div
+          className="w-36 h-36 rounded-full blur-3xl absolute opacity-25 pointer-events-none"
+          style={{ backgroundColor: accentColor }}
+        />
+
+        {/* Central Graphic Badge */}
+        <div className="relative z-10 flex flex-col items-center space-y-3 p-6 text-center">
+          <div
+            className="w-14 h-14 rounded-2xl flex items-center justify-center shadow-xl border backdrop-blur-md transition-transform duration-500 group-hover:scale-110"
+            style={{
+              backgroundColor: `${accentColor}15`,
+              borderColor: `${accentColor}35`,
+              color: accentColor,
+            }}
+          >
+            <Code2 className="w-7 h-7" />
+          </div>
+          <div className="space-y-1">
+            <span
+              className="font-mono text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border inline-block backdrop-blur-md"
+              style={{
+                backgroundColor: `${accentColor}10`,
+                borderColor: `${accentColor}30`,
+                color: accentColor,
+              }}
+            >
+              {category?.name || "EKSCODER // INSIGHT"}
+            </span>
+          </div>
+        </div>
+
+        {/* Cyber Watermark Accent */}
+        <div
+          className="absolute bottom-3 right-4 font-mono text-[9px] tracking-wider opacity-40 uppercase font-bold select-none"
+          style={{ color: accentColor }}
+        >
+          // EKSCODER.DEV
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={fullSrc}
+      alt={alt}
+      className={className}
+      loading="lazy"
+      onError={() => setHasError(true)}
+    />
+  );
+};
 
 export const Blog: React.FC = () => {
   const { language } = useLanguage();
   const t = translations[language].blog;
 
-  const [posts, setPosts] = useState<BlogPost[]>(fallbackBlogPosts);
+  const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [selectedCategory, setSelectedCategory] = useState<string>("ALL");
-  const [activePostModal, setActivePostModal] = useState<BlogPost | null>(null);
 
   const sliderRef = React.useRef<HTMLDivElement>(null);
 
@@ -90,23 +175,6 @@ export const Blog: React.FC = () => {
     return filteredPosts.filter((post) => post.id !== featuredPost.id);
   }, [filteredPosts, featuredPost]);
 
-  // Open & Close Modal Reader
-  const openModal = (post: BlogPost) => {
-    setActivePostModal(post);
-    document.body.style.overflow = "hidden";
-    if (typeof window !== "undefined" && (window as any).lenis) {
-      (window as any).lenis.stop();
-    }
-  };
-
-  const closeModal = () => {
-    setActivePostModal(null);
-    document.body.style.overflow = "unset";
-    if (typeof window !== "undefined" && (window as any).lenis) {
-      (window as any).lenis.start();
-    }
-  };
-
   return (
     <section
       id="blog"
@@ -134,38 +202,40 @@ export const Blog: React.FC = () => {
           </p>
         </div>
 
-        {/* Category Filter Tabs */}
-        <div className="flex flex-wrap items-center gap-2 mb-12 border-b border-neutral-800/80 pb-6">
-          <button
-            onClick={() => setSelectedCategory("ALL")}
-            suppressHydrationWarning
-            className={`px-5 py-2 rounded-full font-mono text-xs tracking-wider uppercase transition-all duration-300 ${
-              selectedCategory === "ALL"
-                ? "bg-[#B8FF00] text-black font-bold shadow-lg glow-accent"
-                : "bg-neutral-900 border border-neutral-800 text-neutral-400 hover:text-white hover:border-neutral-700"
-            }`}
-          >
-            {t.allFilter} ({posts.length})
-          </button>
+        {/* Category Filter Tabs (only if posts exist) */}
+        {posts.length > 0 && (
+          <div className="flex flex-wrap items-center gap-2 mb-12 border-b border-neutral-800/80 pb-6">
+            <button
+              onClick={() => setSelectedCategory("ALL")}
+              suppressHydrationWarning
+              className={`px-5 py-2 rounded-full font-mono text-xs tracking-wider uppercase transition-all duration-300 ${
+                selectedCategory === "ALL"
+                  ? "bg-[#B8FF00] text-black font-bold shadow-lg glow-accent"
+                  : "bg-neutral-900 border border-neutral-800 text-neutral-400 hover:text-white hover:border-neutral-700"
+              }`}
+            >
+              {t.allFilter} ({posts.length})
+            </button>
 
-          {categories.map((catName) => {
-            const isActive = selectedCategory === catName;
-            return (
-              <button
-                key={catName}
-                onClick={() => setSelectedCategory(catName)}
-                suppressHydrationWarning
-                className={`px-5 py-2 rounded-full font-mono text-xs tracking-wider uppercase transition-all duration-300 ${
-                  isActive
-                    ? "bg-[#B8FF00] text-black font-bold shadow-lg glow-accent"
-                    : "bg-neutral-900 border border-neutral-800 text-neutral-400 hover:text-white hover:border-neutral-700"
-                }`}
-              >
-                {catName}
-              </button>
-            );
-          })}
-        </div>
+            {categories.map((catName) => {
+              const isActive = selectedCategory === catName;
+              return (
+                <button
+                  key={catName}
+                  onClick={() => setSelectedCategory(catName)}
+                  suppressHydrationWarning
+                  className={`px-5 py-2 rounded-full font-mono text-xs tracking-wider uppercase transition-all duration-300 ${
+                    isActive
+                      ? "bg-[#B8FF00] text-black font-bold shadow-lg glow-accent"
+                      : "bg-neutral-900 border border-neutral-800 text-neutral-400 hover:text-white hover:border-neutral-700"
+                  }`}
+                >
+                  {catName}
+                </button>
+              );
+            })}
+          </div>
+        )}
 
         {/* Loading Skeleton */}
         {loading ? (
@@ -184,38 +254,52 @@ export const Blog: React.FC = () => {
               </div>
             ))}
           </div>
+        ) : posts.length === 0 ? (
+          <div className="rounded-3xl bg-[#111111]/80 border border-neutral-800/80 p-12 text-center flex flex-col items-center justify-center space-y-4 my-8">
+            <div className="w-16 h-16 rounded-2xl bg-neutral-900 border border-neutral-800 flex items-center justify-center text-[#B8FF00] shadow-lg">
+              <BookOpen className="w-8 h-8 opacity-70" />
+            </div>
+            <div className="space-y-2 max-w-md">
+              <h3 className="text-xl font-bold font-mono text-white tracking-tight uppercase">
+                {t.emptyTitle}
+              </h3>
+              <p className="text-neutral-400 font-light text-sm">
+                {t.emptyDesc}
+              </p>
+            </div>
+          </div>
         ) : (
           <div className="space-y-12">
             {/* Featured Post Banner */}
             {featuredPost && (
-              <div
-                onClick={() => openModal(featuredPost)}
+              <Link
+                href={`/blog/${featuredPost.slug || featuredPost.id}`}
                 data-cursor="READ"
                 suppressHydrationWarning
                 className="group relative rounded-3xl bg-[#111111] border border-neutral-800 hover:border-[#B8FF00]/50 overflow-hidden transition-all duration-500 cursor-pointer shadow-2xl grid grid-cols-1 lg:grid-cols-12"
               >
                 {/* Cover Image Container */}
-                <div className="lg:col-span-7 relative h-72 sm:h-96 lg:h-auto overflow-hidden bg-neutral-900">
-                  <img
+                <div className="lg:col-span-5 relative h-60 sm:h-72 lg:h-[340px] overflow-hidden bg-neutral-900">
+                  <BlogCoverImage
                     src={featuredPost.cover_image}
                     alt={featuredPost.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                    loading="lazy"
+                    category={featuredPost.category}
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#111111] via-transparent to-transparent lg:hidden" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#111111] via-transparent to-transparent lg:hidden pointer-events-none" />
 
                   {/* Featured Pill */}
-                  <div className="absolute top-6 left-6 inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#B8FF00] text-black font-mono text-[11px] font-extrabold uppercase shadow-lg">
+                  <div className="absolute top-5 left-5 inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#B8FF00] text-black font-mono text-[11px] font-extrabold uppercase shadow-lg z-10">
                     <Sparkles className="w-3 h-3" />
                     <span>{t.featuredBadge}</span>
                   </div>
                 </div>
 
                 {/* Article Info Details */}
-                <div className="lg:col-span-5 p-8 sm:p-12 flex flex-col justify-between">
+                <div className="lg:col-span-7 p-6 sm:p-8 lg:p-10 flex flex-col justify-between">
                   <div>
                     {/* Category & Meta Pill */}
-                    <div className="flex items-center space-x-3 mb-6 font-mono text-xs">
+                    <div className="flex items-center space-x-3 mb-5 font-mono text-xs">
                       <span
                         className="px-3 py-1 rounded-full font-bold uppercase"
                         style={{
@@ -236,18 +320,20 @@ export const Blog: React.FC = () => {
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold font-mono text-white tracking-tight uppercase leading-snug group-hover:text-[#B8FF00] transition-colors mb-4">
+                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-extrabold font-mono text-white tracking-tight uppercase leading-snug group-hover:text-[#B8FF00] transition-colors mb-4">
                       {featuredPost.title}
                     </h3>
 
-                    {/* Excerpt */}
-                    <p className="text-neutral-400 font-light text-sm sm:text-base leading-relaxed line-clamp-3 mb-8">
-                      {featuredPost.excerpt}
-                    </p>
+                    {/* Excerpt / Summary */}
+                    {getPostExcerpt(featuredPost, 200) && (
+                      <p className="text-neutral-400 font-light text-xs sm:text-sm leading-relaxed line-clamp-3 mb-6">
+                        {getPostExcerpt(featuredPost, 200)}
+                      </p>
+                    )}
                   </div>
 
                   {/* Footer Meta info */}
-                  <div className="pt-6 border-t border-neutral-800/80 flex items-center justify-between font-mono text-xs text-neutral-500">
+                  <div className="pt-5 border-t border-neutral-800/80 flex items-center justify-between font-mono text-xs text-neutral-500">
                     <div className="flex items-center space-x-4">
                       <span className="flex items-center space-x-1">
                         <User className="w-3.5 h-3.5 text-[#B8FF00]" />
@@ -260,12 +346,12 @@ export const Blog: React.FC = () => {
                       </span>
                     </div>
 
-                    <div className="w-10 h-10 rounded-full bg-neutral-900 border border-neutral-800 group-hover:bg-[#B8FF00] group-hover:text-black group-hover:border-[#B8FF00] text-white flex items-center justify-center transition-all duration-300">
-                      <ArrowUpRight className="w-5 h-5" />
+                    <div className="w-9 h-9 rounded-full bg-neutral-900 border border-neutral-800 group-hover:bg-[#B8FF00] group-hover:text-black group-hover:border-[#B8FF00] text-white flex items-center justify-center transition-all duration-300">
+                      <ArrowUpRight className="w-4 h-4" />
                     </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             )}
 
             {/* Horizontal Scroll Article Slider Container */}
@@ -312,22 +398,22 @@ export const Blog: React.FC = () => {
                   className="flex items-stretch gap-6 sm:gap-8 overflow-x-auto pb-6 pt-2 custom-scrollbar snap-x snap-mandatory scroll-smooth"
                 >
                   {regularPosts.map((post) => (
-                    <div
+                    <Link
                       key={post.id}
-                      onClick={() => openModal(post)}
+                      href={`/blog/${post.slug || post.id}`}
                       data-cursor="READ"
                       suppressHydrationWarning
                       className="w-[280px] sm:w-[340px] md:w-[360px] lg:w-[380px] shrink-0 snap-start group rounded-3xl bg-[#111111] border border-neutral-800 hover:border-[#B8FF00]/40 overflow-hidden transition-all duration-500 cursor-pointer flex flex-col justify-between shadow-xl"
                     >
                       {/* Cover Frame */}
-                      <div className="relative h-52 sm:h-56 w-full overflow-hidden bg-neutral-900">
-                        <img
+                      <div className="relative h-44 sm:h-48 w-full overflow-hidden bg-neutral-900">
+                        <BlogCoverImage
                           src={post.cover_image}
                           alt={post.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                          loading="lazy"
+                          category={post.category}
+                          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                         />
-                        <div className="absolute top-4 left-4">
+                        <div className="absolute top-4 left-4 z-10">
                           <span
                             className="px-3 py-1 rounded-full font-mono text-[10px] font-bold uppercase shadow-md backdrop-blur-md"
                             style={{
@@ -362,9 +448,11 @@ export const Blog: React.FC = () => {
                             {post.title}
                           </h4>
 
-                          <p className="text-neutral-400 font-light text-xs leading-relaxed line-clamp-3 mb-6">
-                            {post.excerpt}
-                          </p>
+                          {getPostExcerpt(post, 130) && (
+                            <p className="text-neutral-400 font-light text-xs leading-relaxed line-clamp-3 mb-6">
+                              {getPostExcerpt(post, 130)}
+                            </p>
+                          )}
                         </div>
 
                         {/* Card Footer */}
@@ -379,7 +467,7 @@ export const Blog: React.FC = () => {
                           </span>
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   ))}
                 </div>
               </div>
@@ -387,214 +475,7 @@ export const Blog: React.FC = () => {
           </div>
         )}
       </div>
-
-      {/* ARTICLE READER MODAL DRAWER */}
-      {activePostModal && (
-        <div
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 md:p-10 bg-black/80 backdrop-blur-xl animate-fade-in"
-          onClick={closeModal}
-          data-lenis-prevent
-        >
-          <div
-            data-lenis-prevent
-            className="relative w-full max-w-4xl max-h-[90vh] bg-[#111111] border border-neutral-800 rounded-3xl overflow-hidden shadow-2xl flex flex-col"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Modal Header Controls */}
-            <div className="p-6 border-b border-neutral-800/80 flex items-center justify-between bg-[#141414] shrink-0">
-              <div className="flex items-center space-x-3">
-                <span
-                  className="px-3.5 py-1 rounded-full font-mono text-xs font-bold uppercase"
-                  style={{
-                    backgroundColor: `${activePostModal.category?.color || "#B8FF00"}20`,
-                    color: activePostModal.category?.color || "#B8FF00",
-                    border: `1px solid ${activePostModal.category?.color || "#B8FF00"}40`,
-                  }}
-                >
-                  {activePostModal.category?.name}
-                </span>
-
-                <span className="text-neutral-400 font-mono text-xs hidden sm:inline">
-                  • {formatDate(activePostModal.published_at, language)}
-                </span>
-              </div>
-
-              <button
-                onClick={closeModal}
-                suppressHydrationWarning
-                className="px-4 py-2 rounded-full bg-neutral-900 hover:bg-[#B8FF00] hover:text-black border border-neutral-800 text-neutral-300 font-mono text-xs font-bold tracking-wider uppercase transition-all flex items-center space-x-2"
-              >
-                <span>{t.closeModal}</span>
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            {/* Scrollable Modal Article Content */}
-            <div
-              data-lenis-prevent
-              onWheel={(e) => e.stopPropagation()}
-              onTouchMove={(e) => e.stopPropagation()}
-              className="p-6 sm:p-10 overflow-y-auto space-y-8 custom-scrollbar overscroll-contain flex-1"
-            >
-              {/* Cover Header */}
-              <div className="relative h-64 sm:h-96 rounded-2xl overflow-hidden bg-neutral-900 border border-neutral-800">
-                <img
-                  src={activePostModal.cover_image}
-                  alt={activePostModal.title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#111111] via-transparent to-transparent" />
-              </div>
-
-              {/* Title & Metadata */}
-              <div>
-                <h1 className="text-2xl sm:text-4xl md:text-5xl font-black font-mono text-white tracking-tight uppercase leading-tight mb-6">
-                  {activePostModal.title}
-                </h1>
-
-                <div className="flex flex-wrap items-center gap-4 text-xs font-mono text-neutral-400 pb-6 border-b border-neutral-800">
-                  <div className="flex items-center space-x-1.5">
-                    <User className="w-4 h-4 text-[#B8FF00]" />
-                    <span className="text-white font-medium">{activePostModal.author?.name}</span>
-                  </div>
-                  <span>•</span>
-                  <div className="flex items-center space-x-1.5">
-                    <Calendar className="w-4 h-4" />
-                    <span>{formatDate(activePostModal.published_at, language)}</span>
-                  </div>
-                  <span>•</span>
-                  <div className="flex items-center space-x-1.5">
-                    <Eye className="w-4 h-4" />
-                    <span>
-                      {activePostModal.views_count} {t.views}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Excerpt Lead */}
-              <div className="p-6 rounded-2xl bg-neutral-900/80 border border-neutral-800 text-neutral-200 font-light text-base leading-relaxed italic">
-                &ldquo;{activePostModal.excerpt}&rdquo;
-              </div>
-
-              {/* Formatted Content Body */}
-              <div className="prose prose-invert max-w-none text-neutral-300 font-light text-sm sm:text-base leading-relaxed">
-                <ReactMarkdown
-                  components={{
-                    h1: ({ children }) => (
-                      <h1 className="text-2xl sm:text-3xl font-black font-mono text-white tracking-tight uppercase border-b border-neutral-800 pb-3 mt-8 mb-4">
-                        {children}
-                      </h1>
-                    ),
-                    h2: ({ children }) => (
-                      <h2 className="text-xl sm:text-2xl font-bold font-mono text-white tracking-tight mt-8 mb-4 border-b border-neutral-800/80 pb-2">
-                        {children}
-                      </h2>
-                    ),
-                    h3: ({ children }) => (
-                      <h3 className="text-lg sm:text-xl font-bold font-mono text-[#B8FF00] tracking-tight mt-6 mb-3">
-                        {children}
-                      </h3>
-                    ),
-                    h4: ({ children }) => (
-                      <h4 className="text-base sm:text-lg font-semibold font-mono text-neutral-200 mt-4 mb-2">
-                        {children}
-                      </h4>
-                    ),
-                    p: ({ children }) => (
-                      <p className="text-neutral-300 font-light text-sm sm:text-base leading-relaxed mb-4">
-                        {children}
-                      </p>
-                    ),
-                    ul: ({ children }) => (
-                      <ul className="list-disc list-inside space-y-2 mb-4 text-neutral-300 pl-2">
-                        {children}
-                      </ul>
-                    ),
-                    ol: ({ children }) => (
-                      <ol className="list-decimal list-inside space-y-2 mb-4 text-neutral-300 pl-2 font-mono">
-                        {children}
-                      </ol>
-                    ),
-                    li: ({ children }) => (
-                      <li className="leading-relaxed text-neutral-300">
-                        {children}
-                      </li>
-                    ),
-                    pre: ({ children }) => (
-                      <pre className="p-4 my-4 rounded-xl bg-black border border-neutral-800 font-mono text-xs text-[#B8FF00] overflow-x-auto whitespace-pre-wrap">
-                        {children}
-                      </pre>
-                    ),
-                    code: ({ node, className, children, ...props }: any) => {
-                      const isMultiLine = typeof children === "string" && children.includes("\n");
-                      const isInline = !className && !isMultiLine;
-
-                      if (isInline) {
-                        return (
-                          <code
-                            className="px-1.5 py-0.5 rounded bg-neutral-900 border border-neutral-800 text-[#B8FF00] font-mono text-xs"
-                            {...props}
-                          >
-                            {children}
-                          </code>
-                        );
-                      }
-                      return (
-                        <code className={className} {...props}>
-                          {children}
-                        </code>
-                      );
-                    },
-                    blockquote: ({ children }) => (
-                      <blockquote className="p-4 my-4 rounded-xl bg-neutral-900/80 border-l-4 border-[#B8FF00] text-neutral-200 font-light text-sm italic">
-                        {children}
-                      </blockquote>
-                    ),
-                    strong: ({ children }) => (
-                      <strong className="font-bold text-white">
-                        {children}
-                      </strong>
-                    ),
-                    a: ({ href, children }) => (
-                      <a
-                        href={href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[#B8FF00] underline underline-offset-4 hover:text-white transition-colors"
-                      >
-                        {children}
-                      </a>
-                    ),
-                  }}
-                >
-                  {activePostModal.content.replace(/\r\n/g, "\n")}
-                </ReactMarkdown>
-              </div>
-
-              {/* Modal Footer CTA */}
-              <div className="pt-8 border-t border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div className="flex items-center space-x-2 text-xs font-mono text-neutral-400">
-                  <Tag className="w-4 h-4 text-[#B8FF00]" />
-                  <span>
-                    Keywords: {activePostModal.meta?.keywords || "laravel, vps, web development"}
-                  </span>
-                </div>
-
-                <MagneticButton strength={0.3}>
-                  <button
-                    onClick={closeModal}
-                    suppressHydrationWarning
-                    className="px-6 py-3 rounded-full bg-[#B8FF00] text-black font-mono font-bold text-xs tracking-wider uppercase hover:bg-white transition-colors"
-                  >
-                    {t.closeModal}
-                  </button>
-                </MagneticButton>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 };
+

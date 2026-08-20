@@ -99,7 +99,9 @@ export const translations = {
       by: "By",
       publishedOn: "Published",
       closeModal: "CLOSE ARTICLE",
-      share: "SHARE ARTICLE"
+      share: "SHARE ARTICLE",
+      emptyTitle: "NO ARTICLES YET",
+      emptyDesc: "Technical insights, DevOps guides, and engineering updates will be published here soon."
     },
     cta: {
       badge: "LET'S COLLABORATE",
@@ -217,7 +219,9 @@ export const translations = {
       by: "Oleh",
       publishedOn: "Diterbitkan",
       closeModal: "TUTUP ARTIKEL",
-      share: "BAGIKAN ARTIKEL"
+      share: "BAGIKAN ARTIKEL",
+      emptyTitle: "BELUM ADA ARTIKEL",
+      emptyDesc: "Wawasan teknis, panduan DevOps, dan artikel terbaru akan segera dipublikasikan di sini."
     },
     cta: {
       badge: "MARI BEKERJASAMA",
