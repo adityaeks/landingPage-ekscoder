@@ -380,7 +380,7 @@ export function BlogDetailClient({ post, allPosts }: BlogDetailClientProps) {
           {/* Left Column (8 cols): Article Body */}
           <div className="lg:col-span-8 space-y-12">
             {/* Overview / Lead Quote */}
-            {summary && (
+            {/* {summary && (
               <div ref={overviewRef} className="p-6 sm:p-8 rounded-3xl bg-[#111111] border border-neutral-800 relative overflow-hidden">
                 <div
                   className="absolute top-0 left-0 w-1.5 h-full"
@@ -394,7 +394,7 @@ export function BlogDetailClient({ post, allPosts }: BlogDetailClientProps) {
                   &ldquo;{summary}&rdquo;
                 </p>
               </div>
-            )}
+            )} */}
 
             {/* Markdown Body Content */}
             <div ref={bodyRef} className="prose prose-invert max-w-none text-neutral-300 font-light text-base sm:text-lg leading-relaxed space-y-6">
