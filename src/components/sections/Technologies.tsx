@@ -1,224 +1,464 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
-import { gsap } from "@/lib/gsap";
-import { Check, Sparkles, ArrowUpRight } from "lucide-react";
+import React, { useEffect, useRef } from "react";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
+import {
+  Globe,
+  Layers,
+  Bot,
+  Check,
+  ArrowUpRight,
+  Sparkles,
+  Zap,
+  ShieldCheck,
+  TrendingUp,
+  MessageSquare,
+  ChevronRight
+} from "lucide-react";
 
 import { useLanguage } from "@/context/LanguageContext";
-import { translations } from "@/data/translations";
-import { businessSolutionsData, businessCapabilitiesData } from "@/data/solutionsData";
+import { getWhatsAppUrl } from "@/data/translations";
+
+interface SolutionItem {
+  id: string;
+  number: string;
+  badge: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  icon: any;
+  features: string[];
+  ctaText: string;
+  accent: string;
+  popular?: boolean;
+}
+
+interface GuaranteeItem {
+  icon: any;
+  title: string;
+  desc: string;
+}
+
+const solutionsContent: Record<"ID" | "EN", {
+  badge: string;
+  title1: string;
+  title2: string;
+  description: string;
+  solutions: SolutionItem[];
+  guaranteeTitle: string;
+  guarantees: GuaranteeItem[];
+}> = {
+  ID: {
+    badge: "SOLUSI DIGITAL // APA YANG KAMI BANGUN",
+    title1: "SOLUSI TEPAT GUNA",
+    title2: "UNTUK BISNIS ANDA.",
+    description: "Kami bantu bisnis Anda berkembang dengan website modern, sistem operasional otomatis, dan bot cerdas berbasis AI yang bekerja 24 jam non-stop.",
+    solutions: [
+      {
+        id: "web-landing",
+        number: "01",
+        badge: "BRANDING & PENJUALAN",
+        title: "Website & Landing Page",
+        subtitle: "Meningkatkan Kepercayaan & Penjualan",
+        description: "Website profesional yang cepat dibuka, terlihat elegan di HP, dan siap mendatangkan calon pelanggan baru lewat Google.",
+        icon: Globe,
+        features: [
+          "Tampilan Modern & Ramah Layar HP",
+          "Optimasi SEO agar Muncul di Google",
+          "Loading Kilat Tanpa Bikin Pengunjung Menunggu",
+          "Tombol WhatsApp & Formulir Lead Siap Pakai"
+        ],
+        ctaText: "Konsultasi Website",
+        accent: "#B8FF00"
+      },
+      {
+        id: "custom-system",
+        number: "02",
+        badge: "OTOMATISASI OPERASIONAL",
+        title: "Sistem & Aplikasi Bisnis",
+        subtitle: "Tinggalkan Cara Manual yang Lambat",
+        description: "Aplikasi web khusus untuk kelola stok gudang, kasir penjualan (POS), pembukuan keuangan, dan manajemen tim secara otomatis & akurat.",
+        icon: Layers,
+        features: [
+          "Kelola Stok, Kasir & Transaksi Otomatis",
+          "Laporan Keuangan & Omset Real-Time",
+          "Hak Akses Karyawan & Multi-Cabang",
+          "Koneksi WhatsApp Notif & Pembayaran Otomatis"
+        ],
+        ctaText: "Diskusi Sistem Bisnis",
+        accent: "#06B6D4",
+        popular: true
+      },
+      {
+        id: "bot-ai",
+        number: "03",
+        badge: "BOT OTOMATIS & AI",
+        title: "Automated Bot & Integrasi AI",
+        subtitle: "Layanan CS 24 Jam & Otomatisasi dengan AI",
+        description: "Bangun bot cerdas untuk WhatsApp, Telegram, atau website yang siap balas chat pelanggan 24/7, kirim notifikasi pesanan, dan integrasi kecerdasan buatan (AI) ke sistem bisnis Anda.",
+        icon: Bot,
+        features: [
+          "Bot WhatsApp & Telegram Balas Chat 24/7",
+          "Integrasi AI untuk Customer Service",
+          "Otomatisasi Broadcast & Notifikasi Order",
+          "Hemat Biaya CS & Respon Pelanggan Cepat"
+        ],
+        ctaText: "Konsultasi Bot & AI",
+        accent: "#A855F7"
+      }
+    ],
+    guaranteeTitle: "NILAI LEBIH BEKERJASAMA DENGAN EKSCODER",
+    guarantees: [
+      {
+        icon: Zap,
+        title: "Loading Super Cepat",
+        desc: "Website terbuka instan tanpa lemot"
+      },
+      {
+        icon: ShieldCheck,
+        title: "Keamanan Data Terjamin",
+        desc: "Enkripsi & backup berkala otomatis"
+      },
+      {
+        icon: TrendingUp,
+        title: "Siap Berkembang",
+        desc: "Mudah ditambah fitur kapan saja"
+      },
+      {
+        icon: MessageSquare,
+        title: "Bantuan & Support Cepat",
+        desc: "Tim engineer siap mendampingi Anda"
+      }
+    ]
+  },
+  EN: {
+    badge: "DIGITAL SOLUTIONS // WHAT WE BUILD",
+    title1: "POWERFUL SOLUTIONS",
+    title2: "BUILT FOR BUSINESS GROWTH.",
+    description: "We help modern businesses grow with high-converting websites, automated workflow systems, and smart AI-powered automation bots.",
+    solutions: [
+      {
+        id: "web-landing",
+        number: "01",
+        badge: "BRANDING & SALES",
+        title: "High-Converting Websites",
+        subtitle: "Build Trust & Generate Leads",
+        description: "Modern, ultra-fast websites and landing pages designed to build customer trust and turn visitors into paying clients.",
+        icon: Globe,
+        features: [
+          "Modern, Clean & Mobile-First Design",
+          "Built-in SEO to Rank Higher on Google",
+          "Instant Page Load Speed (< 1 Second)",
+          "WhatsApp Click-to-Chat & Ready Lead Forms"
+        ],
+        ctaText: "Discuss Website Project",
+        accent: "#B8FF00"
+      },
+      {
+        id: "custom-system",
+        number: "02",
+        badge: "BUSINESS AUTOMATION",
+        title: "Custom Web Applications",
+        subtitle: "Eliminate Slow Manual Spreadsheets",
+        description: "Custom web software to automate inventory tracking, order management, point-of-sale (POS), and financial reports accurately.",
+        icon: Layers,
+        features: [
+          "Automate Inventory, POS & Orders",
+          "Real-Time Business & Revenue Reports",
+          "Role-Based Access & Multi-Branch Support",
+          "WhatsApp Notification & Payment Gateways"
+        ],
+        ctaText: "Discuss Custom Software",
+        accent: "#06B6D4",
+        popular: true
+      },
+      {
+        id: "bot-ai",
+        number: "03",
+        badge: "AUTOMATED BOTS & AI",
+        title: "Automated Bots & AI Integration",
+        subtitle: "24/7 Smart CS & Workflow Automation",
+        description: "Build intelligent bots for WhatsApp, Telegram, or websites to handle customer inquiries 24/7, process incoming orders, and integrate custom AI into your workflow.",
+        icon: Bot,
+        features: [
+          "24/7 WhatsApp & Telegram Auto-Reply Bots",
+          "AI Integration for Customer Support",
+          "Automated Order Notifications & Broadcasts",
+          "Reduce Support Costs & Instant Response Times"
+        ],
+        ctaText: "Discuss Bot & AI",
+        accent: "#A855F7"
+      }
+    ],
+    guaranteeTitle: "WHY PARTNER WITH EKSCODER",
+    guarantees: [
+      {
+        icon: Zap,
+        title: "Ultra-Fast Performance",
+        desc: "Instant page loads with zero lag"
+      },
+      {
+        icon: ShieldCheck,
+        title: "Protected & Secure Data",
+        desc: "Encryption & regular auto-backups"
+      },
+      {
+        icon: TrendingUp,
+        title: "Ready to Scale",
+        desc: "Easily add new features anytime"
+      },
+      {
+        icon: MessageSquare,
+        title: "Direct WhatsApp Support",
+        desc: "Responsive engineering team on standby"
+      }
+    ]
+  }
+};
 
 export const Technologies: React.FC = () => {
   const { language } = useLanguage();
-  const t = translations[language].solutions;
-  const [activeSolution, setActiveSolution] = useState<string>("digital-platform");
+  const content = solutionsContent[language];
   const containerRef = useRef<HTMLDivElement>(null);
-  const solutionsRef = useRef<HTMLDivElement>(null);
-
-  const solutionsList = businessSolutionsData[language];
-  const capabilitiesList = businessCapabilitiesData[language];
-
-  const selectedSolution = solutionsList.find((s) => s.id === activeSolution) || solutionsList[0];
+  const cardsRef = useRef<HTMLDivElement>(null);
+  const trustRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      if (solutionsRef.current) {
+      if (cardsRef.current) {
+        const cards = cardsRef.current.querySelectorAll(".solution-card");
         gsap.fromTo(
-          solutionsRef.current.children,
+          cards,
           { opacity: 0, y: 30 },
           {
             scrollTrigger: {
-              trigger: containerRef.current,
-              start: "top 70%",
-              toggleActions: "play none none reverse",
+              trigger: cardsRef.current,
+              start: "top 92%",
+              toggleActions: "play none none none",
             },
             opacity: 1,
             y: 0,
-            duration: 0.8,
+            duration: 0.7,
             stagger: 0.15,
-            ease: "power3.out",
+            ease: "power2.out",
+            clearProps: "transform",
+          }
+        );
+      }
+
+      if (trustRef.current) {
+        gsap.fromTo(
+          trustRef.current,
+          { opacity: 0, y: 20 },
+          {
+            scrollTrigger: {
+              trigger: trustRef.current,
+              start: "top 95%",
+              toggleActions: "play none none none",
+            },
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            ease: "power2.out",
+            clearProps: "transform",
           }
         );
       }
     });
 
     return () => ctx.revert();
-  }, []);
+  }, [language]);
 
   return (
     <section
-      id="technologies"
+      id="solutions"
       ref={containerRef}
-      className="py-24 md:py-36 px-6 md:px-12 bg-transparent relative border-b border-neutral-800/60 overflow-hidden bg-noise select-none"
+      className="py-16 sm:py-24 md:py-36 px-4 sm:px-6 md:px-12 bg-transparent relative border-b border-neutral-800/60 overflow-hidden"
     >
-      {/* Background Ambient Glow */}
-      <div className="absolute top-1/3 left-1/4 w-[600px] h-[600px] bg-[#B8FF00]/5 rounded-full blur-[160px] pointer-events-none -z-10 animate-pulse" />
+      {/* Background Ambient Glows */}
+      <div className="absolute top-1/4 left-10 w-[500px] h-[500px] bg-[#B8FF00]/5 rounded-full blur-[160px] pointer-events-none -z-10" />
+      <div className="absolute bottom-10 right-10 w-[450px] h-[450px] bg-[#06B6D4]/5 rounded-full blur-[160px] pointer-events-none -z-10" />
 
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto space-y-12 sm:space-y-16">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
             <div className="flex items-center space-x-3 text-xs font-mono text-[#B8FF00] tracking-widest uppercase mb-3">
               <span className="w-8 h-[1px] bg-[#B8FF00]" />
-              <span>{t.badge}</span>
+              <span>{content.badge}</span>
             </div>
-            <h2 className="text-4xl sm:text-6xl font-extrabold tracking-tighter uppercase font-mono text-white flex items-center gap-3">
-              <span>{t.title}</span>
+            <h2 className="text-3xl sm:text-5xl md:text-6xl font-black font-mono tracking-tight uppercase text-white leading-tight">
+              <span>{content.title1}</span>
+              <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#B8FF00] to-neutral-400">
+                {content.title2}
+              </span>
             </h2>
           </div>
-          <p className="text-neutral-400 max-w-md text-sm font-light leading-relaxed">
-            {t.description}
+          <p className="text-neutral-400 max-w-md text-sm sm:text-base font-light leading-relaxed">
+            {content.description}
           </p>
         </div>
 
-        {/* 1. Solution Switcher Tabs */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-12">
-          {solutionsList.map((sol) => {
-            const isActive = activeSolution === sol.id;
+        {/* 3 Core Solution Cards Grid */}
+        <div
+          ref={cardsRef}
+          className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch"
+        >
+          {content.solutions.map((sol) => {
+            const Icon = sol.icon;
+            const message = language === "ID"
+              ? `Halo Ekscoder, saya ingin konsultasi mengenai ${sol.title}.`
+              : `Hi Ekscoder, I would like to consult about ${sol.title}.`;
+            const actionUrl = getWhatsAppUrl(message);
+
             return (
               <div
                 key={sol.id}
-                onClick={() => setActiveSolution(sol.id)}
-                className={`p-6 rounded-2xl border transition-all duration-300 cursor-pointer flex flex-col justify-between group ${
-                  isActive
-                    ? "bg-[#141414] border-[#B8FF00] shadow-xl shadow-[#B8FF00]/10 scale-[1.01]"
-                    : "bg-[#111111]/70 border-neutral-800/80 hover:border-neutral-700 hover:bg-[#141414]"
+                className={`solution-card relative rounded-3xl p-6 sm:p-8 flex flex-col justify-between transition-all duration-400 group border overflow-hidden ${
+                  sol.popular
+                    ? "bg-gradient-to-b from-[#16181b] to-[#101114] border-[#06B6D4]/40 shadow-2xl shadow-[#06B6D4]/10"
+                    : "bg-[#111214] border-neutral-800 hover:border-neutral-700"
                 }`}
+                style={{
+                  borderColor: sol.popular ? `${sol.accent}60` : undefined,
+                }}
               >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-[10px] font-mono px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800 font-bold" style={{ color: sol.accent }}>
-                      // {sol.badge}
+                {/* Popular / Recommended Badge */}
+                {sol.popular && (
+                  <div className="absolute top-0 right-0">
+                    <div
+                      className="px-4 py-1 rounded-bl-2xl font-mono text-[10px] font-extrabold uppercase tracking-widest text-black flex items-center space-x-1.5 shadow-md"
+                      style={{ backgroundColor: sol.accent }}
+                    >
+                      <Sparkles className="w-3 h-3" />
+                      <span>{language === "ID" ? "PALING DICARI" : "MOST POPULAR"}</span>
+                    </div>
+                  </div>
+                )}
+
+                {/* Top Section */}
+                <div className="space-y-6">
+                  {/* Icon & Category Badge */}
+                  <div className="flex items-center justify-between">
+                    <div
+                      className="w-14 h-14 rounded-2xl flex items-center justify-center border transition-transform duration-300 group-hover:scale-105"
+                      style={{
+                        backgroundColor: `${sol.accent}12`,
+                        borderColor: `${sol.accent}30`,
+                        color: sol.accent,
+                      }}
+                    >
+                      <Icon className="w-7 h-7" />
+                    </div>
+
+                    <span className="font-mono text-3xl font-black text-neutral-700 group-hover:text-neutral-500 transition-colors">
+                      {sol.number}
                     </span>
-                    {isActive && <span className="w-2.5 h-2.5 rounded-full bg-[#B8FF00] animate-ping" />}
                   </div>
 
-                  <h3 className={`text-xl font-mono font-extrabold tracking-tight mb-2 ${isActive ? "text-white" : "text-neutral-300 group-hover:text-white"}`}>
-                    {sol.title}
-                  </h3>
+                  {/* Badge & Title */}
+                  <div>
+                    <span
+                      className="inline-block font-mono text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border mb-3"
+                      style={{
+                        backgroundColor: `${sol.accent}10`,
+                        borderColor: `${sol.accent}30`,
+                        color: sol.accent,
+                      }}
+                    >
+                      {sol.badge}
+                    </span>
 
-                  <p className="text-xs font-mono text-neutral-400 font-medium mb-4">
-                    {sol.subtitle}
+                    <h3 className="text-2xl sm:text-3xl font-black font-mono text-white tracking-tight leading-snug mb-1">
+                      {sol.title}
+                    </h3>
+
+                    <p className="text-xs font-mono text-neutral-400 font-medium">
+                      {sol.subtitle}
+                    </p>
+                  </div>
+
+                  {/* Description */}
+                  <p className="text-neutral-300 font-light text-sm leading-relaxed">
+                    {sol.description}
                   </p>
+
+                  {/* Feature Checklist */}
+                  <div className="pt-2 space-y-3">
+                    {sol.features.map((feat, fIdx) => (
+                      <div key={fIdx} className="flex items-start space-x-3">
+                        <div
+                          className="w-4 h-4 rounded-full flex items-center justify-center shrink-0 mt-0.5"
+                          style={{
+                            backgroundColor: `${sol.accent}20`,
+                            color: sol.accent,
+                          }}
+                        >
+                          <Check className="w-2.5 h-2.5 stroke-[3]" />
+                        </div>
+                        <span className="text-xs font-mono text-neutral-200 leading-snug">
+                          {feat}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
-                <div className="pt-4 border-t border-neutral-800/80 flex items-center justify-between text-xs font-mono">
-                  <span className={`${isActive ? "text-[#B8FF00]" : "text-neutral-500"} font-bold`}>
-                    {isActive ? t.tabActive : t.tabSelect}
-                  </span>
-                  <ArrowUpRight className={`w-4 h-4 ${isActive ? "text-[#B8FF00]" : "text-neutral-500"}`} />
+                {/* Bottom Action Button */}
+                <div className="pt-8 mt-6 border-t border-neutral-800/80">
+                  <a
+                    href={actionUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    suppressHydrationWarning
+                    data-cursor="CONSULT"
+                    className="w-full py-3.5 px-6 rounded-2xl flex items-center justify-between font-mono font-bold text-xs uppercase tracking-wider transition-all duration-300 group/btn"
+                    style={{
+                      backgroundColor: sol.popular ? sol.accent : "#1a1c20",
+                      color: sol.popular ? "#000" : "#fff",
+                      border: sol.popular ? "none" : "1px solid rgba(255,255,255,0.1)",
+                    }}
+                  >
+                    <span>{sol.ctaText}</span>
+                    <ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-0.5 transition-transform" />
+                  </a>
                 </div>
               </div>
             );
           })}
         </div>
 
-        {/* Selected Solution Detail Showcase Window */}
-        <div className="p-8 md:p-12 rounded-3xl bg-[#111111] border border-neutral-800 shadow-2xl mb-20 relative overflow-hidden">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-7 space-y-6">
-              <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-neutral-900 border border-neutral-800 text-xs font-mono" style={{ color: selectedSolution.accent }}>
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>{t.impactOverview}</span>
-              </div>
-
-              <h3 className="text-3xl sm:text-4xl font-extrabold font-mono text-white tracking-tight">
-                {selectedSolution.title}
-              </h3>
-
-              <p className="text-neutral-300 font-light text-base leading-relaxed">
-                {selectedSolution.description}
-              </p>
-
-              {/* Business Focus & Key Benefit Cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                <div className="p-4 rounded-xl bg-neutral-900/90 border border-neutral-800">
-                  <div className="text-[10px] font-mono text-neutral-500 uppercase tracking-widest mb-1">
-                    {t.focusLabel}
-                  </div>
-                  <div className="text-xs font-mono font-bold text-white leading-snug">
-                    {selectedSolution.businessFocus}
-                  </div>
-                </div>
-
-                <div className="p-4 rounded-xl bg-neutral-900/90 border border-neutral-800">
-                  <div className="text-[10px] font-mono text-neutral-500 uppercase tracking-widest mb-1">
-                    {t.benefitLabel}
-                  </div>
-                  <div className="text-xs font-mono font-bold text-[#B8FF00] leading-snug">
-                    {selectedSolution.keyBenefit}
-                  </div>
-                </div>
-              </div>
+        {/* Bottom Trust Guarantee Strip */}
+        <div
+          ref={trustRef}
+          className="p-6 sm:p-8 rounded-3xl bg-[#111214] border border-neutral-800 space-y-6"
+        >
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-neutral-800/80 pb-4">
+            <div className="flex items-center space-x-2 text-xs font-mono text-[#B8FF00] font-bold uppercase tracking-widest">
+              <Sparkles className="w-4 h-4" />
+              <span>{content.guaranteeTitle}</span>
             </div>
-
-            {/* Right Side: Business Solution Highlights */}
-            <div className="lg:col-span-5 p-6 rounded-2xl bg-neutral-950 border border-neutral-800 space-y-4">
-              <div className="text-xs font-mono text-neutral-400 uppercase tracking-widest font-bold border-b border-neutral-800 pb-3">
-                {t.highlightsTitle}
-              </div>
-
-              <div className="space-y-3">
-                {selectedSolution.highlights.map((highlight, hIdx) => (
-                  <div
-                    key={hIdx}
-                    className="p-3 rounded-xl bg-neutral-900 border border-neutral-800/80 flex items-center justify-between font-mono text-xs"
-                  >
-                    <div className="flex items-center space-x-3 text-white font-bold">
-                      <Check className="w-4 h-4 text-[#B8FF00]" />
-                      <span>{highlight}</span>
-                    </div>
-                    <span className="text-[10px] text-[#B8FF00] font-bold">VERIFIED</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* 2. Core Business Capabilities Grid Matrix */}
-        <div>
-          <div className="flex items-center justify-between border-b border-neutral-800 pb-4 mb-8">
-            <h3 className="text-2xl font-mono font-extrabold text-white tracking-tight uppercase">
-              {t.matrixTitle}
-            </h3>
-            <span className="text-xs font-mono text-neutral-500">{t.matrixCount}</span>
+            <span className="text-[11px] font-mono text-neutral-500">
+              EKSCODER ENGINEERING STANDARD
+            </span>
           </div>
 
-          <div ref={solutionsRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {capabilitiesList.map((cap, idx) => {
-              const Icon = cap.icon;
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {content.guarantees.map((item, gIdx) => {
+              const GIcon = item.icon;
               return (
-                <div
-                  key={idx}
-                  className="p-6 rounded-2xl bg-[#111111] border border-neutral-800/80 hover:border-[#B8FF00]/40 transition-all duration-300 flex flex-col justify-between group"
-                >
-                  <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="p-2.5 rounded-xl bg-neutral-900 border border-neutral-800 group-hover:bg-[#B8FF00] group-hover:text-black transition-colors duration-300">
-                        <Icon className="w-5 h-5 text-white group-hover:text-black transition-colors" />
-                      </div>
-                      <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-neutral-900 border border-neutral-800 text-[#B8FF00] font-bold">
-                        {cap.status}
-                      </span>
-                    </div>
-
-                    <h4 className="text-lg font-mono font-extrabold text-white group-hover:text-[#B8FF00] transition-colors mb-1">
-                      {cap.name}
-                    </h4>
-
-                    <div className="text-xs font-mono text-neutral-400 font-semibold mb-3">
-                      // {cap.role}
-                    </div>
-
-                    <p className="text-neutral-400 font-light text-xs leading-relaxed">
-                      {cap.implementation}
-                    </p>
+                <div key={gIdx} className="flex items-start space-x-3.5">
+                  <div className="p-2.5 rounded-xl bg-neutral-900 border border-neutral-800 text-[#B8FF00] shrink-0">
+                    <GIcon className="w-4 h-4" />
                   </div>
-
-                  <div className="pt-4 border-t border-neutral-800/60 mt-4 flex items-center justify-between text-[11px] font-mono text-neutral-500">
-                    <span>{cap.category}</span>
-                    <span className="text-neutral-400">READY</span>
+                  <div>
+                    <h4 className="font-mono text-xs font-bold text-white uppercase tracking-tight mb-1">
+                      {item.title}
+                    </h4>
+                    <p className="text-neutral-400 font-light text-xs leading-relaxed">
+                      {item.desc}
+                    </p>
                   </div>
                 </div>
               );

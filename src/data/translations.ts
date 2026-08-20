@@ -1,4 +1,9 @@
-export const WA_LINK = "https://wa.me/6281230508019?text=Hallo%20Admin%20Ekscoder%20saya%20ingin%20konsultasi%20terkait%20project%20website";
+export const WA_PHONE = "6281230508019";
+export const WA_LINK = "https://wa.me/6281230508019?text=Halo%20Ekscoder%2C%20saya%20ingin%20konsultasi%20project.";
+
+export function getWhatsAppUrl(message: string = "Halo Ekscoder, saya ingin konsultasi project."): string {
+  return `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(message.trim())}`;
+}
 
 export const translations = {
   EN: {
@@ -63,17 +68,17 @@ export const translations = {
       description: "Tailored digital engineering and creative technology offerings designed for businesses demanding excellence."
     },
     solutions: {
-      badge: "BUSINESS SOLUTIONS // VALUE DRIVEN ENGINE",
-      title: "DRIVING BUSINESS GROWTH.",
-      description: "We architect scalable software solutions focused on operational efficiency, revenue growth, and long-term business scalability.",
+      badge: "BUSINESS SOLUTIONS // WHAT WE OFFER",
+      title: "HOW WE HELP YOUR BUSINESS.",
+      description: "Simple, practical, and powerful digital solutions to get more clients, automate daily work, and keep your business running smoothly.",
       tabActive: "[ ACTIVE SOLUTION ]",
-      tabSelect: "SELECT SOLUTION →",
-      impactOverview: "BUSINESS IMPACT OVERVIEW",
+      tabSelect: "LEARN MORE →",
+      impactOverview: "WHY THIS MATTERS FOR YOUR BUSINESS",
       focusLabel: "MAIN FOCUS",
-      benefitLabel: "BUSINESS BENEFIT",
-      highlightsTitle: "// SOLUTION HIGHLIGHTS",
-      matrixTitle: "CORE BUSINESS CAPABILITIES & VALUE",
-      matrixCount: "9 CORE VALUE MODULES"
+      benefitLabel: "REAL BENEFIT",
+      highlightsTitle: "// KEY ADVANTAGES",
+      matrixTitle: "WHY PARTNER WITH EKSCODER",
+      matrixCount: "9 ESSENTIAL VALUES"
     },
     projects: {
       badge: "FEATURED WORK // RECENT DELIVERIES",
@@ -183,17 +188,17 @@ export const translations = {
       description: "Penawaran rekayasa digital dan teknologi kreatif yang dirancang khusus untuk bisnis yang menginginkan keunggulan."
     },
     solutions: {
-      badge: "SOLUSI BISNIS // MESIN NILAI UTAMA",
-      title: "MENDORONG PERTUMBUHAN BISNIS.",
-      description: "Kami menyusun solusi perangkat lunak terukur yang berfokus pada efisiensi operasional, pertumbuhan pendapatan, dan skalabilitas jangka panjang bisnis Anda.",
-      tabActive: "[ SOLUSI AKTIF ]",
-      tabSelect: "PILIH SOLUSI →",
-      impactOverview: "RINGKASAN DAMPAK BISNIS",
+      badge: "SOLUSI DIGITAL // APA YANG KAMI TAWARKAN",
+      title: "SOLUSI TEPAT UNTUK BISNIS ANDA.",
+      description: "Solusi digital praktis dan tepat guna untuk membantu bisnis Anda mendapatkan lebih banyak pelanggan, menghemat waktu kerja, dan selalu aktif 24 jam.",
+      tabActive: "[ SOLUSI DIPILIH ]",
+      tabSelect: "LIHAT DETAIL →",
+      impactOverview: "MANFAAT LANGSUNG UNTUK BISNIS ANDA",
       focusLabel: "FOKUS UTAMA",
-      benefitLabel: "MANFAAT BISNIS",
-      highlightsTitle: "// SOROTAN SOLUSI",
-      matrixTitle: "KAPABILITAS & NILAI UTAMA BISNIS",
-      matrixCount: "9 MODUL NILAI UTAMA"
+      benefitLabel: "KEUNTUNGAN NYATA",
+      highlightsTitle: "// KEUNGGULAN UTAMA",
+      matrixTitle: "NILAI LEBIH BEKERJASAMA DENGAN KAMI",
+      matrixCount: "9 NILAI UTAMA"
     },
     projects: {
       badge: "KARYA UNGGULAN // PROYEK TERBARU",
