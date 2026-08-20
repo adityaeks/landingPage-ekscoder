@@ -31,7 +31,7 @@ import {
   MessageSquare,
 } from "lucide-react";
 
-interface BlogDetailClientProps {
+export interface BlogDetailClientProps {
   post: BlogPost | null;
   allPosts: BlogPost[];
 }
@@ -39,7 +39,7 @@ interface BlogDetailClientProps {
 /**
  * Robust Cyber Cover Image with fallback
  */
-const ArticleCoverImage: React.FC<{
+export const ArticleCoverImage: React.FC<{
   src?: string | null;
   alt: string;
   category?: BlogCategory;
@@ -129,7 +129,6 @@ const ArticleCoverImage: React.FC<{
 };
 
 export function BlogDetailClient({ post, allPosts }: BlogDetailClientProps) {
-  const router = useRouter();
   const heroRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const badgeRef = useRef<HTMLDivElement>(null);
@@ -380,23 +379,6 @@ export function BlogDetailClient({ post, allPosts }: BlogDetailClientProps) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
           {/* Left Column (8 cols): Article Body */}
           <div className="lg:col-span-8 space-y-12">
-            {/* Overview / Lead Quote */}
-            {/* {summary && (
-              <div ref={overviewRef} className="p-6 sm:p-8 rounded-3xl bg-[#111111] border border-neutral-800 relative overflow-hidden">
-                <div
-                  className="absolute top-0 left-0 w-1.5 h-full"
-                  style={{ backgroundColor: categoryColor }}
-                />
-                <div className="flex items-center space-x-2 text-xs font-mono text-[#B8FF00] tracking-widest uppercase mb-3">
-                  <BookOpen className="w-3.5 h-3.5" />
-                  <span>// RINGKASAN ARTIKEL</span>
-                </div>
-                <p className="text-base sm:text-lg text-neutral-200 font-light leading-relaxed italic">
-                  &ldquo;{summary}&rdquo;
-                </p>
-              </div>
-            )} */}
-
             {/* Markdown Body Content */}
             <div ref={bodyRef} className="prose prose-invert max-w-none text-neutral-300 font-light text-base sm:text-lg leading-relaxed space-y-6">
               <ReactMarkdown
@@ -696,7 +678,7 @@ export function BlogDetailClient({ post, allPosts }: BlogDetailClientProps) {
                           </span>
                           <span>•</span>
                           <span className="flex items-center space-x-1">
-                            <Eye className="w-3 h-3" />
+                            <Eye className="w-3.5 h-3.5" />
                             <span>{rel.views_count} views</span>
                           </span>
                         </div>
@@ -746,3 +728,5 @@ export function BlogDetailClient({ post, allPosts }: BlogDetailClientProps) {
     </div>
   );
 }
+
+export default BlogDetailClient;

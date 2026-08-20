@@ -20,6 +20,11 @@ export const metadata: Metadata = {
   title: "EKSCODER — Building Digital Experiences",
   description:
     "EKSCODER builds modern digital products, scalable software, and memorable web experiences through code and technology.",
+  icons: {
+    icon: "/ekscoder-logo.png",
+    shortcut: "/ekscoder-logo.png",
+    apple: "/ekscoder-logo.png",
+  },
   keywords: [
     "Creative Developer",
     "Digital Engineering",

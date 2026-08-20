@@ -2,8 +2,9 @@ import {
   fetchBlogPostsFromBackend,
   fetchBlogPostBySlug,
   getPostExcerpt,
+  getFullImageUrl,
 } from "@/services/blogService";
-import { BlogDetailClient } from "./BlogDetailClient";
+import { BlogDetailClient } from "@/components/blog/BlogDetailClient";
 import type { Metadata } from "next";
 
 interface PageProps {
@@ -25,17 +26,42 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const excerpt = getPostExcerpt(post, 160);
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://ekscoder.com";
+  const coverUrl = getFullImageUrl(post.cover_image);
+
+  const ogImages = coverUrl
+    ? [
+        {
+          url: coverUrl,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ]
+    : [];
 
   return {
     title: `${post.title} — EKSCODER`,
     description: excerpt || post.title,
+    alternates: {
+      canonical: `${siteUrl}/blog/${post.slug || slug}`,
+    },
     openGraph: {
       title: `${post.title} — EKSCODER`,
       description: excerpt || post.title,
+      url: `${siteUrl}/blog/${post.slug || slug}`,
+      siteName: "EKSCODER",
       type: "article",
       publishedTime: post.published_at,
       authors: [post.author?.name || "EKSCODER Team"],
       tags: post.category?.name ? [post.category.name] : [],
+      images: ogImages,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${post.title} — EKSCODER`,
+      description: excerpt || post.title,
+      images: coverUrl ? [coverUrl] : [],
     },
   };
 }
