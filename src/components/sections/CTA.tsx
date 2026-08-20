@@ -21,18 +21,19 @@ export const CTA: React.FC = () => {
       if (contentRef.current) {
         gsap.fromTo(
           contentRef.current,
-          { scale: 0.94, opacity: 0, y: 40 },
+          { scale: 0.98, opacity: 0, y: 24 },
           {
             scrollTrigger: {
               trigger: containerRef.current,
-              start: "top 75%",
-              toggleActions: "play none none reverse",
+              start: "top 92%",
+              toggleActions: "play none none none",
             },
             scale: 1,
             opacity: 1,
             y: 0,
-            duration: 1,
-            ease: "power3.out",
+            duration: 0.7,
+            ease: "power2.out",
+            clearProps: "all",
           }
         );
       }
@@ -45,7 +46,7 @@ export const CTA: React.FC = () => {
     <section
       id="cta"
       ref={containerRef}
-      className="py-28 md:py-44 px-6 md:px-12 bg-transparent relative overflow-hidden bg-noise border-b border-neutral-800/60"
+      className="py-14 sm:py-20 md:py-44 px-4 sm:px-6 md:px-12 bg-transparent relative overflow-hidden bg-noise border-b border-neutral-800/60"
     >
       {/* Background Animated Gradient Glows */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#B8FF00]/10 rounded-full blur-[160px] pointer-events-none -z-10 animate-pulse" />
@@ -53,26 +54,26 @@ export const CTA: React.FC = () => {
       <div className="max-w-7xl mx-auto">
         <div
           ref={contentRef}
-          className="relative p-10 sm:p-16 md:p-24 rounded-3xl bg-[#111111] border border-neutral-800 text-center flex flex-col items-center justify-center overflow-hidden shadow-2xl"
+          className="relative p-6 sm:p-14 md:p-24 rounded-3xl bg-[#111111] border border-neutral-800 text-center flex flex-col items-center justify-center overflow-hidden shadow-2xl"
         >
           {/* Tech Grid Pattern */}
           <div className="absolute inset-0 bg-grid-pattern opacity-20 pointer-events-none" />
 
           {/* Section Tag */}
-          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full border border-[#B8FF00]/30 bg-[#B8FF00]/10 text-[#B8FF00] font-mono text-xs tracking-widest uppercase mb-8 z-10">
+          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full border border-[#B8FF00]/30 bg-[#B8FF00]/10 text-[#B8FF00] font-mono text-xs tracking-widest uppercase mb-6 sm:mb-8 z-10">
             <MessageSquare className="w-3.5 h-3.5" />
             <span>{t.badge}</span>
           </div>
 
           {/* Bold Heading */}
-          <h2 className="text-4xl sm:text-6xl md:text-8xl font-black font-mono tracking-tighter uppercase text-white leading-none mb-8 z-10">
+          <h2 className="text-3xl sm:text-5xl md:text-8xl font-black font-mono tracking-tighter uppercase text-white leading-tight sm:leading-none mb-6 sm:mb-8 z-10">
             {t.line1}<br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#B8FF00] to-neutral-400">
               {t.line2}
             </span>
           </h2>
 
-          <p className="text-neutral-300 font-light text-base sm:text-xl max-w-2xl leading-relaxed mb-12 z-10">
+          <p className="text-neutral-300 font-light text-sm sm:text-xl max-w-2xl leading-relaxed mb-8 sm:mb-12 z-10">
             {t.description}
           </p>
 

@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations } from "@/data/translations";
+import { ScrollTrigger } from "@/lib/gsap";
 import {
   BlogPost,
   BlogCategory,
@@ -138,6 +139,9 @@ export const Blog: React.FC = () => {
       if (isMounted) {
         setPosts(data);
         setLoading(false);
+        setTimeout(() => {
+          ScrollTrigger.refresh();
+        }, 150);
       }
     }
 
@@ -178,7 +182,7 @@ export const Blog: React.FC = () => {
   return (
     <section
       id="blog"
-      className="py-24 md:py-36 px-6 md:px-12 bg-transparent relative overflow-hidden border-b border-neutral-800/60"
+      className="py-14 sm:py-20 md:py-36 px-4 sm:px-6 md:px-12 bg-transparent relative overflow-hidden border-b border-neutral-800/60"
     >
       {/* Background Subtle Ambient Glow */}
       <div className="absolute top-1/3 right-10 w-[500px] h-[500px] bg-[#B8FF00]/5 rounded-full blur-[140px] pointer-events-none -z-10" />
@@ -186,7 +190,7 @@ export const Blog: React.FC = () => {
 
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-14 md:mb-16 gap-4 sm:gap-6">
           <div>
             <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full border border-[#B8FF00]/30 bg-[#B8FF00]/10 text-[#B8FF00] font-mono text-xs tracking-widest uppercase mb-4">
               <BookOpen className="w-3.5 h-3.5" />
@@ -358,7 +362,7 @@ export const Blog: React.FC = () => {
             {regularPosts.length > 0 && (
               <div className="space-y-4">
                 {/* Horizontal Navigation Header Controls */}
-                <div className="flex items-center justify-between font-mono text-xs text-neutral-400">
+                {/* <div className="flex items-center justify-between font-mono text-xs text-neutral-400">
                   <div className="flex items-center space-x-2">
                     <span className="w-2 h-2 rounded-full bg-[#B8FF00] animate-pulse" />
                     <span className="tracking-wider uppercase font-bold text-neutral-300">
@@ -384,7 +388,7 @@ export const Blog: React.FC = () => {
                       <ChevronRight className="w-5 h-5" />
                     </button>
                   </div>
-                </div>
+                </div> */}
 
                 {/* Horizontal Scroll Track */}
                 <div

@@ -159,12 +159,12 @@ export function BlogDetailClient({ post, allPosts }: BlogDetailClientProps) {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ delay: 0.1 });
 
-      tl.fromTo(badgeRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" })
-        .fromTo(titleRef.current, { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.8, ease: "power4.out" }, "-=0.3")
-        .fromTo(metaRef.current, { opacity: 0, y: 25 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, "-=0.5")
-        .fromTo(overviewRef.current, { opacity: 0, y: 25 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, "-=0.4")
-        .fromTo(bodyRef.current, { opacity: 0, y: 25 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, "-=0.4")
-        .fromTo(sidebarRef.current, { opacity: 0, x: 25 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, "-=0.5");
+      tl.fromTo(badgeRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out", clearProps: "transform" })
+        .fromTo(titleRef.current, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.8, ease: "power4.out", clearProps: "transform" }, "-=0.3")
+        .fromTo(metaRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", clearProps: "transform" }, "-=0.5")
+        .fromTo(overviewRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", clearProps: "transform" }, "-=0.4")
+        .fromTo(bodyRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out", clearProps: "transform" }, "-=0.4")
+        .fromTo(sidebarRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out", clearProps: "transform" }, "-=0.5");
 
       if (relatedRef.current) {
         const cards = relatedRef.current.querySelectorAll(".related-blog-card");
@@ -242,7 +242,7 @@ export function BlogDetailClient({ post, allPosts }: BlogDetailClientProps) {
   return (
     <div className="min-h-screen bg-[#0A0A0A] text-[#F5F5F5] overflow-x-hidden selection:bg-[#B8FF00] selection:text-black">
       {/* ── Top Navigation Bar ── */}
-      <nav className="fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-4 flex items-center justify-between border-b border-neutral-800/50 bg-[#0A0A0A]/85 backdrop-blur-xl">
+      <nav className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 md:px-12 py-4 flex items-center justify-between border-b border-neutral-800/50 bg-[#0A0A0A]/85 backdrop-blur-xl">
         <Link
           href="/#blog"
           data-cursor="HOME"
@@ -267,7 +267,7 @@ export function BlogDetailClient({ post, allPosts }: BlogDetailClientProps) {
             onClick={handleCopyLink}
             suppressHydrationWarning
             data-cursor="SHARE"
-            className="inline-flex items-center space-x-2 px-4 py-2 rounded-full border border-neutral-700 hover:border-[#B8FF00] text-xs font-mono text-neutral-300 hover:text-[#B8FF00] transition-all bg-neutral-900/60"
+            className="inline-flex items-center space-x-2 px-3 sm:px-4 py-2 rounded-full border border-neutral-700 hover:border-[#B8FF00] text-xs font-mono text-neutral-300 hover:text-[#B8FF00] transition-all bg-neutral-900/60"
           >
             {copied ? (
               <>
@@ -287,7 +287,7 @@ export function BlogDetailClient({ post, allPosts }: BlogDetailClientProps) {
       {/* ── Hero Banner Section ── */}
       <div
         ref={heroRef}
-        className="relative w-full min-h-[50vh] md:min-h-[60vh] bg-gradient-to-b from-[#121417] via-[#0D0E10] to-[#0A0A0A] flex flex-col justify-end pt-28 md:pt-36 pb-14 px-6 md:px-12 overflow-hidden border-b border-neutral-800/60"
+        className="relative w-full min-h-[50vh] md:min-h-[60vh] bg-gradient-to-b from-[#121417] via-[#0D0E10] to-[#0A0A0A] flex flex-col justify-end pt-28 md:pt-36 pb-14 px-4 sm:px-6 md:px-12 overflow-hidden border-b border-neutral-800/60"
       >
         {/* Cyber Grid Texture */}
         <div className="absolute inset-0 bg-grid-pattern opacity-20 pointer-events-none" />
@@ -366,7 +366,7 @@ export function BlogDetailClient({ post, allPosts }: BlogDetailClientProps) {
       </div>
 
       {/* ── Main Article & Sidebar Content ── */}
-      <div ref={contentRef} className="max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-24">
+      <div ref={contentRef} className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 py-12 sm:py-16 md:py-24 w-full">
         {/* Cover Image Frame */}
         <div className="mb-14">
           <ArticleCoverImage
@@ -611,7 +611,7 @@ export function BlogDetailClient({ post, allPosts }: BlogDetailClientProps) {
 
       {/* ── Related Articles Section ── */}
       {related.length > 0 && (
-        <section className="border-t border-neutral-800/60 px-6 md:px-12 py-20 md:py-28">
+        <section className="border-t border-neutral-800/60 px-4 sm:px-6 md:px-12 py-16 sm:py-20 md:py-28">
           <div className="max-w-7xl mx-auto">
             <div className="flex items-center justify-between mb-12">
               <div>
@@ -713,7 +713,7 @@ export function BlogDetailClient({ post, allPosts }: BlogDetailClientProps) {
       )}
 
       {/* ── Footer Strip ── */}
-      <footer className="border-t border-neutral-800/60 px-6 md:px-12 py-6">
+      <footer className="border-t border-neutral-800/60 px-4 sm:px-6 md:px-12 py-6">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs text-neutral-500">
           <span>© 2026 EKSCODER. ALL RIGHTS RESERVED.</span>
           <Link

@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { projectsData, Project } from "@/data/projects";
 import { fetchProjectsFromBackend } from "@/services/projectService";
-import { gsap } from "@/lib/gsap";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 import {
   ArrowUpRight,
   ExternalLink,
@@ -56,21 +56,25 @@ export const Projects: React.FC = () => {
         cards.forEach((card) => {
           gsap.fromTo(
             card,
-            { y: 70, opacity: 0 },
+            { y: 35, opacity: 0 },
             {
               scrollTrigger: {
                 trigger: card,
-                start: "top 85%",
-                toggleActions: "play none none reverse",
+                start: "top 92%",
+                toggleActions: "play none none none",
               },
               y: 0,
               opacity: 1,
-              duration: 0.9,
-              ease: "power3.out",
+              duration: 0.7,
+              ease: "power2.out",
+              clearProps: "transform",
             }
           );
         });
       }
+      setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 150);
     }, containerRef);
 
     return () => ctx.revert();
@@ -117,11 +121,11 @@ export const Projects: React.FC = () => {
     <section
       id="projects"
       ref={containerRef}
-      className="py-24 md:py-36 px-6 md:px-12 bg-transparent relative border-b border-neutral-800/60"
+      className="py-14 sm:py-20 md:py-36 px-4 sm:px-6 md:px-12 bg-transparent relative border-b border-neutral-800/60"
     >
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-14 md:mb-16 gap-4 sm:gap-6">
           <div>
             <div className="flex items-center space-x-3 text-xs font-mono text-[#B8FF00] tracking-widest uppercase mb-3">
               <span className="w-8 h-[1px] bg-[#B8FF00]" />
