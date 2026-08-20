@@ -3,6 +3,8 @@ import { Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Cursor } from "@/components/ui/Cursor";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
+import { ScrollToTopRocket } from "@/components/ui/ScrollToTopRocket";
+import { LanguageProvider } from "@/context/LanguageContext";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -47,8 +49,6 @@ export const metadata: Metadata = {
   },
 };
 
-import { LanguageProvider } from "@/context/LanguageContext";
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -63,6 +63,7 @@ export default function RootLayout({
         <LanguageProvider>
           <Cursor />
           <SmoothScroll>{children}</SmoothScroll>
+          <ScrollToTopRocket />
         </LanguageProvider>
       </body>
     </html>

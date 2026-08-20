@@ -15,7 +15,6 @@ import { Process } from "@/components/sections/Process";
 import { Blog } from "@/components/sections/Blog";
 import { CTA } from "@/components/sections/CTA";
 import { Footer } from "@/components/layout/Footer";
-import { ScrollToTopRocket } from "@/components/ui/ScrollToTopRocket";
 
 export default function Home() {
   const [preloaderFinished, setPreloaderFinished] = useState(false);
@@ -41,7 +40,6 @@ export default function Home() {
       <Blog />
       <CTA />
       <Footer />
-      <ScrollToTopRocket />
     </main>
   );
 }
