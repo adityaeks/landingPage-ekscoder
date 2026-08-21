@@ -121,7 +121,7 @@ export const Projects: React.FC = () => {
     <section
       id="projects"
       ref={containerRef}
-      className="py-14 sm:py-20 md:py-36 px-4 sm:px-6 md:px-12 bg-transparent relative border-b border-neutral-800/60"
+      className="pt-10 sm:pt-12 md:pt-14 pb-14 sm:pb-20 md:pb-28 px-4 sm:px-6 md:px-12 bg-transparent relative border-b border-neutral-800/60"
     >
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}

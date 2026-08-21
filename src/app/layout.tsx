@@ -4,6 +4,7 @@ import "./globals.css";
 import { Cursor } from "@/components/ui/Cursor";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { ScrollToTopRocket } from "@/components/ui/ScrollToTopRocket";
+import { AiChatWidget } from "@/components/ui/AiChatWidget";
 import { LanguageProvider } from "@/context/LanguageContext";
 
 const inter = Inter({
@@ -69,6 +70,7 @@ export default function RootLayout({
           <Cursor />
           <SmoothScroll>{children}</SmoothScroll>
           <ScrollToTopRocket />
+          <AiChatWidget />
         </LanguageProvider>
       </body>
     </html>

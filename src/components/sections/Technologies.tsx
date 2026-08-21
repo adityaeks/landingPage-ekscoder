@@ -273,7 +273,7 @@ export const Technologies: React.FC = () => {
     <section
       id="solutions"
       ref={containerRef}
-      className="py-16 sm:py-24 md:py-36 px-4 sm:px-6 md:px-12 bg-transparent relative border-b border-neutral-800/60 overflow-hidden"
+      className="pt-14 sm:pt-20 md:pt-28 pb-10 sm:pb-12 md:pb-14 px-4 sm:px-6 md:px-12 bg-transparent relative border-b border-neutral-800/60 overflow-hidden"
     >
       {/* Background Ambient Glows */}
       <div className="absolute top-1/4 left-10 w-[500px] h-[500px] bg-[#B8FF00]/5 rounded-full blur-[160px] pointer-events-none -z-10" />
