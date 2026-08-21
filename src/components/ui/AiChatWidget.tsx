@@ -332,7 +332,21 @@ export const AiChatWidget: React.FC = () => {
       {/* ========================================================================= */}
       {/* 2. FLOATING ACTION BUTTON (FAB) */}
       {/* ========================================================================= */}
-      <div className="fixed bottom-6 right-6 z-[9980]">
+      <div className="fixed bottom-6 right-6 z-[9980] group/fab">
+        {/* Hover Dialog Box (Hallo AI Disini👋) - Left Side, Top Aligned */}
+        {!isOpen && (
+          <div className="absolute right-[calc(100%+12px)] top-0 opacity-0 translate-x-2 pointer-events-none group-hover/fab:opacity-100 group-hover/fab:translate-x-0 group-hover/fab:pointer-events-auto transition-all duration-300 ease-out hidden sm:flex items-center">
+            <div className="relative px-3.5 py-2 rounded-xl bg-[#111111]/95 backdrop-blur-xl border border-neutral-800 text-xs font-medium text-white shadow-2xl whitespace-nowrap flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#B8FF00] animate-pulse" />
+              <span className="font-sans font-medium text-neutral-100 tracking-wide">
+                Hallo AI Disini 👋
+              </span>
+              {/* Pointer arrow pointing right to the top-left boundary of the FAB button */}
+              <div className="absolute -right-1.5 top-3 w-2.5 h-2.5 bg-[#111111] border-t border-r border-neutral-800 transform rotate-45" />
+            </div>
+          </div>
+        )}
+
         <button
           type="button"
           onClick={isOpen ? handleCloseWidget : handleOpenWidget}
