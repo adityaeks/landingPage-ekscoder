@@ -1,5 +1,7 @@
 export const WA_PHONE = "6281230508019";
 export const WA_LINK = "https://wa.me/6281230508019?text=Halo%20Ekscoder%2C%20saya%20ingin%20konsultasi%20project.";
+export const TIKTOK_LINK = "https://www.tiktok.com/@ekscoder?_r=1&_t=ZS-998g68gOAhW";
+export const INSTAGRAM_LINK = "https://www.instagram.com/@ekscoder";
 
 export function getWhatsAppUrl(message: string = "Halo Ekscoder, saya ingin konsultasi project."): string {
   return `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(message.trim())}`;

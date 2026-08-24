@@ -5,7 +5,7 @@ import { ArrowUp } from "lucide-react";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 
 import { useLanguage } from "@/context/LanguageContext";
-import { translations } from "@/data/translations";
+import { translations, INSTAGRAM_LINK, TIKTOK_LINK } from "@/data/translations";
 
 export const Footer: React.FC = () => {
   const { language } = useLanguage();
@@ -79,46 +79,34 @@ export const Footer: React.FC = () => {
             <div className="text-xs text-[#B8FF00] tracking-widest uppercase mb-2 font-bold">
               {t.socialTitle}
             </div>
-            <div className="grid grid-cols-2 gap-3 text-neutral-400">
+            <div className="flex flex-col gap-2.5 text-neutral-400">
               <a
-                href="https://github.com"
+                href={INSTAGRAM_LINK}
                 target="_blank"
                 rel="noreferrer"
                 suppressHydrationWarning
-                className="hover:text-[#B8FF00] transition-colors"
+                className="group flex items-center justify-between p-3 rounded-xl bg-neutral-900/60 border border-neutral-800/80 hover:border-[#B8FF00]/40 hover:text-white transition-all duration-300"
                 data-cursor="LINK"
               >
-                GitHub ↗
+                <div className="flex items-center space-x-2.5">
+                  <span className="text-sm font-medium">Instagram</span>
+                  <span className="text-xs text-neutral-500 group-hover:text-neutral-400">@ekscoder</span>
+                </div>
+                <span className="text-[#B8FF00] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">↗</span>
               </a>
               <a
-                href="https://linkedin.com"
+                href={TIKTOK_LINK}
                 target="_blank"
                 rel="noreferrer"
                 suppressHydrationWarning
-                className="hover:text-[#B8FF00] transition-colors"
+                className="group flex items-center justify-between p-3 rounded-xl bg-neutral-900/60 border border-neutral-800/80 hover:border-[#B8FF00]/40 hover:text-white transition-all duration-300"
                 data-cursor="LINK"
               >
-                LinkedIn ↗
-              </a>
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noreferrer"
-                suppressHydrationWarning
-                className="hover:text-[#B8FF00] transition-colors"
-                data-cursor="LINK"
-              >
-                Instagram ↗
-              </a>
-              <a
-                href="https://x.com"
-                target="_blank"
-                rel="noreferrer"
-                suppressHydrationWarning
-                className="hover:text-[#B8FF00] transition-colors"
-                data-cursor="LINK"
-              >
-                X (Twitter) ↗
+                <div className="flex items-center space-x-2.5">
+                  <span className="text-sm font-medium">TikTok</span>
+                  <span className="text-xs text-neutral-500 group-hover:text-neutral-400">@ekscoder</span>
+                </div>
+                <span className="text-[#B8FF00] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">↗</span>
               </a>
             </div>
           </div>

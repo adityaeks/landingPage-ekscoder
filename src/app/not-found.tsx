@@ -64,7 +64,7 @@ export default function NotFound() {
             className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-6 py-3.5 rounded-full bg-[#B8FF00] text-black hover:bg-[#a3e600] transition-all duration-300 uppercase shadow-lg shadow-[#B8FF00]/10 group"
           >
             <Home className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
-            <span>Back To Home</span>
+            <span>Back to Home</span>
           </Link>
 
           {/* <Link
