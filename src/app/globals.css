@@ -8,7 +8,7 @@
   --color-text-secondary: #999999;
   --color-border-dark: #2A2A2A;
   --color-accent-lime: #B8FF00;
-  
+
   --font-mono: 'Geist Mono', monospace;
 }
 
@@ -40,13 +40,16 @@ body {
 ::-webkit-scrollbar {
   width: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: #0A0A0A;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #2A2A2A;
   border-radius: 3px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: #B8FF00;
 }
@@ -54,7 +57,7 @@ body {
 /* Tech Grid Pattern */
 .bg-grid-pattern {
   background-size: 60px 60px;
-  background-image: 
+  background-image:
     linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
 }
@@ -102,7 +105,8 @@ body {
 }
 
 /* Lenis Recommended CSS */
-html.lenis, html.lenis body {
+html.lenis,
+html.lenis body {
   height: auto;
 }
 
@@ -122,13 +126,11 @@ html.lenis, html.lenis body {
   pointer-events: none;
 }
 
-/* Hide default cursor when custom cursor is enabled (Desktop / mouse devices only) */
-@media (hover: hover) and (pointer: fine) {
-  body.custom-cursor-enabled,
-  body.custom-cursor-enabled a,
-  body.custom-cursor-enabled button {
-    cursor: none !important;
-  }
+/* Interactive cursor affordance */
+a,
+button,
+[role="button"] {
+  cursor: pointer;
 }
 
 /* GPU Hardware Composite Acceleration Rules */
@@ -144,4 +146,3 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
-

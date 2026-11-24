@@ -1,10 +1,9 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { gsap } from "@/lib/gsap";
 import { MagneticButton } from "@/components/ui/MagneticButton";
-import { ArrowUpRight, Mail, MessageSquare, Phone } from "lucide-react";
-
+import { ArrowUpRight, Mail, MessageSquare } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations, WA_LINK } from "@/data/translations";
 
@@ -25,7 +24,7 @@ export const CTA: React.FC = () => {
           {
             scrollTrigger: {
               trigger: containerRef.current,
-              start: "top 92%",
+              start: "top 90%",
               toggleActions: "play none none none",
             },
             scale: 1,
@@ -37,7 +36,7 @@ export const CTA: React.FC = () => {
           }
         );
       }
-    });
+    }, containerRef);
 
     return () => ctx.revert();
   }, []);
@@ -46,46 +45,44 @@ export const CTA: React.FC = () => {
     <section
       id="cta"
       ref={containerRef}
-      className="py-14 sm:py-20 md:py-44 px-4 sm:px-6 md:px-12 bg-transparent relative overflow-hidden bg-noise border-b border-neutral-800/60"
+      className="py-20 md:py-36 px-5 sm:px-8 md:px-16 bg-[#08080A] relative overflow-hidden border-b border-white/10"
     >
-      {/* Background Animated Gradient Glows */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#B8FF00]/10 rounded-full blur-[160px] pointer-events-none -z-10 animate-pulse" />
-
+      <span id="contact" className="sr-only" />
       <div className="max-w-7xl mx-auto">
         <div
           ref={contentRef}
-          className="relative p-6 sm:p-14 md:p-24 rounded-3xl bg-[#111111] border border-neutral-800 text-center flex flex-col items-center justify-center overflow-hidden shadow-2xl"
+          className="relative p-8 sm:p-14 md:p-24 rounded-3xl bg-[#0F0F12] border border-white/10 text-center flex flex-col items-center justify-center overflow-hidden"
         >
-          {/* Tech Grid Pattern */}
-          <div className="absolute inset-0 bg-grid-pattern opacity-20 pointer-events-none" />
+          {/* Subtle Accent Glow */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-white/5 rounded-full blur-[140px] pointer-events-none" />
 
           {/* Section Tag */}
-          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full border border-[#B8FF00]/30 bg-[#B8FF00]/10 text-[#B8FF00] font-mono text-xs tracking-widest uppercase mb-6 sm:mb-8 z-10">
+          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full border border-white/10 bg-white/5 text-neutral-400 text-xs tracking-widest uppercase mb-6 sm:mb-8 z-10 font-medium">
             <MessageSquare className="w-3.5 h-3.5" />
             <span>{t.badge}</span>
           </div>
 
-          {/* Bold Heading */}
-          <h2 className="text-3xl sm:text-5xl md:text-8xl font-black font-mono tracking-tighter uppercase text-white leading-tight sm:leading-none mb-6 sm:mb-8 z-10">
+          {/* Monumental Heading */}
+          <h2 className="text-4xl sm:text-6xl md:text-8xl font-black tracking-tight uppercase text-[#F4F4F6] leading-[0.95] mb-6 sm:mb-8 z-10">
             {t.line1}<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#B8FF00] to-neutral-400">
+            <span className="text-white">
               {t.line2}
             </span>
           </h2>
 
-          <p className="text-neutral-300 font-light text-sm sm:text-xl max-w-2xl leading-relaxed mb-8 sm:mb-12 z-10">
+          <p className="text-[#8E8E9A] text-sm sm:text-lg max-w-2xl leading-relaxed mb-10 sm:mb-12 z-10">
             {t.description}
           </p>
 
-          {/* Magnetic CTA Buttons */}
-          <div className="flex flex-wrap items-center justify-center gap-6 z-10">
-            <MagneticButton strength={0.4}>
+          {/* Magnetic CTA Action Buttons */}
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 z-10">
+            <MagneticButton strength={0.3}>
               <a
                 href={waUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 suppressHydrationWarning
-                className="px-10 py-5 rounded-full bg-[#B8FF00] text-black font-mono font-bold text-base tracking-wider uppercase hover:bg-white transition-all duration-300 flex items-center space-x-3 shadow-2xl glow-accent"
+                className="px-8 sm:px-10 py-4 sm:py-5 rounded-full bg-white text-black font-bold text-sm sm:text-base tracking-wider uppercase hover:bg-neutral-200 transition-all duration-300 flex items-center space-x-3 cursor-pointer shadow-lg"
                 data-cursor="TALK"
               >
                 <span>{t.startProject}</span>
@@ -93,17 +90,15 @@ export const CTA: React.FC = () => {
               </a>
             </MagneticButton>
 
-            <MagneticButton strength={0.25}>
+            <MagneticButton strength={0.2}>
               <a
-                href={waUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+                href="mailto:contact@ekscoder.com"
                 suppressHydrationWarning
-                className="px-8 py-5 rounded-full border border-neutral-700 bg-neutral-900 hover:bg-neutral-800 text-white font-mono font-medium text-sm tracking-wider uppercase transition-colors flex items-center space-x-2"
-                data-cursor="WA"
+                className="px-8 sm:px-10 py-4 sm:py-5 rounded-full bg-[#181820] border border-white/10 text-white font-bold text-sm sm:text-base tracking-wider uppercase hover:bg-white/10 transition-all duration-300 flex items-center space-x-3 cursor-pointer"
+                data-cursor="MAIL"
               >
-                <Phone className="w-4 h-4 text-[#B8FF00]" />
-                <span>{t.whatsapp}</span>
+                <Mail className="w-5 h-5 text-white" />
+                <span>contact@ekscoder.com</span>
               </a>
             </MagneticButton>
           </div>

@@ -8,9 +8,7 @@ import {
   ArrowUpRight,
   ExternalLink,
   X,
-  Sparkles,
   Calendar,
-  Code2,
   Tag,
   Check,
   Share2,
@@ -52,20 +50,20 @@ export const Projects: React.FC = () => {
 
     const ctx = gsap.context(() => {
       if (gridRef.current) {
-        const cards = gridRef.current.querySelectorAll(".project-card");
+        const cards = gridRef.current.querySelectorAll(".exhibition-card");
         cards.forEach((card) => {
           gsap.fromTo(
             card,
-            { y: 35, opacity: 0 },
+            { y: 30, opacity: 0 },
             {
               scrollTrigger: {
                 trigger: card,
-                start: "top 92%",
+                start: "top 90%",
                 toggleActions: "play none none none",
               },
               y: 0,
               opacity: 1,
-              duration: 0.7,
+              duration: 0.8,
               ease: "power2.out",
               clearProps: "transform",
             }
@@ -80,7 +78,7 @@ export const Projects: React.FC = () => {
     return () => ctx.revert();
   }, [loading, projects]);
 
-  // Modal Open & Close Handlers
+  // Modal Open & Close Handlers with Lenis scroll lock
   const openModal = (project: Project) => {
     setActiveProject(project);
     document.body.style.overflow = "hidden";
@@ -108,12 +106,16 @@ export const Projects: React.FC = () => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [activeProject]);
 
-  const handleCopyProject = () => {
-    if (typeof window !== "undefined" && activeProject) {
-      const url = activeProject.link || window.location.href;
-      navigator.clipboard.writeText(url);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+  const handleCopyProject = async () => {
+    if (typeof window !== "undefined") {
+      const url = `${window.location.origin}/#projects`;
+      try {
+        await navigator.clipboard.writeText(url);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      } catch (err) {
+        console.error("Failed to copy link: ", err);
+      }
     }
   };
 
@@ -121,99 +123,98 @@ export const Projects: React.FC = () => {
     <section
       id="projects"
       ref={containerRef}
-      className="pt-10 sm:pt-12 md:pt-14 pb-14 sm:pb-20 md:pb-28 px-4 sm:px-6 md:px-12 bg-transparent relative border-b border-neutral-800/60"
+      className="py-24 sm:py-32 md:py-40 px-6 sm:px-12 md:px-16 bg-[#08080A] text-white relative border-b border-white/10"
     >
       <div className="max-w-7xl mx-auto">
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-14 md:mb-16 gap-4 sm:gap-6">
+        {/* Section Header: Architectural & Minimal */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-24 gap-6">
           <div>
-            <div className="flex items-center space-x-3 text-xs font-mono text-[#B8FF00] tracking-widest uppercase mb-3">
-              <span className="w-8 h-[1px] bg-[#B8FF00]" />
+            <div className="flex items-center space-x-3 text-xs tracking-[0.3em] text-neutral-400 uppercase mb-4 font-mono">
+              <span className="w-6 h-[1px] bg-white/40" />
               <span>{t.badge}</span>
             </div>
-            <h2 className="text-4xl sm:text-6xl font-extrabold tracking-tighter uppercase font-mono text-white">
+            <h2 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-[-0.03em] uppercase text-white">
               {t.title}
             </h2>
           </div>
-          <p className="text-neutral-400 max-w-md text-sm md:text-base font-light">
+          <p className="text-neutral-400 max-w-md text-sm md:text-base leading-relaxed font-light">
             {t.description}
           </p>
         </div>
 
-        {/* Projects Cards Grid */}
-        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {projects.map((project: Project) => (
-            <div
-              key={project.slug || project.number}
-              onClick={() => openModal(project)}
-              suppressHydrationWarning
-              className="project-card group relative rounded-3xl bg-[#111111] border border-neutral-800 hover:border-[#B8FF00]/40 overflow-hidden transition-all duration-500 flex flex-col justify-between cursor-pointer shadow-xl"
-              data-cursor="VIEW"
-            >
-              {/* Project Card Image / Gradient Preview Frame */}
-              <div
-                className={`shrink-0 h-64 sm:h-72 lg:h-80 w-full bg-gradient-to-br ${project.imageBg} relative p-6 sm:p-8 flex flex-col justify-between overflow-hidden group-hover:scale-[1.02] transition-transform duration-700 ease-out`}
-              >
-                {/* Tech Grid Background Texture */}
-                <div className="absolute inset-0 bg-grid-pattern opacity-30" />
+        {/* Quiet Luxury Exhibition Cards: 2-Column Minimal Grid */}
+        <div
+          ref={gridRef}
+          className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12"
+        >
+          {projects.map((project: Project, idx: number) => {
+            const projectNumber = project.number || String(idx + 1).padStart(2, "0");
 
-                {/* Top Bar: Number & Year */}
-                <div className="relative z-10 flex justify-between items-center font-mono text-xs text-neutral-400">
-                  <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white font-bold">
-                    {project.number}
-                  </span>
-                  <span className="px-3 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/5">
+            return (
+              <article
+                key={project.slug || project.number}
+                onClick={() => openModal(project)}
+                data-cursor="VIEW"
+                className="exhibition-card group relative rounded-2xl bg-[#0D0D12] border border-white/10 hover:border-white/30 transition-all duration-500 p-8 sm:p-10 md:p-12 flex flex-col justify-between min-h-[420px] sm:min-h-[460px] cursor-pointer overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.6)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.9)]"
+              >
+                {/* Subtle Ambient Hover Glow */}
+                <div className="absolute inset-0 bg-radial from-white/[0.03] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+
+                {/* Top Row: Index Number & Category */}
+                <div className="relative z-10 flex items-center justify-between text-xs font-mono tracking-widest text-neutral-400 uppercase border-b border-white/5 pb-6">
+                  <div className="flex items-center space-x-3">
+                    <span className="text-white font-bold text-sm">
+                      {projectNumber}
+                    </span>
+                    <span className="text-neutral-600">/</span>
+                    <span>{project.category}</span>
+                  </div>
+
+                  <span className="text-neutral-500 font-medium">
                     {project.year}
                   </span>
                 </div>
 
-                {/* Large Background Code/Number Watermark */}
-                <div className="absolute bottom-2 right-4 font-mono text-7xl sm:text-8xl font-black text-white/5 select-none pointer-events-none group-hover:text-white/10 transition-colors">
-                  {project.number}
-                </div>
-
-                {/* Center Title Watermark / Visual Focus */}
-                <div className="relative z-10 my-auto">
-                  <div className="text-xs font-mono text-[#B8FF00] tracking-widest uppercase mb-1">
-                    {project.category}
-                  </div>
-                  <h3 className="text-2xl sm:text-4xl lg:text-5xl font-mono font-black text-white tracking-tight uppercase group-hover:text-[#B8FF00] transition-colors">
-                    {project.title}
+                {/* Center Core: Monumental Title & Narrative */}
+                <div className="relative z-10 my-8 sm:my-10 space-y-4">
+                  <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white uppercase tracking-tight group-hover:text-neutral-200 transition-colors leading-[1.05]">
+                    {project.title}.
                   </h3>
+                  <p className="text-neutral-400 text-sm sm:text-base font-light leading-relaxed line-clamp-3">
+                    {project.description}
+                  </p>
                 </div>
-              </div>
 
-              {/* Project Details Bottom Container */}
-              <div className="flex-1 flex flex-col justify-between p-6 sm:p-8 space-y-6 bg-[#111111] border-t border-neutral-800">
-                <p className="text-neutral-300 font-light text-sm sm:text-base leading-relaxed line-clamp-3 min-h-[4.5rem]">
-                  {project.description}
-                </p>
-
-                {/* Tech Stack Pills & View Button */}
-                <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-neutral-800/60">
+                {/* Bottom Row: Stack Pills & Arrow Action */}
+                <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 pt-6 border-t border-white/5">
                   <div className="flex flex-wrap gap-2">
-                    {project.technologies.map((tech, tIdx) => (
+                    {project.technologies.slice(0, 3).map((tech, tIdx) => (
                       <span
                         key={tIdx}
-                        className="px-2.5 py-1 rounded-md bg-neutral-900 border border-neutral-800 text-[11px] font-mono text-neutral-400"
+                        className="px-3 py-1 rounded-full text-xs font-mono text-neutral-400 bg-white/[0.02] border border-white/10 group-hover:border-white/20 transition-colors"
                       >
                         {tech}
                       </span>
                     ))}
+                    {project.technologies.length > 3 && (
+                      <span className="px-2.5 py-1 rounded-full text-xs font-mono text-neutral-600 border border-white/5">
+                        +{project.technologies.length - 3}
+                      </span>
+                    )}
                   </div>
 
-                  <div className="inline-flex items-center space-x-2 text-xs font-mono font-bold text-white group-hover:text-[#B8FF00] transition-colors">
-                    <span>{t.viewProject || "EXPLORE PROJECT"}</span>
-                    <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                  <div className="inline-flex items-center space-x-2 text-xs font-bold font-mono tracking-wider text-white group-hover:text-neutral-300 transition-colors">
+                    <span>{t.viewProject || "LIHAT DETAIL"}</span>
+                    <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
                   </div>
                 </div>
-              </div>
-            </div>
-          ))}
+              </article>
+            );
+          })}
         </div>
       </div>
 
-      {/* ── PROJECT DETAIL POP-UP MODAL ── */}
+      {/* Case Study Detail Modal (Pure Editorial) */}
       {activeProject && (
         <div
           className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 md:p-10 bg-black/85 backdrop-blur-xl animate-fade-in"
@@ -222,129 +223,75 @@ export const Projects: React.FC = () => {
         >
           <div
             data-lenis-prevent
-            className="relative w-full max-w-4xl max-h-[90vh] bg-[#111111] border border-neutral-800 rounded-3xl overflow-hidden shadow-[0_0_60px_rgba(0,0,0,0.9)] flex flex-col"
+            className="relative w-full max-w-3xl max-h-[88vh] bg-[#0C0C10] border border-white/15 rounded-3xl overflow-hidden shadow-[0_25px_80px_rgba(0,0,0,0.95)] flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Modal Top Control Bar */}
-            <div className="p-5 sm:p-6 border-b border-neutral-800/80 flex items-center justify-between bg-[#141414] shrink-0">
-              <div className="flex items-center space-x-3">
-                <span className="px-3.5 py-1 rounded-full font-mono text-xs font-bold uppercase bg-[#B8FF00]/15 text-[#B8FF00] border border-[#B8FF00]/30">
-                  {activeProject.category}
-                </span>
-
-                <span className="text-neutral-400 font-mono text-xs hidden sm:inline">
-                  PROJECT {activeProject.number} • {activeProject.year}
-                </span>
+            {/* Modal Header */}
+            <div className="p-6 border-b border-white/10 flex items-center justify-between bg-[#0F0F14] shrink-0">
+              <div className="flex items-center space-x-3 text-xs font-mono tracking-widest text-neutral-400 uppercase">
+                <span>PROJECT {activeProject.number}</span>
+                <span>·</span>
+                <span className="text-white">{activeProject.category}</span>
               </div>
 
-              <div className="flex items-center space-x-2">
-                <button
-                  onClick={closeModal}
-                  suppressHydrationWarning
-                  aria-label="Close Project Modal"
-                  className="px-4 py-2 rounded-full bg-neutral-900 hover:bg-[#B8FF00] hover:text-black border border-neutral-800 text-neutral-300 font-mono text-xs font-bold tracking-wider uppercase transition-all flex items-center space-x-2"
-                >
-                  <span>TUTUP</span>
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
+              <button
+                onClick={closeModal}
+                aria-label="Tutup"
+                className="w-10 h-10 rounded-full bg-white/5 hover:bg-white hover:text-black border border-white/10 text-white transition-colors flex items-center justify-center cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
             </div>
 
-            {/* Modal Scrollable Body */}
+            {/* Modal Content */}
             <div
               data-lenis-prevent
               onWheel={(e) => e.stopPropagation()}
               onTouchMove={(e) => e.stopPropagation()}
               className="p-6 sm:p-10 overflow-y-auto space-y-8 custom-scrollbar overscroll-contain flex-1"
             >
-              {/* Project Hero Visual Frame */}
-              <div
-                className={`relative min-h-[220px] sm:min-h-[280px] rounded-2xl overflow-hidden bg-gradient-to-br ${activeProject.imageBg} border border-neutral-800 p-6 sm:p-10 flex flex-col justify-end`}
-              >
-                {/* Tech Grid Texture */}
-                <div className="absolute inset-0 bg-grid-pattern opacity-25 pointer-events-none" />
-
-                {/* Accent Radial Glow */}
-                <div
-                  className="absolute inset-0 pointer-events-none"
-                  style={{
-                    background: `radial-gradient(ellipse at 70% 40%, ${activeProject.accentColor}25, transparent 70%)`,
-                  }}
-                />
-
-                {/* Watermark Number */}
-                <div className="absolute -bottom-2 -right-4 font-mono text-8xl sm:text-9xl font-black text-white/5 select-none pointer-events-none">
-                  {activeProject.number}
+              {/* Headline */}
+              <div className="space-y-3">
+                <div className="text-xs font-mono tracking-widest text-neutral-400 uppercase">
+                  {activeProject.year} · COMPLETED
                 </div>
-
-                <div className="relative z-10 space-y-3">
-                  <div className="flex items-center space-x-2 text-xs font-mono text-[#B8FF00] uppercase tracking-widest">
-                    <Sparkles className="w-3.5 h-3.5" />
-                    <span>{activeProject.category}</span>
-                  </div>
-
-                  <h1 className="text-3xl sm:text-5xl font-black font-mono text-white tracking-tight uppercase leading-tight">
-                    {activeProject.title}
-                  </h1>
-
-                  <div className="flex flex-wrap items-center gap-4 text-xs font-mono text-neutral-300 pt-2">
-                    <span className="flex items-center space-x-1.5">
-                      <Calendar className="w-3.5 h-3.5 text-[#B8FF00]" />
-                      <span>{activeProject.year}</span>
-                    </span>
-                    {/* <span>•</span> */}
-                    {/* <span className="flex items-center space-x-1.5">
-                      <Code2 className="w-3.5 h-3.5 text-[#B8FF00]" />
-                      <span>{activeProject.technologies.length} TECHNOLOGIES</span>
-                    </span> */}
-                    <span>•</span>
-                    <span className="inline-flex items-center space-x-1.5 px-2.5 py-0.5 rounded-full bg-[#B8FF00]/10 border border-[#B8FF00]/20 text-[#B8FF00]">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#B8FF00] animate-pulse" />
-                      <span>ACTIVE PROJECT</span>
-                    </span>
-                  </div>
-                </div>
+                <h1 className="text-3xl sm:text-5xl font-black text-white uppercase tracking-tight">
+                  {activeProject.title}.
+                </h1>
               </div>
 
-              {/* Project Description / Overview */}
-              <div className="space-y-4">
-                <div className="flex items-center space-x-2 text-xs font-mono text-[#B8FF00] tracking-widest uppercase">
-                  <span className="w-6 h-[1px] bg-[#B8FF00]" />
-                  <span>// DESKRIPSI & SPESIFIKASI PROYEK</span>
+              {/* Description */}
+              <div className="space-y-2 pt-2 border-t border-white/10">
+                <div className="text-xs tracking-widest text-neutral-400 font-mono uppercase">
+                  RINGKASAN PROYEK
                 </div>
-                <p className="text-neutral-200 font-light text-base sm:text-lg leading-relaxed">
+                <p className="text-neutral-300 font-light text-base sm:text-lg leading-relaxed">
                   {activeProject.description}
                 </p>
               </div>
 
-              {/* Technologies Used Section */}
-              <div className="space-y-4 pt-4 border-t border-neutral-800/80">
-                <div className="flex items-center space-x-2 text-xs font-mono text-[#B8FF00] tracking-widest uppercase">
-                  <span className="w-6 h-[1px] bg-[#B8FF00]" />
-                  <span>// SOLUTION TYPE</span>
+              {/* Stack Architecture */}
+              <div className="space-y-3 pt-4 border-t border-white/10">
+                <div className="text-xs tracking-widest text-neutral-400 font-mono uppercase">
+                  TEKNOLOGI & ARSITEKTUR
                 </div>
-                <div className="flex flex-wrap gap-2.5">
+                <div className="flex flex-wrap gap-2">
                   {activeProject.technologies.map((tech, idx) => (
                     <span
                       key={idx}
-                      className="px-4 py-2 rounded-xl bg-neutral-900 border border-neutral-800 text-xs sm:text-sm font-mono text-neutral-300 flex items-center space-x-2 hover:border-[#B8FF00]/40 hover:text-[#B8FF00] transition-colors"
+                      className="px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/10 text-xs text-neutral-200 font-mono"
                     >
-                      <Tag className="w-3.5 h-3.5 text-[#B8FF00]" />
-                      <span>{tech}</span>
+                      {tech}
                     </span>
                   ))}
                 </div>
               </div>
 
-              {/* Metadata Info Summary Box */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-5 rounded-2xl bg-neutral-900/70 border border-neutral-800 font-mono text-xs">
-                {/* <div>
-                  <span className="text-neutral-500 block mb-1">ID PROYEK</span>
-                  <span className="text-white font-bold">{activeProject.number}</span>
-                </div> */}
+              {/* Project Metadata Details */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 p-5 rounded-2xl bg-[#141419] border border-white/10 text-xs font-mono">
                 <div>
                   <span className="text-neutral-500 block mb-1">KATEGORI</span>
-                  <span className="text-[#B8FF00] font-bold">{activeProject.category}</span>
+                  <span className="text-white font-bold">{activeProject.category}</span>
                 </div>
                 <div>
                   <span className="text-neutral-500 block mb-1">TAHUN</span>
@@ -352,55 +299,45 @@ export const Projects: React.FC = () => {
                 </div>
                 <div>
                   <span className="text-neutral-500 block mb-1">STATUS</span>
-                  <span className="text-[#B8FF00] font-bold">COMPLETED / LIVE</span>
+                  <span className="text-white font-bold">COMPLETED / LIVE</span>
                 </div>
               </div>
             </div>
 
-            {/* Modal Bottom Action Footer */}
-            <div className="p-6 border-t border-neutral-800/80 bg-[#141414] flex flex-col sm:flex-row items-center justify-between gap-4 shrink-0">
+            {/* Modal Footer */}
+            <div className="p-6 border-t border-white/10 bg-[#0F0F14] flex items-center justify-between gap-4 shrink-0">
               <button
                 onClick={handleCopyProject}
-                className="inline-flex items-center space-x-2 text-xs font-mono text-neutral-400 hover:text-[#B8FF00] transition-colors"
+                className="inline-flex items-center space-x-2 text-xs font-mono text-neutral-400 hover:text-white transition-colors cursor-pointer"
               >
                 {copied ? (
                   <>
-                    <Check className="w-3.5 h-3.5 text-[#B8FF00]" />
-                    <span className="text-[#B8FF00]">LINK TERSALIN</span>
+                    <Check className="w-3.5 h-3.5 text-white" />
+                    <span className="text-white">TAUTAN TERSALIN</span>
                   </>
                 ) : (
                   <>
                     <Share2 className="w-3.5 h-3.5" />
-                    <span>SALIN TAUTAN</span>
+                    <span>BAGIKAN</span>
                   </>
                 )}
               </button>
 
-              <div className="flex items-center space-x-3 w-full sm:w-auto">
-                {activeProject.link ? (
+              <div className="flex items-center space-x-3">
+                {activeProject.link && (
                   <a
                     href={activeProject.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    suppressHydrationWarning
-                    className="inline-flex items-center justify-center space-x-2 px-6 py-3 rounded-full bg-[#B8FF00] text-black font-mono font-bold text-xs tracking-wider uppercase hover:bg-white transition-colors flex-1 sm:flex-initial shadow-[0_0_20px_rgba(184,255,0,0.2)]"
+                    className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-full bg-white text-black font-semibold text-xs tracking-wider uppercase hover:bg-neutral-200 transition-colors"
                   >
-                    <ExternalLink className="w-4 h-4" />
-                    <span>KUNJUNGI SITUS</span>
+                    <span>KUNJUNGI</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
                   </a>
-                ) : (
-                  <span
-                    className="inline-flex items-center justify-center space-x-2 px-6 py-3 rounded-full bg-neutral-900 border border-neutral-800 text-neutral-600 font-mono font-bold text-xs tracking-wider uppercase cursor-not-allowed select-none opacity-50 flex-1 sm:flex-initial"
-                  >
-                    <ExternalLink className="w-4 h-4" />
-                    <span>KUNJUNGI SITUS</span>
-                  </span>
                 )}
-
                 <button
                   onClick={closeModal}
-                  suppressHydrationWarning
-                  className="px-6 py-3 rounded-full border border-neutral-700 hover:border-neutral-500 bg-neutral-900 text-neutral-300 font-mono font-bold text-xs uppercase tracking-wider transition-colors flex-1 sm:flex-initial"
+                  className="px-5 py-2.5 rounded-full border border-white/10 hover:border-white/30 text-white font-semibold text-xs tracking-wider uppercase transition-colors"
                 >
                   TUTUP
                 </button>

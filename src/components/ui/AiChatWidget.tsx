@@ -42,10 +42,36 @@ export const AiChatWidget: React.FC = () => {
   const [showTeaser, setShowTeaser] = useState<boolean>(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [isLimitReached, setIsLimitReached] = useState<boolean>(false);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [pillDismissed, setPillDismissed] = useState<boolean>(false);
 
   const chatFeedRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Hide AI widget when user is in the Hero section
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY || window.pageYOffset;
+      const threshold = window.innerHeight * 0.45;
+      setIsVisible(scrollY > threshold);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+
+    const lenis = (window as any).lenis;
+    if (lenis) {
+      lenis.on("scroll", handleScroll);
+    }
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (lenis) {
+        lenis.off("scroll", handleScroll);
+      }
+    };
+  }, []);
 
   // Format current local time HH:mm
   const getCurrentTime = (): string => {
@@ -166,6 +192,7 @@ export const AiChatWidget: React.FC = () => {
 
   const handleOpenWidget = () => {
     setIsOpen(true);
+    setPillDismissed(true);
     setShowTeaser(false);
     setTeaserDismissed();
     setTimeout(() => {
@@ -176,6 +203,7 @@ export const AiChatWidget: React.FC = () => {
 
   const handleCloseWidget = () => {
     setIsOpen(false);
+    setPillDismissed(true);
   };
 
   const handleSendMessage = async (textToSend?: string) => {
@@ -288,7 +316,7 @@ export const AiChatWidget: React.FC = () => {
       {/* ========================================================================= */}
       {/* 1. TEASER PROMPT CARD (Minimalist developer/tech studio micro card) */}
       {/* ========================================================================= */}
-      {showTeaser && !isOpen && (
+      {showTeaser && !isOpen && isVisible && (
         <div
           role="dialog"
           aria-label="Notifikasi Asisten AI"
@@ -301,8 +329,8 @@ export const AiChatWidget: React.FC = () => {
             {/* Top metadata row */}
             <div className="flex items-center justify-between gap-2 pb-2 mb-2 border-b border-white/5">
               <span className="flex items-center gap-1.5 font-mono text-[10px] text-neutral-400 tracking-wider uppercase">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#B8FF00] animate-pulse" />
-                AI Assistant // Online
+                <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                AI Assistant · Online
               </span>
               <button
                 type="button"
@@ -320,7 +348,7 @@ export const AiChatWidget: React.FC = () => {
             </p>
 
             <div className="mt-2.5 flex items-center justify-between text-[11px]">
-              <span className="font-semibold text-[#B8FF00] group-hover:text-[#d4ff4d] inline-flex items-center gap-1 transition-colors">
+              <span className="font-semibold text-white group-hover:text-neutral-300 inline-flex items-center gap-1 transition-colors">
                 Mulai Tanya <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </span>
               <span className="text-[10px] font-mono text-neutral-600">Tekan untuk buka</span>
@@ -332,17 +360,26 @@ export const AiChatWidget: React.FC = () => {
       {/* ========================================================================= */}
       {/* 2. FLOATING ACTION BUTTON (FAB) */}
       {/* ========================================================================= */}
-      <div className="fixed bottom-6 right-6 z-[9980] group/fab">
-        {/* Hover Dialog Box (Hallo AI Disini👋) - Left Side, Top Aligned */}
-        {!isOpen && (
-          <div className="absolute right-[calc(100%+12px)] top-0 opacity-0 translate-x-2 pointer-events-none group-hover/fab:opacity-100 group-hover/fab:translate-x-0 group-hover/fab:pointer-events-auto transition-all duration-300 ease-out hidden sm:flex items-center">
-            <div className="relative px-3.5 py-2 rounded-xl bg-[#111111]/95 backdrop-blur-xl border border-neutral-800 text-xs font-medium text-white shadow-2xl whitespace-nowrap flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#B8FF00] animate-pulse" />
-              <span className="font-sans font-medium text-neutral-100 tracking-wide">
+      <div
+        className={`fixed bottom-6 right-6 z-[9980] group/fab transition-all duration-500 ease-out ${
+          isVisible || isOpen
+            ? "opacity-100 translate-y-0 pointer-events-auto"
+            : "opacity-0 translate-y-8 pointer-events-none"
+        }`}
+      >
+        {/* Permanent AI Presence Pill (Hallo AI Disini 👋) */}
+        {!isOpen && !pillDismissed && (
+          <div
+            onClick={handleOpenWidget}
+            className="absolute right-[calc(100%+12px)] top-1/2 -translate-y-1/2 flex items-center cursor-pointer transition-all duration-300 hover:scale-105"
+          >
+            <div className="relative px-3.5 py-1.5 sm:py-2 rounded-full bg-[#111116]/95 backdrop-blur-xl border border-white/15 text-xs font-medium text-white shadow-2xl whitespace-nowrap flex items-center gap-2 group-hover/fab:border-white/30">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="font-sans font-medium text-neutral-100 tracking-wide text-[11px] sm:text-xs">
                 Hallo AI Disini 👋
               </span>
-              {/* Pointer arrow pointing right to the top-left boundary of the FAB button */}
-              <div className="absolute -right-1.5 top-3 w-2.5 h-2.5 bg-[#111111] border-t border-r border-neutral-800 transform rotate-45" />
+              {/* Pointer arrow pointing right to the FAB button */}
+              <div className="absolute -right-1 top-1/2 -translate-y-1/2 w-2 h-2 bg-[#111116] border-t border-r border-white/15 transform rotate-45" />
             </div>
           </div>
         )}
@@ -351,26 +388,23 @@ export const AiChatWidget: React.FC = () => {
           type="button"
           onClick={isOpen ? handleCloseWidget : handleOpenWidget}
           aria-label={isOpen ? "Tutup Chat AI" : "Buka Chat Asisten AI Ekscoder"}
-          className={`relative group flex items-center justify-center w-14 h-14 rounded-full transition-all duration-300 shadow-2xl focus:outline-none focus:ring-2 focus:ring-[#B8FF00]/50 ${
+          className={`relative group flex items-center justify-center w-14 h-14 rounded-full transition-all duration-300 shadow-2xl focus:outline-none focus:ring-2 focus:ring-white/50 ${
             isOpen
-              ? "bg-neutral-900 border border-neutral-700 text-white rotate-90 scale-95 hover:bg-neutral-800"
-              : "bg-gradient-to-tr from-emerald-600 via-emerald-500 to-[#B8FF00] text-black hover:scale-105 hover:shadow-[0_0_25px_rgba(34,197,94,0.5)]"
+              ? "bg-[#0E0E12] border border-white/20 text-white rotate-90 scale-95 hover:bg-neutral-800"
+              : "bg-white text-black border border-white hover:bg-black hover:text-white hover:border-white/50 hover:scale-105 shadow-[0_8px_30px_rgba(255,255,255,0.15)]"
           }`}
         >
           {/* Animated pulsing halo aura when closed */}
           {!isOpen && (
-            <>
-              <span className="absolute -inset-1 rounded-full bg-gradient-to-r from-emerald-500 to-[#B8FF00] opacity-40 blur-md animate-pulse group-hover:opacity-75 duration-1000" />
-              <span className="absolute -inset-2 rounded-full border border-emerald-500/30 animate-ping duration-1000 opacity-60" />
-            </>
+            <span className="absolute -inset-1 rounded-full bg-white/20 opacity-40 blur-md group-hover:opacity-60 duration-500" />
           )}
 
           {/* Button Icon */}
           <div className="relative z-10 flex items-center justify-center">
             {isOpen ? (
-              <X className="w-6 h-6 text-neutral-300 group-hover:text-white transition-colors" />
+              <X className="w-6 h-6 text-white transition-colors" />
             ) : (
-              <Bot className="w-6 h-6 text-black group-hover:scale-110 transition-transform duration-300" />
+              <Bot className="w-6 h-6 transition-transform duration-300 group-hover:scale-110" />
             )}
           </div>
         </button>
@@ -391,8 +425,8 @@ export const AiChatWidget: React.FC = () => {
             {/* Bot Profile Info */}
             <div className="flex items-center gap-3">
               <div className="relative">
-                <div className="w-9 h-9 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center">
-                  <Bot className="w-5 h-5 text-neutral-200" />
+                <div className="w-9 h-9 rounded-xl bg-white border border-white text-black flex items-center justify-center">
+                  <Bot className="w-5 h-5 text-black" />
                 </div>
                 {/* Status Indicator */}
                 <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-[#121212] flex items-center justify-center">
@@ -440,7 +474,7 @@ export const AiChatWidget: React.FC = () => {
             {/* Welcome banner info */}
             <div className="text-center my-2">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-neutral-900/80 border border-neutral-800 text-[11px] text-neutral-400 font-mono">
-                <Sparkles className="w-3 h-3 text-[#B8FF00]" />
+                <Sparkles className="w-3 h-3 text-white" />
                 Didukung oleh Ekscoder Intelligence AI
               </div>
             </div>
@@ -457,7 +491,7 @@ export const AiChatWidget: React.FC = () => {
                   <div
                     className={`max-w-[86%] sm:max-w-[82%] relative rounded-2xl p-3.5 text-[13px] leading-relaxed transition-all shadow-md ${
                       isUser
-                        ? "bg-gradient-to-tr from-[#B8FF00] to-[#9deb00] text-black font-medium rounded-tr-none shadow-[0_4px_15px_rgba(184,255,0,0.15)]"
+                        ? "bg-white text-black font-medium rounded-tr-none shadow-md"
                         : "bg-[#181818] border border-white/10 text-neutral-200 rounded-tl-none"
                     }`}
                   >
@@ -509,7 +543,7 @@ export const AiChatWidget: React.FC = () => {
                               <strong className="font-bold text-white">{children}</strong>
                             ),
                             code: ({ children }) => (
-                              <code className="px-1.5 py-0.5 rounded bg-black/50 text-[#B8FF00] font-mono text-[11px] border border-white/10">
+                              <code className="px-1.5 py-0.5 rounded bg-black/50 text-white font-mono text-[11px] border border-white/10">
                                 {children}
                               </code>
                             ),
@@ -561,7 +595,7 @@ export const AiChatWidget: React.FC = () => {
             {quickPrompts.length > 0 && !isLimitReached && (
               <div className="pt-2">
                 <p className="text-[11px] font-medium text-neutral-400 mb-2 flex items-center gap-1">
-                  <Sparkles className="w-3 h-3 text-[#B8FF00]" /> Pertanyaan Populer:
+                  <Sparkles className="w-3 h-3 text-white" /> Pertanyaan Populer:
                 </p>
                 <div className="flex flex-wrap gap-1.5">
                   {quickPrompts.map((prompt, index) => (
@@ -570,7 +604,7 @@ export const AiChatWidget: React.FC = () => {
                       type="button"
                       disabled={isLoading}
                       onClick={() => handleSendMessage(prompt)}
-                      className="text-left text-xs px-3 py-1.5 rounded-full bg-[#161616] hover:bg-[#222222] border border-neutral-800 hover:border-emerald-500/40 text-neutral-300 hover:text-[#B8FF00] transition-all duration-200 disabled:opacity-50 hover:shadow-[0_0_10px_rgba(34,197,94,0.1)] active:scale-95 cursor-pointer"
+                      className="text-left text-xs px-3 py-1.5 rounded-full bg-[#161616] hover:bg-[#222222] border border-neutral-800 hover:border-white/30 text-neutral-300 hover:text-white transition-all duration-200 disabled:opacity-50 active:scale-95 cursor-pointer"
                     >
                       {prompt}
                     </button>
@@ -590,7 +624,7 @@ export const AiChatWidget: React.FC = () => {
                   href={DEFAULT_WHATSAPP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-2xl bg-gradient-to-r from-emerald-500 via-emerald-400 to-[#B8FF00] text-black font-bold text-xs shadow-lg hover:brightness-110 transition-all active:scale-[0.99]"
+                  className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-2xl bg-white text-black font-bold text-xs shadow-lg hover:bg-neutral-200 transition-all active:scale-[0.99]"
                 >
                   <MessageCircle className="w-4 h-4 fill-current" />
                   Chat Tim via WhatsApp
@@ -598,7 +632,7 @@ export const AiChatWidget: React.FC = () => {
                 </a>
               </div>
             ) : (
-              <div className="relative flex items-end gap-2 bg-[#181818] border border-neutral-800 focus-within:border-emerald-500/60 rounded-2xl p-1.5 transition-colors">
+              <div className="relative flex items-end gap-2 bg-[#181818] border border-neutral-800 focus-within:border-white/30 rounded-2xl p-1.5 transition-colors">
                 <textarea
                   ref={textareaRef}
                   value={inputMessage}
@@ -620,7 +654,7 @@ export const AiChatWidget: React.FC = () => {
                   aria-label="Kirim pesan"
                   className={`flex items-center justify-center w-9 h-9 rounded-xl transition-all duration-200 shrink-0 ${
                     inputMessage.trim() && !isLoading
-                      ? "bg-[#B8FF00] hover:bg-[#a6e600] text-black shadow-[0_0_12px_rgba(184,255,0,0.3)] scale-100 active:scale-95"
+                      ? "bg-white hover:bg-neutral-200 text-black shadow-md scale-100 active:scale-95"
                       : "bg-neutral-800 text-neutral-500 cursor-not-allowed opacity-50"
                   }`}
                 >

@@ -16,15 +16,29 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [language, setLanguageState] = useState<Language>("ID");
 
   useEffect(() => {
-    const savedLang = localStorage.getItem("ekscoder_lang") as Language;
-    if (savedLang === "EN" || savedLang === "ID") {
-      setLanguageState(savedLang);
+    // Purge legacy storage keys to eliminate stale "EN" cache
+    try {
+      localStorage.removeItem("ekscoder_lang");
+      localStorage.removeItem("ekscoder_lang_v2");
+
+      const userSelected = localStorage.getItem("ekscoder_user_lang") as Language;
+      if (userSelected === "EN") {
+        setLanguageState("EN");
+      } else {
+        // Default strictly to Indonesian (ID)
+        setLanguageState("ID");
+        localStorage.setItem("ekscoder_user_lang", "ID");
+      }
+    } catch {
+      setLanguageState("ID");
     }
   }, []);
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
-    localStorage.setItem("ekscoder_lang", lang);
+    try {
+      localStorage.setItem("ekscoder_user_lang", lang);
+    } catch {}
   };
 
   const toggleLanguage = () => {

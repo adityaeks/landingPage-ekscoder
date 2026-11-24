@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!post) {
     return {
-      title: "Article Not Found — EKSCODER",
+      title: "Article Not Found · EKSCODER",
     };
   }
 
@@ -41,47 +41,39 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     : [];
 
   return {
-    title: `${post.title} — EKSCODER`,
+    title: `${post.title} · EKSCODER`,
     description: excerpt || post.title,
     alternates: {
       canonical: `${siteUrl}/blog/${post.slug || slug}`,
     },
     openGraph: {
-      title: `${post.title} — EKSCODER`,
+      title: `${post.title} · EKSCODER`,
       description: excerpt || post.title,
       url: `${siteUrl}/blog/${post.slug || slug}`,
       siteName: "EKSCODER",
+      images: ogImages,
       type: "article",
       publishedTime: post.published_at,
-      authors: [post.author?.name || "EKSCODER Team"],
-      tags: post.category?.name ? [post.category.name] : [],
-      images: ogImages,
+      authors: [post.author?.name || "Ekscoder Engineering"],
     },
     twitter: {
       card: "summary_large_image",
-      title: `${post.title} — EKSCODER`,
+      title: `${post.title} · EKSCODER`,
       description: excerpt || post.title,
-      images: coverUrl ? [coverUrl] : [],
+      images: ogImages.map((img) => img.url),
     },
   };
 }
 
-export async function generateStaticParams() {
-  const posts = await fetchBlogPostsFromBackend();
-  return posts.map((p) => ({ id: p.slug }));
-}
-
-export default async function BlogDetailPage({ params }: PageProps) {
+export default async function BlogPostPage({ params }: PageProps) {
   const { id: slug } = await params;
-  const [postBySlug, allPosts] = await Promise.all([
-    fetchBlogPostBySlug(slug),
-    fetchBlogPostsFromBackend(),
-  ]);
 
-  const post =
-    postBySlug ??
-    allPosts.find((p) => p.slug === slug || String(p.id) === slug) ??
-    null;
+  let post = await fetchBlogPostBySlug(slug);
+  const allPosts = await fetchBlogPostsFromBackend();
+
+  if (!post) {
+    post = allPosts.find((p) => p.slug === slug || String(p.id) === slug) ?? null;
+  }
 
   return <BlogDetailClient post={post} allPosts={allPosts} />;
 }

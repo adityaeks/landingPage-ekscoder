@@ -2,42 +2,22 @@
 
 import React, { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
-import { processStepsData } from "@/data/processData";
+import { Compass, Code2, Rocket, Search } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations } from "@/data/translations";
+
+const stepIcons = [Search, Compass, Code2, Rocket];
 
 export const Process: React.FC = () => {
   const { language } = useLanguage();
   const t = translations[language].process;
   const containerRef = useRef<HTMLDivElement>(null);
-  const lineRef = useRef<HTMLDivElement>(null);
   const stepsRef = useRef<HTMLDivElement>(null);
-
-  const steps = processStepsData[language];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Progress line fill animation
-      if (lineRef.current && containerRef.current) {
-        gsap.fromTo(
-          lineRef.current,
-          { scaleY: 0 },
-          {
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: "top 80%",
-              end: "bottom 85%",
-              scrub: true,
-            },
-            scaleY: 1,
-            ease: "none",
-          }
-        );
-      }
-
-      // Step cards entrance
       if (stepsRef.current) {
-        const items = stepsRef.current.querySelectorAll(".process-item");
+        const items = stepsRef.current.querySelectorAll(".process-card");
         items.forEach((item) => {
           gsap.fromTo(
             item,
@@ -45,7 +25,7 @@ export const Process: React.FC = () => {
             {
               scrollTrigger: {
                 trigger: item,
-                start: "top 92%",
+                start: "top 90%",
                 toggleActions: "play none none none",
               },
               opacity: 1,
@@ -57,7 +37,7 @@ export const Process: React.FC = () => {
           );
         });
       }
-    });
+    }, containerRef);
 
     return () => ctx.revert();
   }, []);
@@ -66,75 +46,64 @@ export const Process: React.FC = () => {
     <section
       id="process"
       ref={containerRef}
-      className="py-14 sm:py-20 md:py-36 px-4 sm:px-6 md:px-12 bg-transparent relative border-b border-neutral-800/60"
+      className="py-24 sm:py-32 md:py-40 px-5 sm:px-8 md:px-16 bg-[#08080A] text-white relative border-b border-white/10"
     >
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-14 md:mb-20 gap-4 sm:gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-24 gap-6">
           <div>
-            <div className="flex items-center space-x-3 text-xs font-mono text-[#B8FF00] tracking-widest uppercase mb-3">
-              <span className="w-8 h-[1px] bg-[#B8FF00]" />
+            <div className="flex items-center space-x-3 text-xs tracking-[0.25em] text-neutral-400 uppercase mb-4 font-medium">
+              <span className="w-6 h-[1px] bg-white/40" />
               <span>{t.badge}</span>
             </div>
-            <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tighter uppercase font-mono text-white">
+            <h2 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-[#F4F4F6] uppercase">
               {t.title}
             </h2>
           </div>
-          <p className="text-neutral-400 max-w-md text-sm md:text-base font-light">
+          <p className="text-[#8E8E9A] max-w-md text-sm md:text-base leading-relaxed">
             {t.description}
           </p>
         </div>
 
-        {/* Process Timeline Grid */}
-        <div className="relative pl-6 md:pl-12">
-          {/* Vertical Progress Line Track */}
-          <div className="absolute left-2 md:left-4 top-4 bottom-4 w-[2px] bg-neutral-800">
-            <div
-              ref={lineRef}
-              className="w-full bg-[#B8FF00] origin-top h-full shadow-[0_0_12px_#B8FF00]"
-            />
-          </div>
-
-          <div ref={stepsRef} className="space-y-6 sm:space-y-10 md:space-y-16">
-            {steps.map((step, idx) => {
-              const Icon = step.icon;
-              return (
-                <div
-                  key={idx}
-                  className="process-item relative grid grid-cols-1 lg:grid-cols-12 gap-6 items-center p-5 sm:p-8 rounded-2xl bg-[#141414] border border-neutral-800 hover:border-[#B8FF00]/40 transition-all duration-300 group"
-                  data-cursor={step.title}
-                >
-                  {/* Timeline Dot Badge */}
-                  <div className="absolute -left-[31px] md:-left-[55px] top-7 sm:top-10 w-4 h-4 rounded-full border-2 border-neutral-700 bg-[#0E0E0E] group-hover:border-[#B8FF00] group-hover:bg-[#B8FF00] transition-colors" />
-
-                  {/* Left Column: Step Number & Title */}
-                  <div className="lg:col-span-5 flex items-center space-x-4 sm:space-x-6">
-                    <span className="font-mono text-2xl sm:text-5xl font-black text-neutral-600 group-hover:text-[#B8FF00] transition-colors">
+        {/* Editorial Process Rows */}
+        <div ref={stepsRef} className="space-y-4">
+          {t.steps.map((step, idx) => {
+            const Icon = stepIcons[idx % stepIcons.length];
+            return (
+              <div
+                key={idx}
+                className="process-card group relative p-6 sm:p-8 md:p-10 rounded-2xl bg-[#0F0F12] border border-white/10 hover:border-white/25 transition-all duration-300"
+                data-cursor="PHASE"
+              >
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                  {/* Left Column: Index & Phase Title */}
+                  <div className="lg:col-span-5 flex items-start sm:items-center space-x-5">
+                    <span className="text-3xl sm:text-4xl md:text-5xl font-black text-white/30 group-hover:text-white transition-colors duration-300">
                       {step.number}
                     </span>
                     <div>
-                      <div className="flex items-center space-x-2">
-                        <Icon className="w-4 h-4 text-[#B8FF00]" />
-                        <span className="text-xs font-mono text-[#B8FF00] uppercase tracking-widest">
+                      <div className="flex items-center space-x-2 mb-1">
+                        <Icon className="w-4 h-4 text-white" />
+                        <span className="text-xs font-semibold text-neutral-400 tracking-wider uppercase">
                           {step.subtitle}
                         </span>
                       </div>
-                      <h3 className="text-xl sm:text-3xl font-mono font-extrabold text-white tracking-tight uppercase group-hover:translate-x-1 transition-transform">
+                      <h3 className="text-2xl sm:text-3xl font-bold text-[#F4F4F6] tracking-tight uppercase group-hover:translate-x-1 transition-transform">
                         {step.title}
                       </h3>
                     </div>
                   </div>
 
-                  {/* Right Column: Description */}
+                  {/* Right Column: Narrative Description */}
                   <div className="lg:col-span-7">
-                    <p className="text-neutral-300 font-light text-sm sm:text-base leading-relaxed">
+                    <p className="text-[#8E8E9A] group-hover:text-[#C8C8D4] text-sm sm:text-base leading-relaxed transition-colors duration-300">
                       {step.description}
                     </p>
                   </div>
                 </div>
-              );
-            })}
-          </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

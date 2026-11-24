@@ -2,58 +2,59 @@
 
 import React, { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
-
 import { useLanguage } from "@/context/LanguageContext";
 import { translations } from "@/data/translations";
 
 export const Introduction: React.FC = () => {
   const { language } = useLanguage();
-  const t = translations[language].intro;
-  const containerRef = useRef<HTMLDivElement>(null);
+  const t = translations[language].manifesto;
+
+  const containerRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
-  const textRef = useRef<HTMLParagraphElement>(null);
+  const pillarsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       if (headingRef.current) {
-        const lines = headingRef.current.querySelectorAll(".intro-line");
         gsap.fromTo(
-          lines,
-          { y: 50, opacity: 0 },
+          headingRef.current,
+          { opacity: 0, y: 35 },
           {
             scrollTrigger: {
-              trigger: containerRef.current,
-              start: "top 75%",
-              end: "top 35%",
-              toggleActions: "play none none reverse",
+              trigger: headingRef.current,
+              start: "top 88%",
+              toggleActions: "play none none none",
             },
-            y: 0,
             opacity: 1,
-            duration: 0.8,
-            stagger: 0.15,
-            ease: "power3.out",
-          }
-        );
-      }
-
-      if (textRef.current) {
-        gsap.fromTo(
-          textRef.current,
-          { y: 40, opacity: 0 },
-          {
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: "top 65%",
-              toggleActions: "play none none reverse",
-            },
             y: 0,
-            opacity: 1,
             duration: 0.9,
             ease: "power3.out",
           }
         );
       }
-    });
+
+      if (pillarsRef.current) {
+        const cards = pillarsRef.current.querySelectorAll(".pillar-card");
+        cards.forEach((card, idx) => {
+          gsap.fromTo(
+            card,
+            { opacity: 0, y: 30 },
+            {
+              scrollTrigger: {
+                trigger: card,
+                start: "top 90%",
+                toggleActions: "play none none none",
+              },
+              opacity: 1,
+              y: 0,
+              duration: 0.7,
+              delay: idx * 0.1,
+              ease: "power2.out",
+            }
+          );
+        });
+      }
+    }, containerRef);
 
     return () => ctx.revert();
   }, []);
@@ -62,59 +63,52 @@ export const Introduction: React.FC = () => {
     <section
       id="about"
       ref={containerRef}
-      className="py-24 md:py-36 px-6 md:px-12 bg-transparent relative border-b border-neutral-800/60 overflow-hidden"
+      className="py-24 sm:py-32 md:py-40 px-5 sm:px-8 md:px-16 bg-[#08080A] text-white relative border-b border-white/10"
     >
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-        {/* Left Section Label */}
-        <div className="lg:col-span-3">
-          <div className="flex items-center space-x-3 text-xs font-mono text-[#B8FF00] tracking-widest uppercase">
-            <span className="w-8 h-[1px] bg-[#B8FF00]" />
-            <span>{t.badge}</span>
-          </div>
+      <div className="max-w-7xl mx-auto">
+        {/* Section Pill Badge */}
+        <div className="flex items-center space-x-3 text-xs tracking-[0.25em] text-neutral-400 uppercase mb-8 font-medium">
+          <span className="w-6 h-[1px] bg-white/40" />
+          <span>{t.badge}</span>
         </div>
 
-        {/* Right Section Content */}
-        <div className="lg:col-span-9 space-y-8">
-          <h2
-            ref={headingRef}
-            className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tighter uppercase font-mono leading-[1.05] text-white"
-          >
-            <div className="overflow-hidden">
-              <span className="intro-line block">{t.line1}</span>
-            </div>
-            <div className="overflow-hidden">
-              <span className="intro-line block text-neutral-400">{t.line2}</span>
-            </div>
-            <div className="overflow-hidden">
-              <span className="intro-line block text-[#B8FF00]">{t.line3}</span>
-            </div>
-          </h2>
+        {/* Monumental Editorial Headline */}
+        <h2
+          ref={headingRef}
+          className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight uppercase leading-[1.05] text-[#F4F4F6] max-w-5xl mb-14 md:mb-20"
+        >
+          {t.heading}
+        </h2>
 
-          <p
-            ref={textRef}
-            className="text-xl sm:text-2xl md:text-3xl text-neutral-300 font-light leading-relaxed max-w-4xl"
-          >
-            {t.description}
-          </p>
+        {/* Narrative Two-Column Paragraphs */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 pb-16 md:pb-24 border-b border-white/10 text-[#8E8E9A] text-base sm:text-lg md:text-xl font-light leading-relaxed">
+          <p>{t.paragraph1}</p>
+          <p>{t.paragraph2}</p>
+        </div>
 
-          <div className="pt-4 grid grid-cols-2 sm:grid-cols-4 gap-6 font-mono text-xs text-neutral-400 border-t border-neutral-800/80">
-            <div>
-              <div className="text-white text-2xl font-bold font-sans">100%</div>
-              <div className="mt-1 text-neutral-500">{t.stat1Label}</div>
+        {/* Core Principles Grid */}
+        <div
+          ref={pillarsRef}
+          className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 pt-16 md:pt-20"
+        >
+          {t.pillars.map((pillar, idx) => (
+            <div
+              key={idx}
+              className="pillar-card p-6 sm:p-8 rounded-2xl bg-[#0F0F12] border border-white/10 hover:border-white/25 transition-all duration-300 flex flex-col justify-between group"
+            >
+              <div className="space-y-4">
+                <span className="text-2xl sm:text-3xl font-black text-white/30 group-hover:text-white transition-colors duration-300">
+                  {pillar.number}
+                </span>
+                <h3 className="text-xl sm:text-2xl font-bold text-[#F4F4F6] tracking-tight uppercase">
+                  {pillar.title}
+                </h3>
+              </div>
+              <p className="mt-6 text-sm sm:text-base text-[#8E8E9A] group-hover:text-[#C8C8D4] leading-relaxed transition-colors duration-300">
+                {pillar.description}
+              </p>
             </div>
-            <div>
-              <div className="text-[#B8FF00] text-2xl font-bold font-sans">5+</div>
-              <div className="mt-1 text-neutral-500">{t.stat2Label}</div>
-            </div>
-            <div>
-              <div className="text-white text-2xl font-bold font-sans">99.9%</div>
-              <div className="mt-1 text-neutral-500">{t.stat3Label}</div>
-            </div>
-            <div>
-              <div className="text-white text-2xl font-bold font-sans">0.2s</div>
-              <div className="mt-1 text-neutral-500">{t.stat4Label}</div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>

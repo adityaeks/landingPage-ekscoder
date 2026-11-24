@@ -65,7 +65,7 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
       .to(logoRef.current, {
         scale: 1.15,
         letterSpacing: "0.2em",
-        color: "#B8FF00",
+        color: "#FFFFFF",
         duration: 0.5,
         ease: "power2.inOut",
       })
@@ -94,7 +94,7 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
       className="fixed inset-0 z-[10000] bg-[#0A0A0A] flex flex-col items-center justify-between p-8 md:p-16 select-none bg-noise"
     >
       <div className="w-full flex justify-between items-center text-xs font-mono text-neutral-500 uppercase tracking-widest">
-        <span>EKSCODER // DIGITAL EXPERIENCES</span>
+        <span>EKSCODER · DIGITAL EXPERIENCES</span>
         <span>SYS.INIT.2026</span>
       </div>
 
@@ -103,12 +103,12 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
           ref={logoRef}
           className="text-4xl sm:text-6xl md:text-8xl font-extrabold tracking-tight text-white font-mono"
         >
-          EKSCODER<span className="text-[#B8FF00]">.</span>
+          EKSCODER<span className="text-white">.</span>
         </div>
 
         <div
           ref={counterRef}
-          className="font-mono text-xl sm:text-2xl text-[#B8FF00] font-bold tracking-widest"
+          className="font-mono text-xl sm:text-2xl text-white font-bold tracking-widest"
         >
           [ {formatProgress(progress)}% ]
         </div>
@@ -117,7 +117,7 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
         <div className="w-48 sm:w-64 h-[2px] bg-neutral-800 rounded-full overflow-hidden">
           <div
             ref={barRef}
-            className="h-full bg-[#B8FF00] w-0 transition-all duration-75"
+            className="h-full bg-white w-0 transition-all duration-75"
           />
         </div>
       </div>

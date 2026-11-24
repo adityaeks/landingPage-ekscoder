@@ -8,104 +8,107 @@ export const Marquee: React.FC = () => {
   const marquee2Ref = useRef<HTMLDivElement>(null);
 
   const itemsRow1 = [
-    "DIGITAL TRANSFORMATION",
-    "ENTERPRISE SOFTWARE",
-    "BUSINESS AUTOMATION",
-    "HIGH CONVERSION PLATFORMS",
-    "BRAND EXPERIENCES",
-    "UI/UX PRODUCT DESIGN",
-    "SCALABLE SYSTEMS",
+    "Bespoke Web Platforms",
+    "Creative Technology",
+    "Enterprise Software",
+    "Motion Architecture",
+    "High Concurrency Systems",
+    "Digital Engineering",
   ];
 
   const itemsRow2 = [
-    "REVENUE GROWTH",
-    "OPERATIONAL EFFICIENCY",
-    "99.99% SYSTEM UPTIME",
-    "DATA ACCURACY & INTEGRATION",
-    "CUSTOM ERP SOLUTIONS",
-    "OPTIMIZED WORKFLOWS",
-    "FUTURE-PROOF ARCHITECTURE",
+    "Production Grade Reliability",
+    "Scalable Cloud Engines",
+    "Next.js Architecture",
+    "Hardware Accelerated 60FPS",
+    "Custom Business ERP",
+    "Award Caliber Interfaces",
   ];
 
   useEffect(() => {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) return;
+
     const el1 = marquee1Ref.current;
     const el2 = marquee2Ref.current;
-
     if (!el1 || !el2) return;
 
-    // Row 1 move left
     const tween1 = gsap.to(el1, {
       xPercent: -50,
       repeat: -1,
-      duration: 25,
+      duration: 28,
       ease: "none",
       force3D: true,
     });
 
-    // Row 2 move right
     const tween2 = gsap.fromTo(
       el2,
       { xPercent: -50 },
       {
         xPercent: 0,
         repeat: -1,
-        duration: 25,
+        duration: 32,
         ease: "none",
         force3D: true,
       }
     );
 
-    // Pause on hover
     const container = el1.closest(".marquee-container");
     if (container) {
-      const handleMouseEnter = () => {
-        gsap.to([tween1, tween2], { timeScale: 0.2, duration: 0.5 });
+      const onEnter = () => {
+        tween1.pause();
+        tween2.pause();
       };
-      const handleMouseLeave = () => {
-        gsap.to([tween1, tween2], { timeScale: 1, duration: 0.5 });
+      const onLeave = () => {
+        tween1.play();
+        tween2.play();
       };
 
-      container.addEventListener("mouseenter", handleMouseEnter);
-      container.addEventListener("mouseleave", handleMouseLeave);
+      container.addEventListener("mouseenter", onEnter);
+      container.addEventListener("mouseleave", onLeave);
 
       return () => {
-        container.removeEventListener("mouseenter", handleMouseEnter);
-        container.removeEventListener("mouseleave", handleMouseLeave);
+        container.removeEventListener("mouseenter", onEnter);
+        container.removeEventListener("mouseleave", onLeave);
         tween1.kill();
         tween2.kill();
       };
     }
+
+    return () => {
+      tween1.kill();
+      tween2.kill();
+    };
   }, []);
 
   return (
-    <div className="marquee-container py-12 bg-transparent backdrop-blur-sm border-y border-white/10 overflow-hidden select-none">
-      {/* Row 1 - Leftward */}
-      <div className="flex whitespace-nowrap mb-4">
-        <div ref={marquee1Ref} className="flex items-center space-x-8 shrink-0 transform-gpu">
-          {[...itemsRow1, ...itemsRow1].map((text, idx) => (
-            <div key={idx} className="flex items-center space-x-8">
-              <span className="text-3xl sm:text-5xl font-mono font-extrabold tracking-tighter text-white/90 uppercase hover:text-[#B8FF00] transition-colors cursor-default">
-                {text}
-              </span>
-              <span className="w-3 h-3 rounded-full bg-[#B8FF00]" />
-            </div>
-          ))}
-        </div>
+    <section
+      aria-label="Studio Capabilities Ribbon"
+      className="marquee-container py-8 sm:py-12 bg-[#08080A] border-y border-white/[0.08] overflow-hidden select-none relative"
+    >
+      {/* Row 1: Leftward Marquee */}
+      <div className="flex w-max" ref={marquee1Ref}>
+        {[...itemsRow1, ...itemsRow1].map((text, idx) => (
+          <div key={`m1-${idx}`} className="flex items-center space-x-6 sm:space-x-8 px-4 sm:px-6">
+            <span className="text-xl sm:text-3xl md:text-4xl font-extrabold uppercase tracking-tight text-white hover:text-[#D4FF00] transition-colors whitespace-nowrap">
+              {text}
+            </span>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#D4FF00] shrink-0" />
+          </div>
+        ))}
       </div>
 
-      {/* Row 2 - Rightward */}
-      <div className="flex whitespace-nowrap">
-        <div ref={marquee2Ref} className="flex items-center space-x-8 shrink-0 transform-gpu">
-          {[...itemsRow2, ...itemsRow2].map((text, idx) => (
-            <div key={idx} className="flex items-center space-x-8">
-              <span className="text-3xl sm:text-5xl font-mono font-bold tracking-tighter text-stroke uppercase cursor-default">
-                {text}
-              </span>
-              <span className="text-[#B8FF00] font-mono text-2xl">•</span>
-            </div>
-          ))}
-        </div>
+      {/* Row 2: Rightward Marquee with Editorial Italic Contrast */}
+      <div className="flex w-max mt-4 sm:mt-6" ref={marquee2Ref}>
+        {[...itemsRow2, ...itemsRow2].map((text, idx) => (
+          <div key={`m2-${idx}`} className="flex items-center space-x-6 sm:space-x-8 px-4 sm:px-6">
+            <span className="text-lg sm:text-2xl md:text-3xl font-light italic tracking-normal text-neutral-400 hover:text-white transition-colors whitespace-nowrap">
+              {text}
+            </span>
+            <span className="text-neutral-600 text-xs shrink-0">✦</span>
+          </div>
+        ))}
       </div>
-    </div>
+    </section>
   );
 };

@@ -10,6 +10,14 @@ interface SmoothScrollProps {
 
 export const SmoothScroll: React.FC<SmoothScrollProps> = ({ children }) => {
   useEffect(() => {
+    // Reset scroll to top on every page reload/refresh
+    if (typeof window !== "undefined") {
+      if ("scrollRestoration" in window.history) {
+        window.history.scrollRestoration = "manual";
+      }
+      window.scrollTo(0, 0);
+    }
+
     // Check reduced motion preference
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion) return;
@@ -23,6 +31,9 @@ export const SmoothScroll: React.FC<SmoothScrollProps> = ({ children }) => {
     });
 
     (window as any).lenis = lenis;
+
+    // Immediately snap Lenis to the top on initial mount
+    lenis.scrollTo(0, { immediate: true });
 
     // Synchronize Lenis scroll with GSAP ScrollTrigger
     lenis.on("scroll", ScrollTrigger.update);

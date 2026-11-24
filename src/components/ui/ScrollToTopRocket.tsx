@@ -69,7 +69,7 @@ export const ScrollToTopRocket: React.FC = () => {
             <div className="relative w-32 h-32 flex items-center justify-center -mt-8">
               <div className="absolute w-20 h-20 rounded-full bg-white/70 blur-md animate-ping" />
               <div className="absolute w-24 h-24 rounded-full bg-neutral-400/80 blur-lg animate-pulse" />
-              <div className="absolute w-28 h-28 rounded-full bg-[#B8FF00]/40 blur-xl animate-pulse delay-75" />
+              <div className="absolute w-28 h-28 rounded-full bg-white/40 blur-xl animate-pulse delay-75" />
               <div className="absolute w-36 h-36 rounded-full bg-neutral-700/50 blur-2xl animate-bounce delay-150" />
             </div>
           </div>
@@ -92,15 +92,15 @@ export const ScrollToTopRocket: React.FC = () => {
               disabled={isLaunching}
               className={`w-14 h-14 rounded-full bg-neutral-900/95 backdrop-blur-xl border border-neutral-800 text-neutral-300 flex items-center justify-center shadow-2xl transition-all duration-300 group pointer-events-auto ${
                 isLaunching
-                  ? "border-[#B8FF00] bg-black text-[#B8FF00] shadow-[0_0_40px_#B8FF00]"
-                  : "hover:text-black hover:bg-[#B8FF00] hover:border-[#B8FF00] hover:shadow-[0_0_25px_rgba(184,255,0,0.5)]"
+                  ? "border-white bg-black text-white shadow-[0_0_40px_rgba(255,255,255,0.4)]"
+                  : "hover:text-black hover:bg-white hover:border-white hover:shadow-2xl"
               }`}
             >
               {/* Lucide Rocket Icon rotated -45deg so it points straight UP */}
               <Rocket
                 className={`w-6 h-6 transition-all duration-300 -rotate-45 ${
                   isLaunching
-                    ? "text-[#B8FF00] animate-pulse scale-125"
+                    ? "text-white animate-pulse scale-125"
                     : "group-hover:-translate-y-1 group-hover:scale-110"
                 }`}
               />
@@ -111,7 +111,7 @@ export const ScrollToTopRocket: React.FC = () => {
           {isLaunching && (
             <div className="absolute top-12 pointer-events-none flex flex-col items-center z-0">
               {/* Bright Fire Thruster Flame */}
-              <div className="w-5 h-24 bg-gradient-to-b from-[#B8FF00] via-amber-400 via-orange-500 to-transparent rounded-b-full blur-[1px] animate-pulse shadow-[0_0_30px_#B8FF00]" />
+              <div className="w-5 h-24 bg-gradient-to-b from-white via-amber-400 via-orange-500 to-transparent rounded-b-full blur-[1px] animate-pulse shadow-[0_0_30px_rgba(255,255,255,0.5)]" />
 
               {/* Trailing Tail Smoke Plume */}
               <div className="w-10 h-16 bg-neutral-300/60 rounded-full blur-md animate-ping -mt-6" />

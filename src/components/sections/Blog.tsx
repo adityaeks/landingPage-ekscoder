@@ -8,9 +8,6 @@ import {
   Calendar,
   User,
   ArrowUpRight,
-  Sparkles,
-  ChevronLeft,
-  ChevronRight,
   Code2,
 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
@@ -26,7 +23,7 @@ import {
 } from "@/services/blogService";
 
 /**
- * Robust BlogCoverImage component with automatic fallback & cyber placeholder
+ * Editorial BlogCoverImage component with clean fallback
  */
 const BlogCoverImage: React.FC<{
   src?: string | null;
@@ -42,61 +39,42 @@ const BlogCoverImage: React.FC<{
   }, [src]);
 
   if (!fullSrc || hasError) {
-    const accentColor = category?.color || "#B8FF00";
+    const accentColor = category?.color || "#FFFFFF";
     return (
       <div
-        className={`w-full h-full min-h-[180px] relative flex flex-col items-center justify-center overflow-hidden select-none bg-[#0c0d0e] ${className}`}
-        style={{
-          background: `radial-gradient(ellipse at 50% 40%, ${accentColor}18 0%, #0c0d0e 85%)`,
-        }}
+        className={`w-full h-full min-h-[180px] relative flex flex-col items-center justify-center overflow-hidden select-none bg-[#121217] ${className}`}
       >
-        {/* Subtle Cyber Grid Pattern */}
-        <div
-          className="absolute inset-0 opacity-15 pointer-events-none"
-          style={{
-            backgroundImage: `linear-gradient(${accentColor}25 1px, transparent 1px), linear-gradient(90deg, ${accentColor}25 1px, transparent 1px)`,
-            backgroundSize: "24px 24px",
-          }}
-        />
-
-        {/* Ambient Glow Aura */}
-        <div
-          className="w-36 h-36 rounded-full blur-3xl absolute opacity-25 pointer-events-none"
-          style={{ backgroundColor: accentColor }}
-        />
-
-        {/* Central Graphic Badge */}
+        {/* Clean Architectural Badge */}
         <div className="relative z-10 flex flex-col items-center space-y-3 p-6 text-center">
           <div
-            className="w-14 h-14 rounded-2xl flex items-center justify-center shadow-xl border backdrop-blur-md transition-transform duration-500 group-hover:scale-110"
+            className="w-12 h-12 rounded-xl flex items-center justify-center border transition-transform duration-300 group-hover:scale-105"
             style={{
               backgroundColor: `${accentColor}15`,
               borderColor: `${accentColor}35`,
               color: accentColor,
             }}
           >
-            <Code2 className="w-7 h-7" />
+            <Code2 className="w-6 h-6" />
           </div>
-          <div className="space-y-1">
+          <div>
             <span
-              className="font-mono text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border inline-block backdrop-blur-md"
+              className="text-[11px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border inline-block"
               style={{
                 backgroundColor: `${accentColor}10`,
                 borderColor: `${accentColor}30`,
                 color: accentColor,
               }}
             >
-              {category?.name || "EKSCODER // INSIGHT"}
+              {category?.name || "JOURNAL"}
             </span>
           </div>
         </div>
 
-        {/* Cyber Watermark Accent */}
+        {/* Minimal Subtle Brand Mark */}
         <div
-          className="absolute bottom-3 right-4 font-mono text-[9px] tracking-wider opacity-40 uppercase font-bold select-none"
-          style={{ color: accentColor }}
+          className="absolute bottom-3 right-4 text-[10px] tracking-widest uppercase font-bold text-white/20 select-none"
         >
-          // EKSCODER.DEV
+          EKSCODER
         </div>
       </div>
     );
@@ -122,13 +100,6 @@ export const Blog: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("ALL");
 
   const sliderRef = React.useRef<HTMLDivElement>(null);
-
-  const scrollSlider = (direction: "left" | "right") => {
-    if (sliderRef.current) {
-      const scrollAmount = direction === "left" ? -380 : 380;
-      sliderRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
-    }
-  };
 
   useEffect(() => {
     let isMounted = true;
@@ -182,40 +153,37 @@ export const Blog: React.FC = () => {
   return (
     <section
       id="blog"
-      className="py-14 sm:py-20 md:py-36 px-4 sm:px-6 md:px-12 bg-transparent relative overflow-hidden border-b border-neutral-800/60"
+      className="py-20 md:py-32 px-5 sm:px-8 md:px-16 bg-[#08080A] relative border-b border-white/10"
     >
-      {/* Background Subtle Ambient Glow */}
-      <div className="absolute top-1/3 right-10 w-[500px] h-[500px] bg-[#B8FF00]/5 rounded-full blur-[140px] pointer-events-none -z-10" />
-      <div className="absolute bottom-10 left-10 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[140px] pointer-events-none -z-10" />
-
+      <span id="articles" className="sr-only" />
       <div className="max-w-7xl mx-auto">
-        {/* Header Section */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-14 md:mb-16 gap-4 sm:gap-6">
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 md:mb-20 gap-6">
           <div>
-            <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full border border-[#B8FF00]/30 bg-[#B8FF00]/10 text-[#B8FF00] font-mono text-xs tracking-widest uppercase mb-4">
-              <BookOpen className="w-3.5 h-3.5" />
+            <div className="flex items-center space-x-3 text-xs tracking-[0.25em] text-neutral-400 uppercase mb-4 font-medium">
+              <span className="w-6 h-[1px] bg-white/40" />
               <span>{t.badge}</span>
             </div>
-            <h2 className="text-4xl sm:text-5xl md:text-7xl font-black font-mono tracking-tighter uppercase text-white leading-none">
+            <h2 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-[#F4F4F6] uppercase">
               {t.title}
             </h2>
           </div>
 
-          <p className="text-neutral-400 font-light text-sm sm:text-base max-w-md leading-relaxed">
+          <p className="text-[#8E8E9A] text-sm sm:text-base max-w-md leading-relaxed">
             {t.description}
           </p>
         </div>
 
-        {/* Category Filter Tabs (only if posts exist) */}
+        {/* Category Filter Pills (only if posts exist) */}
         {posts.length > 0 && (
-          <div className="flex flex-wrap items-center gap-2 mb-12 border-b border-neutral-800/80 pb-6">
+          <div className="flex flex-wrap items-center gap-2 mb-12 border-b border-white/10 pb-6">
             <button
               onClick={() => setSelectedCategory("ALL")}
               suppressHydrationWarning
-              className={`px-5 py-2 rounded-full font-mono text-xs tracking-wider uppercase transition-all duration-300 ${
+              className={`px-5 py-2 rounded-full text-xs tracking-wider uppercase transition-all duration-300 cursor-pointer ${
                 selectedCategory === "ALL"
-                  ? "bg-[#B8FF00] text-black font-bold shadow-lg glow-accent"
-                  : "bg-neutral-900 border border-neutral-800 text-neutral-400 hover:text-white hover:border-neutral-700"
+                  ? "bg-white text-black font-bold shadow-md"
+                  : "bg-[#141419] border border-white/10 text-[#8E8E9A] hover:text-white hover:border-white/20"
               }`}
             >
               {t.allFilter} ({posts.length})
@@ -228,10 +196,10 @@ export const Blog: React.FC = () => {
                   key={catName}
                   onClick={() => setSelectedCategory(catName)}
                   suppressHydrationWarning
-                  className={`px-5 py-2 rounded-full font-mono text-xs tracking-wider uppercase transition-all duration-300 ${
+                  className={`px-5 py-2 rounded-full text-xs tracking-wider uppercase transition-all duration-300 cursor-pointer ${
                     isActive
-                      ? "bg-[#B8FF00] text-black font-bold shadow-lg glow-accent"
-                      : "bg-neutral-900 border border-neutral-800 text-neutral-400 hover:text-white hover:border-neutral-700"
+                      ? "bg-white text-black font-bold shadow-md"
+                      : "bg-[#141419] border border-white/10 text-[#8E8E9A] hover:text-white hover:border-white/20"
                   }`}
                 >
                   {catName}
@@ -247,27 +215,27 @@ export const Blog: React.FC = () => {
             {[1, 2, 3].map((n) => (
               <div
                 key={n}
-                className="rounded-3xl bg-neutral-900/60 border border-neutral-800 h-96 animate-pulse p-6 flex flex-col justify-between"
+                className="rounded-2xl bg-[#0F0F12] border border-white/10 h-96 animate-pulse p-6 flex flex-col justify-between"
               >
-                <div className="h-48 bg-neutral-800 rounded-2xl w-full" />
+                <div className="h-48 bg-white/5 rounded-xl w-full" />
                 <div className="space-y-3 mt-4">
-                  <div className="h-4 bg-neutral-800 rounded w-1/3" />
-                  <div className="h-6 bg-neutral-800 rounded w-full" />
-                  <div className="h-4 bg-neutral-800 rounded w-4/5" />
+                  <div className="h-4 bg-white/5 rounded w-1/3" />
+                  <div className="h-6 bg-white/5 rounded w-full" />
+                  <div className="h-4 bg-white/5 rounded w-4/5" />
                 </div>
               </div>
             ))}
           </div>
         ) : posts.length === 0 ? (
-          <div className="rounded-3xl bg-[#111111]/80 border border-neutral-800/80 p-12 text-center flex flex-col items-center justify-center space-y-4 my-8">
-            <div className="w-16 h-16 rounded-2xl bg-neutral-900 border border-neutral-800 flex items-center justify-center text-[#B8FF00] shadow-lg">
-              <BookOpen className="w-8 h-8 opacity-70" />
+          <div className="rounded-2xl bg-[#0F0F12] border border-white/10 p-12 text-center flex flex-col items-center justify-center space-y-4 my-8">
+            <div className="w-14 h-14 rounded-2xl bg-[#16161D] border border-white/10 flex items-center justify-center text-white">
+              <BookOpen className="w-6 h-6 opacity-70" />
             </div>
             <div className="space-y-2 max-w-md">
-              <h3 className="text-xl font-bold font-mono text-white tracking-tight uppercase">
+              <h3 className="text-xl font-bold text-white tracking-tight uppercase">
                 {t.emptyTitle}
               </h3>
-              <p className="text-neutral-400 font-light text-sm">
+              <p className="text-[#8E8E9A] text-sm">
                 {t.emptyDesc}
               </p>
             </div>
@@ -280,42 +248,40 @@ export const Blog: React.FC = () => {
                 href={`/blog/${featuredPost.slug || featuredPost.id}`}
                 data-cursor="READ"
                 suppressHydrationWarning
-                className="group relative rounded-3xl bg-[#111111] border border-neutral-800 hover:border-[#B8FF00]/50 overflow-hidden transition-all duration-500 cursor-pointer shadow-2xl grid grid-cols-1 lg:grid-cols-12"
+                className="group relative rounded-2xl bg-[#0F0F12] border border-white/10 hover:border-white/25 overflow-hidden transition-all duration-500 cursor-pointer grid grid-cols-1 lg:grid-cols-12"
               >
                 {/* Cover Image Container */}
-                <div className="lg:col-span-5 relative h-60 sm:h-72 lg:h-[340px] overflow-hidden bg-neutral-900">
+                <div className="lg:col-span-5 relative h-60 sm:h-72 lg:h-[340px] overflow-hidden bg-[#16161D]">
                   <BlogCoverImage
                     src={featuredPost.cover_image}
                     alt={featuredPost.title}
                     category={featuredPost.category}
                     className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#111111] via-transparent to-transparent lg:hidden pointer-events-none" />
 
                   {/* Featured Pill */}
-                  <div className="absolute top-5 left-5 inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#B8FF00] text-black font-mono text-[11px] font-extrabold uppercase shadow-lg z-10">
-                    <Sparkles className="w-3 h-3" />
-                    <span>{t.featuredBadge}</span>
+                  <div className="absolute top-5 left-5 inline-flex items-center px-3 py-1 rounded-full bg-white text-black text-[11px] font-bold uppercase shadow-md z-10 tracking-wider">
+                    {t.featuredBadge}
                   </div>
                 </div>
 
                 {/* Article Info Details */}
                 <div className="lg:col-span-7 p-6 sm:p-8 lg:p-10 flex flex-col justify-between">
                   <div>
-                    {/* Category & Meta Pill */}
-                    <div className="flex items-center space-x-3 mb-5 font-mono text-xs">
+                    {/* Category & Views */}
+                    <div className="flex items-center space-x-3 mb-5 text-xs">
                       <span
-                        className="px-3 py-1 rounded-full font-bold uppercase"
+                        className="px-3 py-1 rounded-full font-bold uppercase tracking-wider"
                         style={{
-                          backgroundColor: `${featuredPost.category?.color || "#B8FF00"}20`,
-                          color: featuredPost.category?.color || "#B8FF00",
-                          border: `1px solid ${featuredPost.category?.color || "#B8FF00"}40`,
+                          backgroundColor: `${featuredPost.category?.color || "#FFFFFF"}20`,
+                          color: featuredPost.category?.color || "#FFFFFF",
+                          border: `1px solid ${featuredPost.category?.color || "#FFFFFF"}40`,
                         }}
                       >
                         {featuredPost.category?.name || "DevOps"}
                       </span>
 
-                      <span className="text-neutral-500 flex items-center space-x-1">
+                      <span className="text-[#8E8E9A] flex items-center space-x-1">
                         <Eye className="w-3.5 h-3.5" />
                         <span>
                           {featuredPost.views_count} {t.views}
@@ -324,33 +290,33 @@ export const Blog: React.FC = () => {
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-extrabold font-mono text-white tracking-tight uppercase leading-snug group-hover:text-[#B8FF00] transition-colors mb-4">
+                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#F4F4F6] tracking-tight uppercase leading-snug group-hover:text-white transition-colors mb-4">
                       {featuredPost.title}
                     </h3>
 
-                    {/* Excerpt / Summary */}
+                    {/* Excerpt */}
                     {getPostExcerpt(featuredPost, 200) && (
-                      <p className="text-neutral-400 font-light text-xs sm:text-sm leading-relaxed line-clamp-3 mb-6">
+                      <p className="text-[#8E8E9A] text-sm leading-relaxed line-clamp-3 mb-6">
                         {getPostExcerpt(featuredPost, 200)}
                       </p>
                     )}
                   </div>
 
                   {/* Footer Meta info */}
-                  <div className="pt-5 border-t border-neutral-800/80 flex items-center justify-between font-mono text-xs text-neutral-500">
+                  <div className="pt-5 border-t border-white/10 flex items-center justify-between text-xs text-[#8E8E9A]">
                     <div className="flex items-center space-x-4">
                       <span className="flex items-center space-x-1">
-                        <User className="w-3.5 h-3.5 text-[#B8FF00]" />
+                        <User className="w-3.5 h-3.5 text-white" />
                         <span>{featuredPost.author?.name}</span>
                       </span>
-                      <span>•</span>
+                      <span>·</span>
                       <span className="flex items-center space-x-1">
                         <Calendar className="w-3.5 h-3.5" />
                         <span>{formatDate(featuredPost.published_at, language)}</span>
                       </span>
                     </div>
 
-                    <div className="w-9 h-9 rounded-full bg-neutral-900 border border-neutral-800 group-hover:bg-[#B8FF00] group-hover:text-black group-hover:border-[#B8FF00] text-white flex items-center justify-center transition-all duration-300">
+                    <div className="w-9 h-9 rounded-full bg-[#181820] border border-white/10 group-hover:bg-white group-hover:text-black group-hover:border-white text-white flex items-center justify-center transition-all duration-300">
                       <ArrowUpRight className="w-4 h-4" />
                     </div>
                   </div>
@@ -360,120 +326,88 @@ export const Blog: React.FC = () => {
 
             {/* Horizontal Scroll Article Slider Container */}
             {regularPosts.length > 0 && (
-              <div className="space-y-4">
-                {/* Horizontal Navigation Header Controls */}
-                {/* <div className="flex items-center justify-between font-mono text-xs text-neutral-400">
-                  <div className="flex items-center space-x-2">
-                    <span className="w-2 h-2 rounded-full bg-[#B8FF00] animate-pulse" />
-                    <span className="tracking-wider uppercase font-bold text-neutral-300">
-                      [ HORIZONTAL SLIDER // SCROLL SAMPING → ]
-                    </span>
-                  </div>
+              <div
+                ref={sliderRef}
+                data-lenis-prevent
+                onWheel={(e) => {
+                  if (e.deltaY !== 0 && sliderRef.current) {
+                    sliderRef.current.scrollLeft += e.deltaY;
+                  }
+                }}
+                className="flex items-stretch gap-6 sm:gap-8 overflow-x-auto pb-6 pt-2 custom-scrollbar snap-x snap-mandatory scroll-smooth"
+              >
+                {regularPosts.map((post) => (
+                  <Link
+                    key={post.id}
+                    href={`/blog/${post.slug || post.id}`}
+                    data-cursor="READ"
+                    suppressHydrationWarning
+                    className="w-[280px] sm:w-[340px] md:w-[360px] lg:w-[380px] shrink-0 snap-start group rounded-2xl bg-[#0F0F12] border border-white/10 hover:border-white/25 overflow-hidden transition-all duration-500 cursor-pointer flex flex-col justify-between"
+                  >
+                    {/* Cover Frame */}
+                    <div className="relative h-44 sm:h-48 w-full overflow-hidden bg-[#16161D]">
+                      <BlogCoverImage
+                        src={post.cover_image}
+                        alt={post.title}
+                        category={post.category}
+                        className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                      />
+                      <div className="absolute top-4 left-4 z-10">
+                        <span
+                          className="px-3 py-1 rounded-full text-[10px] font-bold uppercase shadow-sm backdrop-blur-md"
+                          style={{
+                            backgroundColor: `${post.category?.color || "#3b82f6"}30`,
+                            color: post.category?.color || "#3b82f6",
+                            border: `1px solid ${post.category?.color || "#3b82f6"}50`,
+                          }}
+                        >
+                          {post.category?.name}
+                        </span>
+                      </div>
+                    </div>
 
-                  <div className="flex items-center space-x-2">
-                    <button
-                      onClick={() => scrollSlider("left")}
-                      aria-label="Previous Article"
-                      suppressHydrationWarning
-                      className="w-10 h-10 rounded-full border border-neutral-800 bg-neutral-900/90 hover:bg-[#B8FF00] hover:text-black hover:border-[#B8FF00] text-white flex items-center justify-center transition-all duration-300 shadow-md"
-                    >
-                      <ChevronLeft className="w-5 h-5" />
-                    </button>
-                    <button
-                      onClick={() => scrollSlider("right")}
-                      aria-label="Next Article"
-                      suppressHydrationWarning
-                      className="w-10 h-10 rounded-full border border-neutral-800 bg-neutral-900/90 hover:bg-[#B8FF00] hover:text-black hover:border-[#B8FF00] text-white flex items-center justify-center transition-all duration-300 shadow-md"
-                    >
-                      <ChevronRight className="w-5 h-5" />
-                    </button>
-                  </div>
-                </div> */}
-
-                {/* Horizontal Scroll Track */}
-                <div
-                  ref={sliderRef}
-                  data-lenis-prevent
-                  onWheel={(e) => {
-                    if (e.deltaY !== 0 && sliderRef.current) {
-                      sliderRef.current.scrollLeft += e.deltaY;
-                    }
-                  }}
-                  className="flex items-stretch gap-6 sm:gap-8 overflow-x-auto pb-6 pt-2 custom-scrollbar snap-x snap-mandatory scroll-smooth"
-                >
-                  {regularPosts.map((post) => (
-                    <Link
-                      key={post.id}
-                      href={`/blog/${post.slug || post.id}`}
-                      data-cursor="READ"
-                      suppressHydrationWarning
-                      className="w-[280px] sm:w-[340px] md:w-[360px] lg:w-[380px] shrink-0 snap-start group rounded-3xl bg-[#111111] border border-neutral-800 hover:border-[#B8FF00]/40 overflow-hidden transition-all duration-500 cursor-pointer flex flex-col justify-between shadow-xl"
-                    >
-                      {/* Cover Frame */}
-                      <div className="relative h-44 sm:h-48 w-full overflow-hidden bg-neutral-900">
-                        <BlogCoverImage
-                          src={post.cover_image}
-                          alt={post.title}
-                          category={post.category}
-                          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
-                        />
-                        <div className="absolute top-4 left-4 z-10">
-                          <span
-                            className="px-3 py-1 rounded-full font-mono text-[10px] font-bold uppercase shadow-md backdrop-blur-md"
-                            style={{
-                              backgroundColor: `${post.category?.color || "#3b82f6"}30`,
-                              color: post.category?.color || "#3b82f6",
-                              border: `1px solid ${post.category?.color || "#3b82f6"}50`,
-                            }}
-                          >
-                            {post.category?.name}
+                    {/* Content Details */}
+                    <div className="p-6 flex flex-col justify-between flex-1">
+                      <div>
+                        <div className="flex items-center space-x-3 text-[#8E8E9A] text-[11px] mb-3">
+                          <span className="flex items-center space-x-1">
+                            <Calendar className="w-3 h-3" />
+                            <span>{formatDate(post.published_at, language)}</span>
+                          </span>
+                          <span>·</span>
+                          <span className="flex items-center space-x-1">
+                            <Eye className="w-3 h-3" />
+                            <span>
+                              {post.views_count} {t.views}
+                            </span>
                           </span>
                         </div>
+
+                        <h4 className="text-lg font-bold text-[#F4F4F6] tracking-tight uppercase leading-snug group-hover:text-white transition-colors mb-3 line-clamp-2">
+                          {post.title}
+                        </h4>
+
+                        {getPostExcerpt(post, 130) && (
+                          <p className="text-[#8E8E9A] text-xs leading-relaxed line-clamp-3 mb-6">
+                            {getPostExcerpt(post, 130)}
+                          </p>
+                        )}
                       </div>
 
-                      {/* Content Details */}
-                      <div className="p-6 flex flex-col justify-between flex-1">
-                        <div>
-                          <div className="flex items-center space-x-3 text-neutral-500 font-mono text-[11px] mb-3">
-                            <span className="flex items-center space-x-1">
-                              <Calendar className="w-3 h-3" />
-                              <span>{formatDate(post.published_at, language)}</span>
-                            </span>
-                            <span>•</span>
-                            <span className="flex items-center space-x-1">
-                              <Eye className="w-3 h-3" />
-                              <span>
-                                {post.views_count} {t.views}
-                              </span>
-                            </span>
-                          </div>
+                      {/* Card Footer */}
+                      <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs">
+                        <span className="text-[#8E8E9A] text-[11px]">
+                          {t.by} {post.author?.name}
+                        </span>
 
-                          <h4 className="text-lg font-extrabold font-mono text-white tracking-tight uppercase leading-snug group-hover:text-[#B8FF00] transition-colors mb-3 line-clamp-2">
-                            {post.title}
-                          </h4>
-
-                          {getPostExcerpt(post, 130) && (
-                            <p className="text-neutral-400 font-light text-xs leading-relaxed line-clamp-3 mb-6">
-                              {getPostExcerpt(post, 130)}
-                            </p>
-                          )}
-                        </div>
-
-                        {/* Card Footer */}
-                        <div className="pt-4 border-t border-neutral-800/80 flex items-center justify-between font-mono text-xs">
-                          <span className="text-neutral-500 text-[11px]">
-                            {t.by} {post.author?.name}
-                          </span>
-
-                          <span className="inline-flex items-center space-x-1 text-[#B8FF00] font-bold group-hover:translate-x-1 transition-transform">
-                            <span>{t.readArticle}</span>
-                            <ArrowUpRight className="w-3.5 h-3.5" />
-                          </span>
-                        </div>
+                        <span className="inline-flex items-center space-x-1 text-white font-bold group-hover:translate-x-1 transition-transform">
+                          <span>{t.readArticle}</span>
+                          <ArrowUpRight className="w-3.5 h-3.5" />
+                        </span>
                       </div>
-                    </Link>
-                  ))}
-                </div>
+                    </div>
+                  </Link>
+                ))}
               </div>
             )}
           </div>
@@ -482,4 +416,3 @@ export const Blog: React.FC = () => {
     </section>
   );
 };
-
